@@ -1,10 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { Button, Container, ListGroup } from "react-bootstrap";
+import { Button, Container, Col, Row, ListGroup, Card } from "react-bootstrap";
 import ListGroupItem from "./listGroupItem";
 import ModalForm from "./modal";
+import NavBar from "./navBar";
 
-class Rename extends React.Component {
+class Main extends React.Component {
   state = {
     entries: [],
     dbWasContacted: false,
@@ -84,30 +85,41 @@ class Rename extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.serverStatus()}</h1>
-        <Button onClick={(event) => this.mapListFromState(event)}>
-          console .log state entries
-        </Button>
-        <Button onClick={(event) => this.createNewPost(event)}>
-          create new hard wired post
-        </Button>
-        {this.state.modalIsOpen ? (
-          <ModalForm
-            closeModal={this.closeModal}
-            isOpen={this.state.modalIsOpen}
-            value={this.state.modalIsOpen}
-            handleSubmit={this.handleSubmit}
-          />
-        ) : null}
-        <Button onClick={this.openModal}>Display Modal Form</Button>
-        <Button onClick={this.newDate}>console.log new Date()</Button>
-        <ListGroup className="ListGroup">
-          <Container>{this.renderPostsInListGroup()}</Container>
-        </ListGroup>
-      </div>
+      <Container fluid>
+        <Row>
+          <Col className="d-flex justify-content-between">
+            <h1>{this.serverStatus()}</h1>
+            <Button onClick={(event) => this.mapListFromState(event)}>
+              console .log state entries
+            </Button>
+            <Button onClick={(event) => this.createNewPost(event)}>
+              create new hard wired post
+            </Button>
+            {this.state.modalIsOpen ? (
+              <ModalForm
+                closeModal={this.closeModal}
+                isOpen={this.state.modalIsOpen}
+                value={this.state.modalIsOpen}
+                handleSubmit={this.handleSubmit}
+              />
+            ) : null}
+            <Button onClick={this.openModal}>Display Modal Form</Button>
+            <Button onClick={this.newDate}>console.log new Date()</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={2} sm={0}>
+            <NavBar />
+          </Col>
+          <Col lg={10} sm={12}>
+            <ListGroup className="ListGroup">
+              {this.renderPostsInListGroup()}
+            </ListGroup>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 
-export default Rename;
+export default Main;

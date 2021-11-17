@@ -4,7 +4,22 @@
 
 .ListGroup {
   max-height: 75vh;
+  max-width: 75vw;
   overflow-y: scroll;
+}
+
+.left-nav-bar {
+  height: 75vh;
+  width: 100%;
+}
+
+.list-group {
+  color: blue;
+}
+
+.card {
+  height: 75vh;
+  width: 100%;
 }
 
 .body-text {
@@ -18,4 +33,46 @@
 
 .list-group-item {
   border: none;
+}
+
+.nav-link-div {
+  display: flex;
+  border-style: solid;
+  border-bottom-style: none;
+  border-color: lightblue;
+  border-width: 1px;
+  height: 10vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link-hovered {
+  background-color: lightgreen;
+}
+
+.nav-link-clicked {
+  background-color: lightblue;
+}
+
+#last-nav-link-div {
+  border-bottom-style: solid;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
