@@ -13,7 +13,9 @@ class Rename extends React.Component {
 
   async componentDidMount() {
     try {
-      const { data: entries } = await axios.get("/api");
+      const { data: entries } = await axios.get(
+        "https://barkerfield-test.herokuapp.com/api"
+      );
       if (entries.length > 0) {
         this.setState({ entries });
         this.setState({ dbWasContacted: true });

@@ -21,7 +21,10 @@ export default class ModalForm extends React.Component {
       timePosted: new Date(),
       likes: ["pedersongw", "somebody else"],
     };
-    const response = await axios.post("/api", postObj);
+    const response = await axios.post(
+      "https://barkerfield-test.herokuapp.com/api",
+      postObj
+    );
     console.log(response);
     this.props.closeModal();
   };
