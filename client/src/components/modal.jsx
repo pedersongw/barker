@@ -27,6 +27,7 @@ export default class ModalForm extends React.Component {
     );
     console.log(response);
     this.props.closeModal();
+    this.props.updateView();
   };
 
   render() {

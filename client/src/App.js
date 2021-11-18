@@ -5,9 +5,9 @@ import Main from "./components/main";
 
 function App() {
   return (
-    <React.Fragment className="App">
+    <div className="App">
       <Main />
-    </React.Fragment>
+    </div>
   );
 }
 

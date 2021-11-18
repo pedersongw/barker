@@ -1,6 +1,4 @@
 import React from "react";
-import { Row, Col, ListGroup } from "react-bootstrap";
-
 class NavBar extends React.Component {
   state = {
     hovered: "",
@@ -8,7 +6,6 @@ class NavBar extends React.Component {
   };
 
   divHovered = (arg) => {
-    console.log("hovered");
     this.setState({ hovered: arg });
   };
 
@@ -17,6 +14,14 @@ class NavBar extends React.Component {
   };
 
   mouseDownFired = (arg) => {
+    if (arg === "Create New") {
+      this.props.openModal();
+      return;
+    } else if (arg === "New") {
+      this.props.sortByNew();
+    } else if (arg === "Old") {
+      this.props.sortByOld();
+    }
     this.setState({ clicked: arg });
   };
 
@@ -55,7 +60,7 @@ class NavBar extends React.Component {
   };
   render() {
     return (
-      <React.Fragment>
+      <div className="nav-container">
         <div
           onMouseOver={() => this.divHovered("Create New")}
           onMouseOut={() => this.mouseOutFired("Create New")}
@@ -114,7 +119,7 @@ class NavBar extends React.Component {
         >
           My Posts
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

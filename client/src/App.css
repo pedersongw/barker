@@ -17,7 +17,8 @@
   color: blue;
 }
 
-.card {
+.card,
+.nav-container {
   height: 75vh;
   width: 100%;
 }
@@ -44,6 +45,7 @@
   height: 10vh;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .nav-link-hovered {

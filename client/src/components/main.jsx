@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button, Container, Col, Row, ListGroup, Card } from "react-bootstrap";
+import { Container, Col, Row, ListGroup } from "react-bootstrap";
 import ListGroupItem from "./listGroupItem";
 import ModalForm from "./modal";
 import NavBar from "./navBar";
@@ -30,6 +30,18 @@ class Main extends React.Component {
     }
   }
 
+  updateView = async () => {
+    try {
+      const { data: entries } = await axios.get(
+        "https://barkerfield-test.herokuapp.com/api"
+      );
+      this.setState({ entries });
+      console.log("update view called");
+    } catch (error) {
+      console.log("Couldn't reach to server", error);
+    }
+  };
+
   serverStatus = () => {
     const { dbWasContacted } = this.state;
     if (dbWasContacted) {
@@ -43,11 +55,6 @@ class Main extends React.Component {
     }
   };
 
-  mapListFromState(event) {
-    event.preventDefault();
-    console.log(this.state);
-  }
-
   onDelete = async (id) => {
     const response = await axios.delete("/api", {
       data: { _id: id },
@@ -59,8 +66,18 @@ class Main extends React.Component {
 
   closeModal = () => this.setState({ modalIsOpen: false });
 
-  handleSubmit = (name) => {
-    console.log(name);
+  displayPostsSortedByNew = () => {
+    const sortedEntries = this.state.entries.sort((a, b) => {
+      return new Date(b.timePosted) - new Date(a.timePosted);
+    });
+    this.setState({ entries: sortedEntries });
+  };
+
+  displayPostsSortedByOld = () => {
+    const sortedEntries = this.state.entries.sort((a, b) => {
+      return new Date(a.timePosted) - new Date(b.timePosted);
+    });
+    this.setState({ entries: sortedEntries });
   };
 
   renderPostsInListGroup = () => {
@@ -79,37 +96,29 @@ class Main extends React.Component {
     });
   };
 
-  newDate = () => {
-    console.log(new Date());
-  };
-
   render() {
     return (
       <Container fluid>
         <Row>
           <Col className="d-flex justify-content-between">
             <h1>{this.serverStatus()}</h1>
-            <Button onClick={(event) => this.mapListFromState(event)}>
-              console .log state entries
-            </Button>
-            <Button onClick={(event) => this.createNewPost(event)}>
-              create new hard wired post
-            </Button>
             {this.state.modalIsOpen ? (
               <ModalForm
                 closeModal={this.closeModal}
                 isOpen={this.state.modalIsOpen}
                 value={this.state.modalIsOpen}
-                handleSubmit={this.handleSubmit}
+                updateView={this.updateView}
               />
             ) : null}
-            <Button onClick={this.openModal}>Display Modal Form</Button>
-            <Button onClick={this.newDate}>console.log new Date()</Button>
           </Col>
         </Row>
         <Row>
           <Col lg={2} sm={0}>
-            <NavBar />
+            <NavBar
+              openModal={this.openModal}
+              sortByNew={this.displayPostsSortedByNew}
+              sortByOld={this.displayPostsSortedByOld}
+            />
           </Col>
           <Col lg={10} sm={12}>
             <ListGroup className="ListGroup">
