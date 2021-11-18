@@ -56,10 +56,18 @@ class Main extends React.Component {
   };
 
   onDelete = async (id) => {
-    const response = await axios.delete("/api", {
-      data: { _id: id },
-    });
-    console.log(response);
+    try {
+      const response = await axios.delete("/api", {
+        data: { _id: id },
+      });
+      console.log(response);
+      const entriesExceptDeleted = this.state.entries.filter(
+        (entry) => entry._id !== id
+      );
+      this.setState({ entries: entriesExceptDeleted });
+    } catch (error) {
+      console.log(error, "Couldn't delete");
+    }
   };
 
   openModal = () => this.setState({ modalIsOpen: true });
