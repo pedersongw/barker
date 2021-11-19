@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import axios from "axios";
 
-export default class ModalForm extends React.Component {
+export default class CreatePostModal extends React.Component {
   state = {
     title: "",
     body: "",
@@ -22,19 +22,19 @@ export default class ModalForm extends React.Component {
       likes: ["pedersongw", "somebody else"],
     };
     const response = await axios.post(
-      "https://barkerfield-test.herokuapp.com/api",
+      "http://localhost:3000/api/posts",
       postObj
     );
     console.log(response);
-    this.props.closeModal();
+    this.props.closePostModal();
     this.props.updateView();
   };
 
   render() {
     return (
-      <Modal show={this.props.isOpen} onHide={this.props.closeModal}>
+      <Modal show={this.props.isOpen} onHide={this.props.closePostModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal Form Title</Modal.Title>
+          <Modal.Title>New Post</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
@@ -52,7 +52,7 @@ export default class ModalForm extends React.Component {
               value={this.state.body}
               placeholder="body of post"
             />
-            <Form.Label>Name: </Form.Label>
+            <Form.Label>Username: </Form.Label>
             <Form.Control
               type="text"
               onChange={this.handleNameChange}

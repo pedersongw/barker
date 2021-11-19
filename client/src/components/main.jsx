@@ -2,20 +2,23 @@ import React from "react";
 import axios from "axios";
 import { Container, Col, Row, ListGroup } from "react-bootstrap";
 import ListGroupItem from "./listGroupItem";
-import ModalForm from "./modal";
+import CreatePostModal from "./createPostModal";
+import CreateUserModal from "./createUserModal";
+
 import NavBar from "./navBar";
 
 class Main extends React.Component {
   state = {
     entries: [],
     dbWasContacted: false,
-    modalIsOpen: false,
+    postModalOpen: false,
+    userModalOpen: false,
   };
 
   async componentDidMount() {
     try {
       const { data: entries } = await axios.get(
-        "https://barkerfield-test.herokuapp.com/api"
+        "http://localhost:3000/api/posts"
       );
       if (entries.length > 0) {
         this.setState({ entries });
@@ -33,7 +36,7 @@ class Main extends React.Component {
   updateView = async () => {
     try {
       const { data: entries } = await axios.get(
-        "https://barkerfield-test.herokuapp.com/api"
+        "http://localhost:3000/api/posts"
       );
       this.setState({ entries });
       console.log("update view called");
@@ -46,7 +49,7 @@ class Main extends React.Component {
     const { dbWasContacted } = this.state;
     if (dbWasContacted) {
       if (dbWasContacted === "empty") {
-        return "The database was successfully reached, but is empty";
+        return "The database is empty";
       } else {
         return "State successfully populated with objects from database";
       }
@@ -57,7 +60,7 @@ class Main extends React.Component {
 
   onDelete = async (id) => {
     try {
-      const response = await axios.delete("/api", {
+      const response = await axios.delete("http://localhost:3000/api/posts", {
         data: { _id: id },
       });
       console.log(response);
@@ -70,9 +73,15 @@ class Main extends React.Component {
     }
   };
 
-  openModal = () => this.setState({ modalIsOpen: true });
+  openPostModal = () => this.setState({ postModalOpen: true });
 
-  closeModal = () => this.setState({ modalIsOpen: false });
+  closePostModal = () => {
+    this.setState({ postModalOpen: false });
+  };
+
+  openUserModal = () => this.setState({ userModalOpen: true });
+
+  closeUserModal = () => this.setState({ userModalOpen: false });
 
   displayPostsSortedByNew = () => {
     const sortedEntries = this.state.entries.sort((a, b) => {
@@ -110,11 +119,19 @@ class Main extends React.Component {
         <Row>
           <Col className="d-flex justify-content-between">
             <h1>{this.serverStatus()}</h1>
-            {this.state.modalIsOpen ? (
-              <ModalForm
-                closeModal={this.closeModal}
-                isOpen={this.state.modalIsOpen}
-                value={this.state.modalIsOpen}
+            {this.state.postModalOpen ? (
+              <CreatePostModal
+                closePostModal={this.closePostModal}
+                isOpen={this.state.postModalOpen}
+                value={this.state.postModalOpen}
+                updateView={this.updateView}
+              />
+            ) : null}
+            {this.state.userModalOpen ? (
+              <CreateUserModal
+                closeUserModal={this.closeUserModal}
+                isOpen={this.state.userModalOpen}
+                value={this.state.userModalOpen}
                 updateView={this.updateView}
               />
             ) : null}
@@ -123,7 +140,8 @@ class Main extends React.Component {
         <Row>
           <Col lg={2} sm={0}>
             <NavBar
-              openModal={this.openModal}
+              openPostModal={this.openPostModal}
+              openUserModal={this.openUserModal}
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
             />

@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 let cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
+const users = require("./routes/users.js");
+const posts = require("./routes/posts.js");
+const auth = require("./routes/auth.js");
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -27,7 +30,9 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "client", "build")));
 
-require("./routes/router.js")(app);
+app.use("/api/users", users);
+app.use("/api/posts", posts);
+app.use("/api/auth", auth);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));

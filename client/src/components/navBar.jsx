@@ -15,7 +15,10 @@ class NavBar extends React.Component {
 
   mouseDownFired = (arg) => {
     if (arg === "Create New") {
-      this.props.openModal();
+      this.props.openPostModal();
+      return;
+    } else if (arg === "Create New User") {
+      this.props.openUserModal();
       return;
     } else if (arg === "New") {
       this.props.sortByNew();
@@ -32,8 +35,8 @@ class NavBar extends React.Component {
   determineClassCreateNew = () => {
     return this.determineClass("Create New");
   };
-  determineClassLogin = () => {
-    return this.determineClass("Login");
+  determineClassCreateNewUser = () => {
+    return this.determineClass("Create New User");
   };
   determineClassPopular = () => {
     return this.determineClass("Popular");
@@ -72,13 +75,13 @@ class NavBar extends React.Component {
         </div>
 
         <div
-          onMouseOver={() => this.divHovered("Login")}
-          onMouseOut={() => this.mouseOutFired("Login")}
-          onMouseDown={() => this.mouseDownFired("Login")}
-          onMouseUp={() => this.mouseUpFired("Login")}
-          className={this.determineClassLogin()}
+          onMouseOver={() => this.divHovered("Create New User")}
+          onMouseOut={() => this.mouseOutFired("Create New User")}
+          onMouseDown={() => this.mouseDownFired("Create New User")}
+          onMouseUp={() => this.mouseUpFired("Create New User")}
+          className={this.determineClassCreateNewUser()}
         >
-          Login
+          Create New User
         </div>
 
         <div
