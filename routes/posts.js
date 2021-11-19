@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 const { Post } = require("../models/postSchema.js");
 const auth = require("../middleware/auth.js");
+const admin = require("../middleware/admin.js");
 
-router.get("/", async (req, res) => {
+router.get("/", [auth, admin], async (req, res) => {
   Post.find()
     .then((data) => {
       res.send(data);
