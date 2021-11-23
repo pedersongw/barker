@@ -5,7 +5,7 @@ const Post = mongoose.model(
   new mongoose.Schema({
     title: String,
     body: String,
-    username: String,
+    username: Object,
     timePosted: Date,
     likes: Array,
   })

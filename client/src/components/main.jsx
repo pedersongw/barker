@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { Container, Col, Row, ListGroup } from "react-bootstrap";
+import jwtDecode from "jwt-decode";
+import { Container, Col, Row, ListGroup, Button } from "react-bootstrap";
 import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
 import CreateUserModal from "./createUserModal";
+import CreateLoginModal from "./createLoginModal";
 
 import NavBar from "./navBar";
 
@@ -13,9 +15,25 @@ class Main extends React.Component {
     dbWasContacted: false,
     postModalOpen: false,
     userModalOpen: false,
+    loginModalOpen: false,
+    user: [],
+    createUserError: "",
+    postTitle: "",
+    postBody: "",
+    userName: "",
+    userEmail: "",
+    userPassword: "",
   };
 
   async componentDidMount() {
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = jwtDecode(jwt);
+      console.log(user);
+      this.setState({ user: user });
+    } catch (ex) {
+      this.setState({ user: false });
+    }
     try {
       const { data: entries } = await axios.get(
         "http://localhost:3000/api/posts"
@@ -33,6 +51,73 @@ class Main extends React.Component {
     }
   }
 
+  handlePostTitleChange = (e) => this.setState({ postTitle: e.target.value });
+  handlePostBodyChange = (e) => this.setState({ postBody: e.target.value });
+  closePostModal = () => {
+    this.setState({ postModalOpen: false });
+  };
+
+  handleUserEmailChange = (e) => this.setState({ userEmail: e.target.value });
+  handleUserPasswordChange = (e) =>
+    this.setState({ userPassword: e.target.value });
+  handleUserNameChange = (e) => this.setState({ userName: e.target.value });
+
+  openUserModal = () => this.setState({ userModalOpen: true });
+
+  closeUserModal = () => this.setState({ userModalOpen: false });
+
+  openLoginModal = () => this.setState({ loginModalOpen: true });
+
+  closeLoginModal = () => this.setState({ loginModalOpen: false });
+
+  onSubmitPost = async () => {
+    const { postTitle, postBody } = this.state;
+    const postObj = {
+      title: postTitle,
+      body: postBody,
+      timePosted: new Date(),
+      username: [this.state.user, this.state.user.name],
+      likes: ["pedersongw", "somebody else"],
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/posts",
+        postObj
+      );
+      console.log(response);
+      this.closePostModal();
+      window.location = "/";
+    } catch (error) {
+      console.log(error);
+      this.closePostModal();
+    }
+  };
+
+  onCreateUser = async () => {
+    const { userEmail, userPassword, userName } = this.state;
+    const postObj = {
+      name: userName,
+      email: userEmail,
+      password: userPassword,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/users",
+        postObj
+      );
+      console.log(response);
+      this.closeUserModal();
+    } catch (error) {
+      console.log(
+        error.response.status,
+        error.response.data.details[0].message
+      );
+      this.setState({
+        createUserError: error.response.data.details[0].message,
+      });
+    }
+  };
+
   updateView = async () => {
     try {
       const { data: entries } = await axios.get(
@@ -46,15 +131,14 @@ class Main extends React.Component {
   };
 
   serverStatus = () => {
-    const { dbWasContacted } = this.state;
-    if (dbWasContacted) {
-      if (dbWasContacted === "empty") {
-        return "The database is empty";
-      } else {
-        return "State successfully populated with objects from database";
-      }
+    const { dbWasContacted, user } = this.state;
+    const firstPart = !user ? "Please log in" : `Welcome ${user.name}`;
+    const secondPart =
+      dbWasContacted === "empty" ? ", the database is empty" : "";
+    if (!dbWasContacted) {
+      return "Couln't reach server";
     } else {
-      return "Couldn't reach the server";
+      return firstPart + secondPart;
     }
   };
 
@@ -68,6 +152,7 @@ class Main extends React.Component {
         (entry) => entry._id !== id
       );
       this.setState({ entries: entriesExceptDeleted });
+      this.updateView();
     } catch (error) {
       console.log(error, "Couldn't delete");
     }
@@ -75,13 +160,10 @@ class Main extends React.Component {
 
   openPostModal = () => this.setState({ postModalOpen: true });
 
-  closePostModal = () => {
-    this.setState({ postModalOpen: false });
+  logOut = () => {
+    localStorage.removeItem("token");
+    window.location = "/";
   };
-
-  openUserModal = () => this.setState({ userModalOpen: true });
-
-  closeUserModal = () => this.setState({ userModalOpen: false });
 
   displayPostsSortedByNew = () => {
     const sortedEntries = this.state.entries.sort((a, b) => {
@@ -106,7 +188,7 @@ class Main extends React.Component {
           title={entry.title}
           body={entry.body}
           timePosted={entry.timePosted}
-          username={entry.username}
+          username={entry.username[1]}
           onDelete={this.onDelete}
         />
       );
@@ -117,6 +199,13 @@ class Main extends React.Component {
     return (
       <Container fluid>
         <Row>
+          <Button
+            onClick={() =>
+              console.log(this.state.user, this.state.dbWasContacted)
+            }
+          >
+            console.log user
+          </Button>
           <Col className="d-flex justify-content-between">
             <h1>{this.serverStatus()}</h1>
             {this.state.postModalOpen ? (
@@ -125,6 +214,9 @@ class Main extends React.Component {
                 isOpen={this.state.postModalOpen}
                 value={this.state.postModalOpen}
                 updateView={this.updateView}
+                onSubmit={this.onSubmitPost}
+                onTitleChange={this.handlePostTitleChange}
+                onBodyChange={this.handlePostBodyChange}
               />
             ) : null}
             {this.state.userModalOpen ? (
@@ -133,6 +225,18 @@ class Main extends React.Component {
                 isOpen={this.state.userModalOpen}
                 value={this.state.userModalOpen}
                 updateView={this.updateView}
+                onSubmit={this.onCreateUser}
+                onNameChange={this.handleUserNameChange}
+                onEmailChange={this.handleUserEmailChange}
+                onPasswordChange={this.handleUserPasswordChange}
+                error={this.state.createUserError}
+              />
+            ) : null}
+            {this.state.loginModalOpen ? (
+              <CreateLoginModal
+                closeLoginModal={this.closeLoginModal}
+                isOpen={this.state.loginModalOpen}
+                value={this.state.loginModalOpen}
               />
             ) : null}
           </Col>
@@ -144,6 +248,8 @@ class Main extends React.Component {
               openUserModal={this.openUserModal}
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
+              logIn={this.openLoginModal}
+              logOut={this.logOut}
             />
           </Col>
           <Col lg={10} sm={12}>

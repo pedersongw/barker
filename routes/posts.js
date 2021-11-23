@@ -5,7 +5,7 @@ const { Post } = require("../models/postSchema.js");
 const auth = require("../middleware/auth.js");
 const admin = require("../middleware/admin.js");
 
-router.get("/", [auth, admin], async (req, res) => {
+router.get("/", async (req, res) => {
   Post.find()
     .then((data) => {
       res.send(data);
@@ -34,6 +34,7 @@ router.post("/", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Message.",
@@ -41,7 +42,7 @@ router.post("/", async (req, res) => {
     });
 });
 
-router.delete("/", auth, async (req, res) => {
+router.delete("/", async (req, res) => {
   console.log(req.body._id);
   Post.deleteOne({ _id: req.body["_id"] }, function (err) {
     if (err) console.log(err);
