@@ -16,7 +16,7 @@ class Main extends React.Component {
     postModalOpen: false,
     userModalOpen: false,
     loginModalOpen: false,
-    user: [],
+    user: null,
     createUserError: "",
     postTitle: "",
     postBody: "",
@@ -32,7 +32,7 @@ class Main extends React.Component {
       console.log(user);
       this.setState({ user: user });
     } catch (ex) {
-      this.setState({ user: false });
+      this.setState({ user: null });
     }
     try {
       const { data: entries } = await axios.get(
@@ -50,6 +50,14 @@ class Main extends React.Component {
       console.log("Couldn't reach the server", error);
     }
   }
+
+  userLoggedIn = () => {
+    if (this.state.user === null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   handlePostTitleChange = (e) => this.setState({ postTitle: e.target.value });
   handlePostBodyChange = (e) => this.setState({ postBody: e.target.value });
@@ -132,7 +140,7 @@ class Main extends React.Component {
 
   serverStatus = () => {
     const { dbWasContacted, user } = this.state;
-    const firstPart = !user ? "Please log in" : `Welcome ${user.name}`;
+    const firstPart = user === null ? "Please log in" : `Welcome ${user.name}`;
     const secondPart =
       dbWasContacted === "empty" ? ", the database is empty" : "";
     if (!dbWasContacted) {
@@ -162,6 +170,7 @@ class Main extends React.Component {
 
   logOut = () => {
     localStorage.removeItem("token");
+    this.setState({ user: null });
     window.location = "/";
   };
 
@@ -199,11 +208,7 @@ class Main extends React.Component {
     return (
       <Container fluid>
         <Row>
-          <Button
-            onClick={() =>
-              console.log(this.state.user, this.state.dbWasContacted)
-            }
-          >
+          <Button onClick={() => console.log(this.state.user)}>
             console.log user
           </Button>
           <Col className="d-flex justify-content-between">
@@ -250,6 +255,7 @@ class Main extends React.Component {
               sortByOld={this.displayPostsSortedByOld}
               logIn={this.openLoginModal}
               logOut={this.logOut}
+              userLoggedIn={this.userLoggedIn}
             />
           </Col>
           <Col lg={10} sm={12}>

@@ -29,6 +29,7 @@ class NavBar extends React.Component {
       this.props.sortByNew();
     } else if (arg === "Old") {
       this.props.sortByOld();
+      console.log(this.props.userLoggedIn);
     }
     this.setState({ clicked: arg });
   };
@@ -74,46 +75,52 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className="nav-container">
-        <div
-          onMouseOver={() => this.divHovered("Create New")}
-          onMouseOut={() => this.mouseOutFired("Create New")}
-          onMouseDown={() => this.mouseDownFired("Create New")}
-          onMouseUp={() => this.mouseUpFired("Create New")}
-          className={this.determineClassCreateNew()}
-        >
-          Create New Post
-        </div>
+        {this.props.userLoggedIn() && (
+          <div
+            onMouseOver={() => this.divHovered("Create New")}
+            onMouseOut={() => this.mouseOutFired("Create New")}
+            onMouseDown={() => this.mouseDownFired("Create New")}
+            onMouseUp={() => this.mouseUpFired("Create New")}
+            className={this.determineClassCreateNew()}
+          >
+            Create New Post
+          </div>
+        )}
+        {!this.props.userLoggedIn() && (
+          <div
+            onMouseOver={() => this.divHovered("Create New User")}
+            onMouseOut={() => this.mouseOutFired("Create New User")}
+            onMouseDown={() => this.mouseDownFired("Create New User")}
+            onMouseUp={() => this.mouseUpFired("Create New User")}
+            className={this.determineClassCreateNewUser()}
+          >
+            Create New User
+          </div>
+        )}
 
-        <div
-          onMouseOver={() => this.divHovered("Create New User")}
-          onMouseOut={() => this.mouseOutFired("Create New User")}
-          onMouseDown={() => this.mouseDownFired("Create New User")}
-          onMouseUp={() => this.mouseUpFired("Create New User")}
-          className={this.determineClassCreateNewUser()}
-        >
-          Create New User
-        </div>
+        {!this.props.userLoggedIn() && (
+          <div
+            onMouseOver={() => this.divHovered("Log In")}
+            onMouseOut={() => this.mouseOutFired("Log In")}
+            onMouseDown={() => this.mouseDownFired("Log In")}
+            onMouseUp={() => this.mouseUpFired("Log In")}
+            className={this.determineClassLogin()}
+          >
+            Login
+          </div>
+        )}
 
-        <div
-          onMouseOver={() => this.divHovered("Log In")}
-          onMouseOut={() => this.mouseOutFired("Log In")}
-          onMouseDown={() => this.mouseDownFired("Log In")}
-          onMouseUp={() => this.mouseUpFired("Log In")}
-          className={this.determineClassLogin()}
-        >
-          Login
-        </div>
-
-        <div
-          onMouseOver={() => this.divHovered("Log Out")}
-          onMouseOut={() => this.mouseOutFired("Log Out")}
-          onMouseDown={() => this.mouseDownFired("Log Out")}
-          onMouseUp={() => this.mouseUpFired("Log Out")}
-          className={this.determineClassLogout()}
-        >
-          Log out
-        </div>
-
+        {this.props.userLoggedIn() && (
+          <div
+            onMouseOver={() => this.divHovered("Log Out")}
+            onMouseOut={() => this.mouseOutFired("Log Out")}
+            onMouseDown={() => this.mouseDownFired("Log Out")}
+            onMouseUp={() => this.mouseUpFired("Log Out")}
+            className={this.determineClassLogout()}
+          >
+            Log out
+          </div>
+        )}
         <div
           onMouseOver={() => this.divHovered("Popular")}
           onMouseOut={() => this.mouseOutFired("Popular")}
@@ -141,7 +148,6 @@ class NavBar extends React.Component {
         >
           Old
         </div>
-
         <div
           onMouseOver={() => this.divHovered("My Posts")}
           onMouseOut={() => this.mouseOutFired("My Posts")}
