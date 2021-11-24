@@ -36,7 +36,7 @@ class Main extends React.Component {
       this.setState({ user: null });
     }
     try {
-      const { data: entries } = await axios.get(baseURL + "/api/posts");
+      const { data: entries } = await axios.get("/api/posts");
       if (entries.length > 0) {
         this.setState({ entries });
         this.setState({ dbWasContacted: true });
@@ -87,7 +87,7 @@ class Main extends React.Component {
       likes: ["pedersongw", "somebody else"],
     };
     try {
-      const response = await axios.post(baseURL + "/api/posts", postObj);
+      const response = await axios.post("/api/posts", postObj);
       console.log(response);
       this.closePostModal();
       window.location = "/";
@@ -105,7 +105,7 @@ class Main extends React.Component {
       password: userPassword,
     };
     try {
-      const response = await axios.post(baseURL + "/api/users", postObj);
+      const response = await axios.post("/api/users", postObj);
       console.log(response);
       this.closeUserModal();
     } catch (error) {
@@ -121,7 +121,7 @@ class Main extends React.Component {
 
   updateView = async () => {
     try {
-      const { data: entries } = await axios.get(baseURL + "/api/posts");
+      const { data: entries } = await axios.get("/api/posts");
       this.setState({ entries });
       console.log("update view called");
     } catch (error) {
@@ -143,7 +143,7 @@ class Main extends React.Component {
 
   onDelete = async (id) => {
     try {
-      const response = await axios.delete(baseURL + "/api/posts", {
+      const response = await axios.delete("/api/posts", {
         data: { _id: id },
       });
       console.log(response);
