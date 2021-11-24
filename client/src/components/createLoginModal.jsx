@@ -17,7 +17,10 @@ export default class CreateUserModal extends React.Component {
       password: password,
     };
 
-    const response = await axios.post("/api/auth", postObj);
+    const response = await axios.post(
+      "http://barkerfield-test.herokuapp.com/api/auth",
+      postObj
+    );
     console.log(response);
     localStorage.setItem("token", response.data);
     this.props.closeLoginModal();
