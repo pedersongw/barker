@@ -6,6 +6,7 @@ import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
+const baseURL = "http://barkerfield-test.herokuapp.com";
 
 import NavBar from "./navBar";
 
@@ -35,9 +36,7 @@ class Main extends React.Component {
       this.setState({ user: null });
     }
     try {
-      const { data: entries } = await axios.get(
-        "http://localhost:3000/api/posts"
-      );
+      const { data: entries } = await axios.get(baseURL + "/api/posts");
       if (entries.length > 0) {
         this.setState({ entries });
         this.setState({ dbWasContacted: true });
@@ -88,10 +87,7 @@ class Main extends React.Component {
       likes: ["pedersongw", "somebody else"],
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/posts",
-        postObj
-      );
+      const response = await axios.post(baseURL + "/api/posts", postObj);
       console.log(response);
       this.closePostModal();
       window.location = "/";
@@ -109,10 +105,7 @@ class Main extends React.Component {
       password: userPassword,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/users",
-        postObj
-      );
+      const response = await axios.post(baseURL + "/api/users", postObj);
       console.log(response);
       this.closeUserModal();
     } catch (error) {
@@ -128,9 +121,7 @@ class Main extends React.Component {
 
   updateView = async () => {
     try {
-      const { data: entries } = await axios.get(
-        "http://localhost:3000/api/posts"
-      );
+      const { data: entries } = await axios.get(baseURL + "/api/posts");
       this.setState({ entries });
       console.log("update view called");
     } catch (error) {
@@ -152,7 +143,7 @@ class Main extends React.Component {
 
   onDelete = async (id) => {
     try {
-      const response = await axios.delete("http://localhost:3000/api/posts", {
+      const response = await axios.delete(baseURL + "/api/posts", {
         data: { _id: id },
       });
       console.log(response);
