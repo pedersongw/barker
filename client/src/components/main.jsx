@@ -199,7 +199,7 @@ class Main extends React.Component {
           title={entry.title}
           body={entry.body}
           timePosted={entry.timePosted}
-          username={entry.username[1]}
+          username={entry.username}
           onDelete={this.onDelete}
         />
       );

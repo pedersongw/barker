@@ -30,6 +30,7 @@ class NavBar extends React.Component {
     } else if (arg === "Old") {
       this.props.sortByOld();
       console.log(this.props.userLoggedIn);
+    } else if (arg === "My Posts") {
     }
     this.setState({ clicked: arg });
   };
@@ -121,6 +122,17 @@ class NavBar extends React.Component {
             Log out
           </div>
         )}
+        {this.props.userLoggedIn() && (
+          <div
+            onMouseOver={() => this.divHovered("My Posts")}
+            onMouseOut={() => this.mouseOutFired("My Posts")}
+            onMouseDown={() => this.mouseDownFired("My Posts")}
+            onMouseUp={() => this.mouseUpFired("My Posts")}
+            className={this.determineClassMyPosts()}
+          >
+            My Posts
+          </div>
+        )}
         <div
           onMouseOver={() => this.divHovered("Popular")}
           onMouseOut={() => this.mouseOutFired("Popular")}
@@ -145,18 +157,9 @@ class NavBar extends React.Component {
           onMouseDown={() => this.mouseDownFired("Old")}
           onMouseUp={() => this.mouseUpFired("Old")}
           className={this.determineClassOld()}
-        >
-          Old
-        </div>
-        <div
-          onMouseOver={() => this.divHovered("My Posts")}
-          onMouseOut={() => this.mouseOutFired("My Posts")}
-          onMouseDown={() => this.mouseDownFired("My Posts")}
-          onMouseUp={() => this.mouseUpFired("My Posts")}
-          className={this.determineClassMyPosts()}
           id="last-nav-link-div"
         >
-          My Posts
+          Old
         </div>
       </div>
     );
