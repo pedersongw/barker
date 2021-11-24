@@ -6,9 +6,9 @@ import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
-const baseURL = "http://barkerfield-test.herokuapp.com";
-
 import NavBar from "./navBar";
+
+const baseURL = "http://barkerfield-test.herokuapp.com";
 
 class Main extends React.Component {
   state = {
