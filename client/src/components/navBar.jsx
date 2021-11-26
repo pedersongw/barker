@@ -29,8 +29,11 @@ class NavBar extends React.Component {
       this.props.sortByNew();
     } else if (arg === "Old") {
       this.props.sortByOld();
-      console.log(this.props.userLoggedIn);
+      console.log(this.props.userLoggedIn());
     } else if (arg === "My Posts") {
+      this.props.sortMyPosts();
+    } else if (arg === "All Posts") {
+      this.props.updateView();
     }
     this.setState({ clicked: arg });
   };
@@ -56,6 +59,9 @@ class NavBar extends React.Component {
   };
   determineClassMyPosts = () => {
     return this.determineClass("My Posts");
+  };
+  determineClassAllPosts = () => {
+    return this.determineClass("All Posts");
   };
   determineClassLogin = () => {
     return this.determineClass("Log In");
@@ -133,6 +139,15 @@ class NavBar extends React.Component {
             My Posts
           </div>
         )}
+        <div
+          onMouseOver={() => this.divHovered("All Posts")}
+          onMouseOut={() => this.mouseOutFired("All Posts")}
+          onMouseDown={() => this.mouseDownFired("All Posts")}
+          onMouseUp={() => this.mouseUpFired("All Posts")}
+          className={this.determineClassAllPosts()}
+        >
+          All Posts
+        </div>
         <div
           onMouseOver={() => this.divHovered("Popular")}
           onMouseOut={() => this.mouseOutFired("Popular")}

@@ -51,11 +51,7 @@ class Main extends React.Component {
   }
 
   userLoggedIn = () => {
-    if (this.state.user === null) {
-      return false;
-    } else {
-      return true;
-    }
+    return this.state.user === null ? false : true;
   };
 
   handlePostTitleChange = (e) => this.setState({ postTitle: e.target.value });
@@ -135,6 +131,14 @@ class Main extends React.Component {
     } catch (error) {
       console.log("Couldn't reach to server", error);
     }
+  };
+
+  updateViewMyPosts = () => {
+    const unsorted = [...this.state.entries];
+    const sorted = unsorted.filter(
+      (entry) => entry.username[0]["_id"] === this.state.user["_id"]
+    );
+    this.setState({ entries: sorted });
   };
 
   serverStatus = () => {
@@ -258,6 +262,8 @@ class Main extends React.Component {
               logIn={this.openLoginModal}
               logOut={this.logOut}
               userLoggedIn={this.userLoggedIn}
+              sortMyPosts={this.updateViewMyPosts}
+              updateView={this.updateView}
             />
           </Col>
           <Col lg={10} sm={12}>
