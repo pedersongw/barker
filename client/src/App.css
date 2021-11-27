@@ -36,6 +36,10 @@
   border: none;
 }
 
+.Button {
+  width: 30px;
+}
+
 .nav-link-div {
   display: flex;
   border-style: solid;

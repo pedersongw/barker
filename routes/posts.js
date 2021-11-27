@@ -18,6 +18,22 @@ router.get("/", async (req, res) => {
     });
 });
 
+router.post("/likes", async (req, res) => {
+  const filter = { _id: req.body._id };
+  const user = { ...req.body.user };
+  console.log(filter, user);
+  const update = { $push: { likes: user } };
+  Post.findOneAndUpdate(filter, update, {
+    new: true,
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
 router.post("/", async (req, res) => {
   console.log(req.body);
   const { body } = req;

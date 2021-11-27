@@ -28,7 +28,6 @@ class Main extends React.Component {
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
-      console.log(user);
       this.setState({ user: user });
     } catch (ex) {
       this.setState({ user: null });
@@ -80,7 +79,7 @@ class Main extends React.Component {
       body: postBody,
       timePosted: new Date(),
       username: [this.state.user, this.state.user.name],
-      likes: ["pedersongw", "somebody else"],
+      likes: [{ ...this.state.user }],
     };
     try {
       const response = await axios.post(
@@ -172,6 +171,38 @@ class Main extends React.Component {
     }
   };
 
+  onLike = async (id) => {
+    const postID = id;
+    const userID = this.state.user._id;
+    let post = this.state.entries.filter((entry) => entry._id === id);
+    let isAlreadyLiked = false;
+    for (let i = 0; i < post[0].likes.length; i++) {
+      if (post[0].likes[i]["_id"] === userID) {
+        isAlreadyLiked = true;
+      }
+    }
+    console.log(isAlreadyLiked);
+
+    if (!isAlreadyLiked) {
+      try {
+        const data = {
+          _id: id,
+          user: { ...this.state.user },
+        };
+        const response = await axios.post(
+          "http://localhost:8000/api/posts/likes",
+          data
+        );
+        console.log(response);
+        this.updateView();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("already liked");
+    }
+  };
+
   openPostModal = () => this.setState({ postModalOpen: true });
 
   logOut = () => {
@@ -205,6 +236,8 @@ class Main extends React.Component {
           timePosted={entry.timePosted}
           username={entry.username}
           onDelete={this.onDelete}
+          onLike={this.onLike}
+          userLoggedIn={Boolean(this.state.user)}
         />
       );
     });

@@ -22,9 +22,16 @@ class ListGroupItem extends React.Component {
           </Row>
           <Row className="username">
             <small>{"posted by " + this.props.username[1]}</small>
-            <Button onClick={() => this.props.onDelete(this.props.id)}>
-              Delete Me
-            </Button>
+            {this.props.userLoggedIn && (
+              <Button onClick={() => this.props.onDelete(this.props.id)}>
+                Delete Me
+              </Button>
+            )}
+            {this.props.userLoggedIn && (
+              <Button onClick={() => this.props.onLike(this.props.id)}>
+                Like
+              </Button>
+            )}
           </Row>
         </div>
       </ListGroup.Item>
