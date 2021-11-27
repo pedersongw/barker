@@ -174,6 +174,10 @@ class Main extends React.Component {
   onLike = async (id) => {
     const postID = id;
     const userID = this.state.user._id;
+    const data = {
+      _id: id,
+      user: { ...this.state.user },
+    };
     let post = this.state.entries.filter((entry) => entry._id === id);
     let isAlreadyLiked = false;
     for (let i = 0; i < post[0].likes.length; i++) {
@@ -185,12 +189,9 @@ class Main extends React.Component {
 
     if (!isAlreadyLiked) {
       try {
-        const data = {
-          _id: id,
-          user: { ...this.state.user },
-        };
-        const response = await axios.post(
-          "http://localhost:8000/api/posts/likes",
+        console.log("like try block called");
+        const response = await axios.put(
+          "http://localhost:8000/api/posts/like",
           data
         );
         console.log(response);
@@ -199,7 +200,16 @@ class Main extends React.Component {
         console.log(error);
       }
     } else {
-      console.log("already liked");
+      try {
+        console.log("unlike try block called");
+        const response = await axios.put(
+          "http://localhost:8000/api/posts/unlike",
+          data
+        );
+        this.updateView();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

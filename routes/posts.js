@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     });
 });
 
-router.post("/likes", async (req, res) => {
+router.put("/like", async (req, res) => {
   const filter = { _id: req.body._id };
   const user = { ...req.body.user };
   console.log(filter, user);
@@ -31,6 +31,25 @@ router.post("/likes", async (req, res) => {
     })
     .catch((err) => {
       res.send(err);
+    });
+});
+
+router.put("/unlike", async (req, res) => {
+  console.log(req.body);
+  const filter = { _id: req.body._id };
+  const user = { ...req.body.user };
+  console.log(filter, user);
+  const update = { $pull: { likes: { _id: user._id } } };
+  Post.findOneAndUpdate(filter, update, {
+    new: true,
+  })
+    .then((data) => {
+      res.send(data);
+      console.log(data);
+    })
+    .catch((err) => {
+      res.send(err);
+      console.log(err);
     });
 });
 

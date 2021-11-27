@@ -29,7 +29,7 @@ class ListGroupItem extends React.Component {
             )}
             {this.props.userLoggedIn && (
               <Button onClick={() => this.props.onLike(this.props.id)}>
-                Like
+                Like / Unlike
               </Button>
             )}
           </Row>
