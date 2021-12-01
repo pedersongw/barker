@@ -235,6 +235,13 @@ class Main extends React.Component {
     this.setState({ entries: sortedEntries });
   };
 
+  displayPostsSortedByPopular = () => {
+    const sortedEntries = this.state.entries.sort((a, b) => {
+      return b.likes.length - a.likes.length;
+    });
+    this.setState({ entries: sortedEntries });
+  };
+
   renderPostsInListGroup = () => {
     return this.state.entries.map((entry) => {
       return (
@@ -243,6 +250,7 @@ class Main extends React.Component {
           id={entry._id}
           title={entry.title}
           body={entry.body}
+          likes={entry.likes}
           timePosted={entry.timePosted}
           username={entry.username}
           onDelete={this.onDelete}
@@ -303,6 +311,7 @@ class Main extends React.Component {
               logOut={this.logOut}
               userLoggedIn={this.userLoggedIn}
               sortMyPosts={this.updateViewMyPosts}
+              sortPopular={this.displayPostsSortedByPopular}
               updateView={this.updateView}
             />
           </Col>

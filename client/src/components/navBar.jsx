@@ -34,6 +34,8 @@ class NavBar extends React.Component {
       this.props.sortMyPosts();
     } else if (arg === "All Posts") {
       this.props.updateView();
+    } else if (arg === "Popular") {
+      this.props.sortPopular();
     }
     this.setState({ clicked: arg });
   };
@@ -42,33 +44,6 @@ class NavBar extends React.Component {
     this.setState({ clicked: "" });
   };
 
-  determineClassCreateNew = () => {
-    return this.determineClass("Create New");
-  };
-  determineClassCreateNewUser = () => {
-    return this.determineClass("Create New User");
-  };
-  determineClassPopular = () => {
-    return this.determineClass("Popular");
-  };
-  determineClassNew = () => {
-    return this.determineClass("New");
-  };
-  determineClassOld = () => {
-    return this.determineClass("Old");
-  };
-  determineClassMyPosts = () => {
-    return this.determineClass("My Posts");
-  };
-  determineClassAllPosts = () => {
-    return this.determineClass("All Posts");
-  };
-  determineClassLogin = () => {
-    return this.determineClass("Log In");
-  };
-  determineClassLogout = () => {
-    return this.determineClass("Log Out");
-  };
   determineClass = (arg) => {
     const { hovered, clicked } = this.state;
     if (clicked === arg) {
@@ -88,7 +63,7 @@ class NavBar extends React.Component {
             onMouseOut={() => this.mouseOutFired("Create New")}
             onMouseDown={() => this.mouseDownFired("Create New")}
             onMouseUp={() => this.mouseUpFired("Create New")}
-            className={this.determineClassCreateNew()}
+            className={this.determineClass("Create New")}
           >
             Create New Post
           </div>
@@ -99,7 +74,7 @@ class NavBar extends React.Component {
             onMouseOut={() => this.mouseOutFired("Create New User")}
             onMouseDown={() => this.mouseDownFired("Create New User")}
             onMouseUp={() => this.mouseUpFired("Create New User")}
-            className={this.determineClassCreateNewUser()}
+            className={this.determineClass("Create New User")}
           >
             Create New User
           </div>
@@ -111,7 +86,7 @@ class NavBar extends React.Component {
             onMouseOut={() => this.mouseOutFired("Log In")}
             onMouseDown={() => this.mouseDownFired("Log In")}
             onMouseUp={() => this.mouseUpFired("Log In")}
-            className={this.determineClassLogin()}
+            className={this.determineClass("Log In")}
           >
             Login
           </div>
@@ -123,7 +98,7 @@ class NavBar extends React.Component {
             onMouseOut={() => this.mouseOutFired("Log Out")}
             onMouseDown={() => this.mouseDownFired("Log Out")}
             onMouseUp={() => this.mouseUpFired("Log Out")}
-            className={this.determineClassLogout()}
+            className={this.determineClass("Log Out")}
           >
             Log out
           </div>
@@ -134,7 +109,7 @@ class NavBar extends React.Component {
             onMouseOut={() => this.mouseOutFired("My Posts")}
             onMouseDown={() => this.mouseDownFired("My Posts")}
             onMouseUp={() => this.mouseUpFired("My Posts")}
-            className={this.determineClassMyPosts()}
+            className={this.determineClass("My Posts")}
           >
             My Posts
           </div>
@@ -144,7 +119,7 @@ class NavBar extends React.Component {
           onMouseOut={() => this.mouseOutFired("All Posts")}
           onMouseDown={() => this.mouseDownFired("All Posts")}
           onMouseUp={() => this.mouseUpFired("All Posts")}
-          className={this.determineClassAllPosts()}
+          className={this.determineClass("All Posts")}
         >
           All Posts
         </div>
@@ -153,7 +128,7 @@ class NavBar extends React.Component {
           onMouseOut={() => this.mouseOutFired("Popular")}
           onMouseDown={() => this.mouseDownFired("Popular")}
           onMouseUp={() => this.mouseUpFired("Popular")}
-          className={this.determineClassPopular()}
+          className={this.determineClass("Popular")}
         >
           Popular
         </div>
@@ -162,7 +137,7 @@ class NavBar extends React.Component {
           onMouseOut={() => this.mouseOutFired("New")}
           onMouseDown={() => this.mouseDownFired("New")}
           onMouseUp={() => this.mouseUpFired("New")}
-          className={this.determineClassNew()}
+          className={this.determineClass("New")}
         >
           New
         </div>
@@ -171,7 +146,7 @@ class NavBar extends React.Component {
           onMouseOut={() => this.mouseOutFired("Old")}
           onMouseDown={() => this.mouseDownFired("Old")}
           onMouseUp={() => this.mouseUpFired("Old")}
-          className={this.determineClassOld()}
+          className={this.determineClass("Old")}
           id="last-nav-link-div"
         >
           Old

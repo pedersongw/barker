@@ -22,6 +22,14 @@ class ListGroupItem extends React.Component {
           </Row>
           <Row className="username">
             <small>{"posted by " + this.props.username[1]}</small>
+            <small>
+              {this.props.likes.length.toString() +
+                (this.props.likes.length === 1
+                  ? " person liked this"
+                  : " people liked this")}
+            </small>
+          </Row>
+          <Row>
             {this.props.userLoggedIn && (
               <Button onClick={() => this.props.onDelete(this.props.id)}>
                 Delete Me
