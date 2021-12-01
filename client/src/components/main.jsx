@@ -191,7 +191,7 @@ class Main extends React.Component {
       try {
         console.log("like try block called");
         const response = await axios.put(
-          "http://localhost:8000/api/posts/like",
+          "http://barkerfield-test.herokuapp.com/api/posts/like",
           data
         );
         console.log(response);
@@ -203,7 +203,7 @@ class Main extends React.Component {
       try {
         console.log("unlike try block called");
         const response = await axios.put(
-          "http://localhost:8000/api/posts/unlike",
+          "http://barkerfield-test.herokuapp.com/api/posts/unlike",
           data
         );
         this.updateView();
@@ -257,9 +257,6 @@ class Main extends React.Component {
     return (
       <Container fluid>
         <Row>
-          <Button onClick={() => console.log(this.state.user)}>
-            console.log user
-          </Button>
           <Col className="d-flex justify-content-between">
             <h1>{this.serverStatus()}</h1>
             {this.state.postModalOpen ? (
