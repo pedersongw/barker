@@ -24,7 +24,7 @@ export default class CreateUserModal extends React.Component {
             />
             <Form.Label>password: </Form.Label>
             <Form.Control
-              type="text"
+              type="password"
               onChange={(event) => this.props.onPasswordChange(event)}
               placeholder="password"
             />

@@ -16,7 +16,7 @@ class Main extends React.Component {
     userModalOpen: false,
     loginModalOpen: false,
     user: null,
-    createUserError: "",
+    createModalError: "",
     postTitle: "",
     postBody: "",
     userName: "",
@@ -55,22 +55,51 @@ class Main extends React.Component {
 
   handlePostTitleChange = (e) => this.setState({ postTitle: e.target.value });
   handlePostBodyChange = (e) => this.setState({ postBody: e.target.value });
-  closePostModal = () => {
-    this.setState({ postModalOpen: false });
-  };
 
   handleUserEmailChange = (e) => this.setState({ userEmail: e.target.value });
   handleUserPasswordChange = (e) =>
     this.setState({ userPassword: e.target.value });
   handleUserNameChange = (e) => this.setState({ userName: e.target.value });
 
-  openUserModal = () => this.setState({ userModalOpen: true });
+  resetStateFormInfoHolders = () => {
+    this.setState({
+      createModalError: "",
+      postTitle: "",
+      postBody: "",
+      userName: "",
+      userEmail: "",
+      userPassword: "",
+    });
+  };
+  openPostModal = () => {
+    this.setState({ postModalOpen: true });
+    this.resetStateFormInfoHolders();
+  };
 
-  closeUserModal = () => this.setState({ userModalOpen: false });
+  closePostModal = () => {
+    this.setState({ postModalOpen: false });
+    this.resetStateFormInfoHolders();
+  };
 
-  openLoginModal = () => this.setState({ loginModalOpen: true });
+  openUserModal = () => {
+    this.setState({ userModalOpen: true });
+    this.resetStateFormInfoHolders();
+  };
 
-  closeLoginModal = () => this.setState({ loginModalOpen: false });
+  closeUserModal = () => {
+    this.setState({ userModalOpen: false });
+    this.resetStateFormInfoHolders();
+  };
+
+  openLoginModal = () => {
+    this.setState({ loginModalOpen: true });
+    this.resetStateFormInfoHolders();
+  };
+
+  closeLoginModal = () => {
+    this.setState({ loginModalOpen: false });
+    this.resetStateFormInfoHolders();
+  };
 
   onSubmitPost = async () => {
     const { postTitle, postBody } = this.state;
@@ -109,13 +138,41 @@ class Main extends React.Component {
       );
       console.log(response);
       this.closeUserModal();
+      window.location = "/";
     } catch (error) {
       console.log(
         error.response.status,
         error.response.data.details[0].message
       );
       this.setState({
-        createUserError: error.response.data.details[0].message,
+        createModalError: error.response.data.details[0].message,
+      });
+    }
+  };
+
+  onLogin = async () => {
+    const { userEmail, userPassword } = this.state;
+    const postObj = {
+      email: userEmail,
+      password: userPassword,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://barkerfield-test.herokuapp.com/api/auth",
+        postObj
+      );
+      console.log(response);
+      localStorage.setItem("token", response.data);
+      this.closeLoginModal();
+      window.location = "/";
+    } catch (error) {
+      console.log(
+        error.response.status,
+        error.response.data.details[0].message
+      );
+      this.setState({
+        createModalError: error.response.data.details[0].message,
       });
     }
   };
@@ -172,7 +229,6 @@ class Main extends React.Component {
   };
 
   onLike = async (id) => {
-    const postID = id;
     const userID = this.state.user._id;
     const data = {
       _id: id,
@@ -206,14 +262,13 @@ class Main extends React.Component {
           "http://barkerfield-test.herokuapp.com/api/posts/unlike",
           data
         );
+        console.log(response);
         this.updateView();
       } catch (error) {
         console.log(error);
       }
     }
   };
-
-  openPostModal = () => this.setState({ postModalOpen: true });
 
   logOut = () => {
     localStorage.removeItem("token");
@@ -265,6 +320,7 @@ class Main extends React.Component {
     return (
       <Container fluid>
         <Row>
+          <Button onClick={() => console.log(this.state)}>Button</Button>
           <Col className="d-flex justify-content-between">
             <h1>{this.serverStatus()}</h1>
             {this.state.postModalOpen ? (
@@ -288,7 +344,7 @@ class Main extends React.Component {
                 onNameChange={this.handleUserNameChange}
                 onEmailChange={this.handleUserEmailChange}
                 onPasswordChange={this.handleUserPasswordChange}
-                error={this.state.createUserError}
+                error={this.state.createModalError}
               />
             ) : null}
             {this.state.loginModalOpen ? (
@@ -296,6 +352,10 @@ class Main extends React.Component {
                 closeLoginModal={this.closeLoginModal}
                 isOpen={this.state.loginModalOpen}
                 value={this.state.loginModalOpen}
+                onEmailChange={this.handleUserEmailChange}
+                onPasswordChange={this.handleUserPasswordChange}
+                onSubmit={this.onLogin}
+                error={this.state.createModalError}
               />
             ) : null}
           </Col>

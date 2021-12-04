@@ -12,7 +12,6 @@ router.get("/me", auth, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const { error } = validate(req.body);
   if (error) {
     console.log(error);
