@@ -34,7 +34,7 @@ class Main extends React.Component {
     }
     try {
       const { data: entries } = await axios.get(
-        "http://barkerfield-test.herokuapp.com/api/posts"
+        "https://barkerfield-test.herokuapp.com/api/posts"
       );
       if (entries.length > 0) {
         this.setState({ entries });
@@ -112,7 +112,7 @@ class Main extends React.Component {
     };
     try {
       const response = await axios.post(
-        "http://barkerfield-test.herokuapp.com/api/posts",
+        "https://barkerfield-test.herokuapp.com/api/posts",
         postObj
       );
       console.log(response);
@@ -133,7 +133,7 @@ class Main extends React.Component {
     };
     try {
       const response = await axios.post(
-        "http://barkerfield-test.herokuapp.com/api/users",
+        "https://barkerfield-test.herokuapp.com/api/users",
         postObj
       );
       console.log(response);
@@ -159,7 +159,7 @@ class Main extends React.Component {
 
     try {
       const response = await axios.post(
-        "http://barkerfield-test.herokuapp.com/api/auth",
+        "https://barkerfield-test.herokuapp.com/api/auth",
         postObj
       );
       console.log(response);
@@ -180,7 +180,7 @@ class Main extends React.Component {
   updateView = async () => {
     try {
       const { data: entries } = await axios.get(
-        "http://barkerfield-test.herokuapp.com/api/posts"
+        "https://barkerfield-test.herokuapp.com/api/posts"
       );
       this.setState({ entries });
       console.log("update view called");
@@ -212,7 +212,7 @@ class Main extends React.Component {
   onDelete = async (id) => {
     try {
       const response = await axios.delete(
-        "http://barkerfield-test.herokuapp.com/api/posts",
+        "https://barkerfield-test.herokuapp.com/api/posts",
         {
           data: { _id: id },
         }
@@ -247,7 +247,7 @@ class Main extends React.Component {
       try {
         console.log("like try block called");
         const response = await axios.put(
-          "http://barkerfield-test.herokuapp.com/api/posts/like",
+          "https://barkerfield-test.herokuapp.com/api/posts/like",
           data
         );
         console.log(response);
@@ -259,7 +259,7 @@ class Main extends React.Component {
       try {
         console.log("unlike try block called");
         const response = await axios.put(
-          "http://barkerfield-test.herokuapp.com/api/posts/unlike",
+          "https://barkerfield-test.herokuapp.com/api/posts/unlike",
           data
         );
         console.log(response);
