@@ -5,8 +5,12 @@ import DateComponent from "./date";
 class ListGroupItem extends React.Component {
   render() {
     return (
-      <ListGroup.Item _id={this.props._id} className="justify-content-between">
-        <div className="list-group-item border-0">
+      <ListGroup.Item
+        _id={this.props._id}
+        className="justify-content-between"
+        onClick={() => this.props.onClick(this.props.id)}
+      >
+        <div className="list-group-item border-0 post">
           <Row>
             <Col className="d-flex justify-content-start">
               <h5>{this.props.title}</h5>

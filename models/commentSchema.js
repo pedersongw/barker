@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
 
-const CommentSchema = mongoose.Schema({
-  body: String,
-  timeCommented: Date,
-  username: String,
-  likes: Array,
-  parentPost: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post",
-  },
-});
 
-module.exports = mongoose.model("CommentSchema", CommentSchema);
+
+const Comment = mongoose.model(
+  "Comment",
+  new mongoose.Schema({
+    body: String,
+    timeCommented: Date,
+    username: Object,
+    parentPost: String,
+    parentComment: String,
+    children: Array
+  })
+);
+
+exports.Comment = Comment;

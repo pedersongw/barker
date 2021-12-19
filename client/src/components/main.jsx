@@ -4,6 +4,7 @@ import jwtDecode from "jwt-decode";
 import { Container, Col, Row, ListGroup, Button } from "react-bootstrap";
 import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
+import Comment from "./comment";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
 import NavBar from "./navBar";
@@ -11,6 +12,8 @@ import NavBar from "./navBar";
 class Main extends React.Component {
   state = {
     entries: [],
+    comments: [],
+    isViewingComments: false,
     dbWasContacted: false,
     postModalOpen: false,
     userModalOpen: false,
@@ -184,6 +187,8 @@ class Main extends React.Component {
       );
       this.setState({ entries });
       console.log("update view called");
+      this.setState({ isViewingComments: false });
+      this.setState({ comments: [] });
     } catch (error) {
       console.log("Couldn't reach to server", error);
     }
@@ -310,17 +315,61 @@ class Main extends React.Component {
           username={entry.username}
           onDelete={this.onDelete}
           onLike={this.onLike}
+          onClick={this.contactDatabaseUpdateStateWithComments}
           userLoggedIn={Boolean(this.state.user)}
         />
       );
     });
   };
 
+  renderCommentsInListGroup = () => {
+    return this.state.comments.map((comment) => {
+      return <Comment key={comment._id} comment={comment} />;
+    });
+  };
+
+  contactDatabaseUpdateStateWithComments = async (postID) => {
+    try {
+      let searchParam = { parentPost: `${postID}` };
+      const { data: comments } = await axios.post(
+        "http://localhost:8000/api/comments/get",
+        searchParam
+      );
+      const hashTable = Object.create(null);
+      comments.forEach((comment) => (hashTable[comment._id] = { ...comment }));
+      const dataTree = [];
+      comments.forEach((comment) => {
+        if (comment.parentComment)
+          hashTable[comment.parentComment].children.push(
+            hashTable[comment._id]
+          );
+        else dataTree.push(hashTable[comment._id]);
+        console.log(dataTree);
+        this.setState({ comments: dataTree });
+        this.setState({ isViewingComments: true });
+      });
+    } catch (error) {
+      console.log("catch block called", error);
+    }
+  };
+
   render() {
     return (
       <Container fluid>
         <Row>
-          <Button onClick={() => console.log(this.state)}>Button</Button>
+          <Button
+            onClick={() =>
+              this.state.isViewingComments === false
+                ? this.setState({ isViewingComments: true })
+                : this.setState({ isViewingComments: false })
+            }
+          >
+            Button
+          </Button>
+          <Button onClick={() => console.log(this.state.comments)}>
+            console.log this.state.comments
+          </Button>
+
           <Col className="d-flex justify-content-between">
             <h1>{this.serverStatus()}</h1>
             {this.state.postModalOpen ? (
@@ -376,9 +425,12 @@ class Main extends React.Component {
             />
           </Col>
           <Col lg={10} sm={12}>
-            <ListGroup className="ListGroup">
-              {this.renderPostsInListGroup()}
-            </ListGroup>
+            {!this.state.isViewingComments && (
+              <ListGroup className="ListGroup">
+                {this.renderPostsInListGroup()}
+              </ListGroup>
+            )}
+            {this.state.isViewingComments && this.renderCommentsInListGroup()}
           </Col>
         </Row>
       </Container>

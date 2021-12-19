@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const users = require("./routes/users.js");
 const posts = require("./routes/posts.js");
 const auth = require("./routes/auth.js");
+const comments = require("./routes/comments.js")
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 app.use("/api/users", users);
 app.use("/api/posts", posts);
 app.use("/api/auth", auth);
+app.use("/api/comments", comments)
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
