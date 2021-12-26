@@ -2,17 +2,21 @@ import React from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { Container, Col, Row, ListGroup, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FaHome, FaBullhorn, FaGift } from "react-icons/fa";
 import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
 import NavBar from "./navBar";
+import Forum from "./Forum";
 
 class Main extends React.Component {
   state = {
     entries: [],
     comments: [],
+    width: window.innerWidth,
     isViewingComments: false,
     dbWasContacted: false,
     postModalOpen: false,
@@ -28,6 +32,7 @@ class Main extends React.Component {
   };
 
   async componentDidMount() {
+    window.addEventListener("resize", this.handleWindowSizeChange);
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
@@ -37,7 +42,7 @@ class Main extends React.Component {
     }
     try {
       const { data: entries } = await axios.get(
-        "https://barkerfield-test.herokuapp.com/api/posts"
+        "http://localhost:3000/api/posts"
       );
       if (entries.length > 0) {
         this.setState({ entries });
@@ -51,6 +56,14 @@ class Main extends React.Component {
       console.log("Couldn't reach the server", error);
     }
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
 
   userLoggedIn = () => {
     return this.state.user === null ? false : true;
@@ -115,7 +128,7 @@ class Main extends React.Component {
     };
     try {
       const response = await axios.post(
-        "https://barkerfield-test.herokuapp.com/api/posts",
+        "http://localhost:3000/api/posts",
         postObj
       );
       console.log(response);
@@ -136,7 +149,7 @@ class Main extends React.Component {
     };
     try {
       const response = await axios.post(
-        "https://barkerfield-test.herokuapp.com/api/users",
+        "http://localhost:3000/api/users",
         postObj
       );
       console.log(response);
@@ -162,7 +175,7 @@ class Main extends React.Component {
 
     try {
       const response = await axios.post(
-        "https://barkerfield-test.herokuapp.com/api/auth",
+        "http://localhost:3000/api/auth",
         postObj
       );
       console.log(response);
@@ -183,7 +196,7 @@ class Main extends React.Component {
   updateView = async () => {
     try {
       const { data: entries } = await axios.get(
-        "https://barkerfield-test.herokuapp.com/api/posts"
+        "http://localhost:3000/api/posts"
       );
       this.setState({ entries });
       console.log("update view called");
@@ -216,12 +229,9 @@ class Main extends React.Component {
 
   onDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        "https://barkerfield-test.herokuapp.com/api/posts",
-        {
-          data: { _id: id },
-        }
-      );
+      const response = await axios.delete("http://localhost:3000/api/posts", {
+        data: { _id: id },
+      });
       console.log(response);
       const entriesExceptDeleted = this.state.entries.filter(
         (entry) => entry._id !== id
@@ -252,7 +262,7 @@ class Main extends React.Component {
       try {
         console.log("like try block called");
         const response = await axios.put(
-          "https://barkerfield-test.herokuapp.com/api/posts/like",
+          "http://localhost:3000/api/posts/like",
           data
         );
         console.log(response);
@@ -264,7 +274,7 @@ class Main extends React.Component {
       try {
         console.log("unlike try block called");
         const response = await axios.put(
-          "https://barkerfield-test.herokuapp.com/api/posts/unlike",
+          "http://localhost:3000/api/posts/unlike",
           data
         );
         console.log(response);
@@ -354,8 +364,37 @@ class Main extends React.Component {
   };
 
   render() {
+    const { width } = this.state;
     return (
       <Container fluid>
+        {width < 800 && (
+          <div className="custom-navbar">
+            <Link to="/">
+              <div className="custom-navbar-button" id="nav-button-1">
+                <div className="icon">
+                  <FaHome />
+                </div>
+                <div>Home</div>
+              </div>
+            </Link>
+            <Link to="/">
+              <div className="custom-navbar-button" id="nav-button-2">
+                <div className="icon">
+                  <FaBullhorn />
+                </div>
+                <div>Forum</div>
+              </div>
+            </Link>
+            <Link to="/">
+              <div className="custom-navbar-button" id="nav-button-3">
+                <div className="icon">
+                  <FaGift />
+                </div>
+                <div>Donate</div>
+              </div>
+            </Link>
+          </div>
+        )}
         <Row>
           <Button
             onClick={() =>
@@ -366,8 +405,8 @@ class Main extends React.Component {
           >
             Button
           </Button>
-          <Button onClick={() => console.log(this.state.comments)}>
-            console.log this.state.comments
+          <Button onClick={() => console.log(this.state.width)}>
+            console.log this.state.width
           </Button>
 
           <Col className="d-flex justify-content-between">
