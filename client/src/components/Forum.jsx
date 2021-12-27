@@ -1,4 +1,5 @@
 import React from "react";
+import MobileNavBar from "./MobileNavBar";
 import Post from "./Post";
 
 class Forum extends React.Component {
@@ -11,7 +12,12 @@ class Forum extends React.Component {
   };
 
   render() {
-    return this.renderDummyPosts();
+    return (
+      <div>
+        {this.renderDummyPosts()}
+        <MobileNavBar />
+      </div>
+    );
   }
 }
 

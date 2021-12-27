@@ -3,7 +3,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { Container, Col, Row, ListGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaHome, FaBullhorn, FaGift } from "react-icons/fa";
+import MovileNavBar from "./MobileNavBar";
 import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
@@ -11,6 +11,7 @@ import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
 import NavBar from "./navBar";
 import Forum from "./Forum";
+import MobileNavBar from "./MobileNavBar";
 
 class Main extends React.Component {
   state = {
@@ -366,113 +367,88 @@ class Main extends React.Component {
   render() {
     const { width, highlighted_nav } = this.state;
     return (
-      <Container fluid>
-        {width < 800 && (
-          <div className="custom-navbar">
-            <Link to="/">
-              <div className="custom-navbar-button" id="nav-button-1">
-                <div className="icon">
-                  <FaHome />
-                </div>
-                <div>Home</div>
-              </div>
-            </Link>
-            <Link to="forum">
-              <div className="custom-navbar-button" id="nav-button-2">
-                <div className="icon">
-                  <FaBullhorn />
-                </div>
-                <div>Forum</div>
-              </div>
-            </Link>
-            <Link to="donate">
-              <div className="custom-navbar-button" id="nav-button-3">
-                <div className="icon">
-                  <FaGift />
-                </div>
-                <div>Donate</div>
-              </div>
-            </Link>
-          </div>
-        )}
-        <Row>
-          <Button
-            onClick={() =>
-              this.state.isViewingComments === false
-                ? this.setState({ isViewingComments: true })
-                : this.setState({ isViewingComments: false })
-            }
-          >
-            Button
-          </Button>
-          <Button onClick={() => console.log(this.state.width)}>
-            console.log this.state.width
-          </Button>
+      <div>
+        <MobileNavBar />
+        <Container fluid>
+          <Row>
+            <Button
+              onClick={() =>
+                this.state.isViewingComments === false
+                  ? this.setState({ isViewingComments: true })
+                  : this.setState({ isViewingComments: false })
+              }
+            >
+              Button
+            </Button>
+            <Button onClick={() => console.log(this.state.width)}>
+              console.log this.state.width
+            </Button>
 
-          <Col className="d-flex justify-content-between">
-            <h1>{this.serverStatus()}</h1>
-            {this.state.postModalOpen ? (
-              <CreatePostModal
-                closePostModal={this.closePostModal}
-                isOpen={this.state.postModalOpen}
-                value={this.state.postModalOpen}
+            <Col className="d-flex justify-content-between">
+              <h1>{this.serverStatus()}</h1>
+              {this.state.postModalOpen ? (
+                <CreatePostModal
+                  closePostModal={this.closePostModal}
+                  isOpen={this.state.postModalOpen}
+                  value={this.state.postModalOpen}
+                  updateView={this.updateView}
+                  onSubmit={this.onSubmitPost}
+                  onTitleChange={this.handlePostTitleChange}
+                  onBodyChange={this.handlePostBodyChange}
+                />
+              ) : null}
+              {this.state.userModalOpen ? (
+                <CreateUserModal
+                  closeUserModal={this.closeUserModal}
+                  isOpen={this.state.userModalOpen}
+                  value={this.state.userModalOpen}
+                  updateView={this.updateView}
+                  onSubmit={this.onCreateUser}
+                  onNameChange={this.handleUserNameChange}
+                  onEmailChange={this.handleUserEmailChange}
+                  onPasswordChange={this.handleUserPasswordChange}
+                  error={this.state.createModalError}
+                />
+              ) : null}
+              {this.state.loginModalOpen ? (
+                <CreateLoginModal
+                  closeLoginModal={this.closeLoginModal}
+                  isOpen={this.state.loginModalOpen}
+                  value={this.state.loginModalOpen}
+                  onEmailChange={this.handleUserEmailChange}
+                  onPasswordChange={this.handleUserPasswordChange}
+                  onSubmit={this.onLogin}
+                  error={this.state.createModalError}
+                />
+              ) : null}
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={2} sm={0}>
+              <NavBar
+                openPostModal={this.openPostModal}
+                openUserModal={this.openUserModal}
+                sortByNew={this.displayPostsSortedByNew}
+                sortByOld={this.displayPostsSortedByOld}
+                logIn={this.openLoginModal}
+                logOut={this.logOut}
+                userLoggedIn={this.userLoggedIn}
+                sortMyPosts={this.updateViewMyPosts}
+                sortPopular={this.displayPostsSortedByPopular}
                 updateView={this.updateView}
-                onSubmit={this.onSubmitPost}
-                onTitleChange={this.handlePostTitleChange}
-                onBodyChange={this.handlePostBodyChange}
               />
-            ) : null}
-            {this.state.userModalOpen ? (
-              <CreateUserModal
-                closeUserModal={this.closeUserModal}
-                isOpen={this.state.userModalOpen}
-                value={this.state.userModalOpen}
-                updateView={this.updateView}
-                onSubmit={this.onCreateUser}
-                onNameChange={this.handleUserNameChange}
-                onEmailChange={this.handleUserEmailChange}
-                onPasswordChange={this.handleUserPasswordChange}
-                error={this.state.createModalError}
-              />
-            ) : null}
-            {this.state.loginModalOpen ? (
-              <CreateLoginModal
-                closeLoginModal={this.closeLoginModal}
-                isOpen={this.state.loginModalOpen}
-                value={this.state.loginModalOpen}
-                onEmailChange={this.handleUserEmailChange}
-                onPasswordChange={this.handleUserPasswordChange}
-                onSubmit={this.onLogin}
-                error={this.state.createModalError}
-              />
-            ) : null}
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={2} sm={0}>
-            <NavBar
-              openPostModal={this.openPostModal}
-              openUserModal={this.openUserModal}
-              sortByNew={this.displayPostsSortedByNew}
-              sortByOld={this.displayPostsSortedByOld}
-              logIn={this.openLoginModal}
-              logOut={this.logOut}
-              userLoggedIn={this.userLoggedIn}
-              sortMyPosts={this.updateViewMyPosts}
-              sortPopular={this.displayPostsSortedByPopular}
-              updateView={this.updateView}
-            />
-          </Col>
-          <Col lg={10} sm={12}>
-            {!this.state.isViewingComments && (
-              <ListGroup className="ListGroup">
-                {this.renderPostsInListGroup()}
-              </ListGroup>
-            )}
-            {this.state.isViewingComments && this.renderCommentsInListGroup()}
-          </Col>
-        </Row>
-      </Container>
+            </Col>
+            <Col lg={10} sm={12}>
+              {!this.state.isViewingComments && (
+                <ListGroup className="ListGroup">
+                  {this.renderPostsInListGroup()}
+                </ListGroup>
+              )}
+              {this.state.isViewingComments && this.renderCommentsInListGroup()}
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }
