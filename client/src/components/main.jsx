@@ -384,8 +384,8 @@ class Main extends React.Component {
                 className={
                   highlighted_nav === 2 ? (navStyle += "-active") : navStyle
                 }
-                onTouchStart={this.setState({ highlighted_nav: 2 })}
-                onTouchEnd={this.setState({highlighed_nav: 0})
+                onTouchStart={() => this.setState({ highlighted_nav: 2 })}
+                onTouchEnd={() => this.setState({ highlighed_nav: 0 })}
                 id="nav-button-2"
               >
                 <div className="icon">
