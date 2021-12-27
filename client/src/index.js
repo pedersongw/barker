@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
+import Forum from "./components/Forum";
+import Donate from "./components/Donate";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -10,6 +12,8 @@ ReactDOM.render(
     <React.StrictMode>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="forum" element={<Forum />} />
+        <Route path="donate" element={<Donate />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

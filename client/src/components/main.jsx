@@ -29,7 +29,6 @@ class Main extends React.Component {
     userName: "",
     userEmail: "",
     userPassword: "",
-    highlighted_nav: 0,
   };
 
   async componentDidMount() {
@@ -366,7 +365,6 @@ class Main extends React.Component {
 
   render() {
     const { width, highlighted_nav } = this.state;
-    let navStyle = "custom-navbar-button";
     return (
       <Container fluid>
         {width < 800 && (
@@ -379,22 +377,15 @@ class Main extends React.Component {
                 <div>Home</div>
               </div>
             </Link>
-            <Link to="/">
-              <div
-                className={
-                  highlighted_nav === 2 ? (navStyle += "-active") : navStyle
-                }
-                onTouchStart={() => this.setState({ highlighted_nav: 2 })}
-                onTouchEnd={() => this.setState({ highlighed_nav: 0 })}
-                id="nav-button-2"
-              >
+            <Link to="forum">
+              <div className="custom-navbar-button" id="nav-button-2">
                 <div className="icon">
                   <FaBullhorn />
                 </div>
                 <div>Forum</div>
               </div>
             </Link>
-            <Link to="/">
+            <Link to="donate">
               <div className="custom-navbar-button" id="nav-button-3">
                 <div className="icon">
                   <FaGift />
