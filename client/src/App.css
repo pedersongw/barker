@@ -65,7 +65,8 @@
 }
 
 .custom-navbar-button:hover,
-.custom-navbar-button-active {
+.custom-navbar-button-active,
+.custom-navbar a:hover {
   background-color: rgb(230, 230, 230);
   color: black;
 }
