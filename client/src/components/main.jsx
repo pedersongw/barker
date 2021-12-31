@@ -23,7 +23,6 @@ class Main extends React.Component {
       <div>
         <MobileNavBar page="home" />
         <h1>Main</h1>
-        {width < 800 && <MobileNavBar />}
       </div>
     );
   }
