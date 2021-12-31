@@ -366,7 +366,7 @@ class Forum extends React.Component {
     const { width, highlighted_nav } = this.state;
     return (
       <div>
-        {width < 800 && <MobileNavBar />}
+        <MobileNavBar page="forum" />
         <Container fluid>
           <Row>
             <Button

@@ -21,6 +21,7 @@ class Main extends React.Component {
     const { width } = this.state;
     return (
       <div>
+        <MobileNavBar page="home" />
         <h1>Main</h1>
         {width < 800 && <MobileNavBar />}
       </div>
