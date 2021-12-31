@@ -3,7 +3,6 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { Container, Col, Row, ListGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import MovileNavBar from "./MobileNavBar";
 import ListGroupItem from "./listGroupItem";
 import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
