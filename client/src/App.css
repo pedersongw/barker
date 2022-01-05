@@ -1,5 +1,14 @@
+body {
+  font-family: "Catamaran" !important;
+}
+
 .App {
   text-align: center;
+}
+
+.page-wrapper {
+  margin: 0;
+  position: relative;
 }
 
 .ListGroup {
@@ -24,8 +33,39 @@
 }
 
 .post-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
+  grid-template-areas:
+    "header-left header header header-right"
+    "body body body body"
+    "footer-left footer footer footer-right";
+
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(188, 229, 240);
+}
+
+.post-title {
+  grid-area: header-left;
+}
+
+.post-username {
+  grid-area: header-right;
+}
+
+.post-body {
+  grid-area: body;
+}
+
+.post-likes {
+  grid-area: footer-left;
+}
+
+.post-time {
+  grid-area: footer-right;
 }
 
 .post-card:hover {
@@ -33,7 +73,8 @@
 }
 
 .post-container {
-  padding: 2px 16px;
+  margin: 20px 16px;
+  cursor: pointer;
 }
 
 .body-text {
@@ -56,7 +97,6 @@
 .custom-navbar {
   display: flex;
   position: fixed;
-  z-index: 1;
   bottom: 0;
   left: 0;
   height: 50px;
@@ -91,10 +131,6 @@
   cursor: pointer;
 }
 
-.post {
-  cursor: pointer;
-}
-
 .nav-link-hovered {
   background-color: lightgreen;
 }
@@ -109,6 +145,7 @@
 
 #nav-content {
   display: flex;
+  font-family: "Itim";
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
@@ -133,11 +170,32 @@
   z-index: 20;
 }
 
+.forum-nav-icon {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 40px;
+  right: 10px;
+  background-color: blue;
+  color: white;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#forum-nav-icon-hovered {
+  background-color: lightblue;
+}
+
 .mobile-nav {
   background: lightblue;
-  height: 100%;
+  height: 90%;
   right: -330px;
   position: fixed;
+  border-radius: 20px 0 0 20px;
+  z-index: 5;
   top: 0;
   transition: -webkit-transform 0.5s ease;
   transition: transform 0.5s ease;
@@ -151,4 +209,53 @@
   -webkit-transform: translateX(-330px);
   -ms-transform: translateX(-330px);
   transform: translateX(-330px);
+}
+
+.bottom-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "one two three four";
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+}
+
+.bottom-nav-link {
+  background-color: gray;
+  cursor: pointer;
+}
+
+.bottom-nav-link a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+}
+
+.bottom-nav-link a:hover {
+  color: black;
+}
+
+.bottom-nav-link:hover {
+  background-color: rgb(136, 136, 136);
+}
+
+#bottom-nav-1 {
+  grid-area: one;
+}
+
+#bottom-nav-2 {
+  grid-area: two;
+}
+
+#bottom-nav-3 {
+  grid-area: three;
+}
+
+#bottom-nav-4 {
+  grid-area: four;
 }

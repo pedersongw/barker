@@ -1,15 +1,14 @@
 import React from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { Container, Col, Row, ListGroup, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import ListGroupItem from "./listGroupItem";
+import { Container, Col, Row, Button } from "react-bootstrap";
+import Post from "./Post";
 import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
 import NavBar from "./navBar";
-import MobileNavBar from "./MobileNavBar";
+import BottomMobileNavBar from "./BottomMobileNavBar";
 
 class Forum extends React.Component {
   state = {
@@ -220,7 +219,7 @@ class Forum extends React.Component {
     const secondPart =
       dbWasContacted === "empty" ? ", the database is empty" : "";
     if (!dbWasContacted) {
-      return "Couln't reach server";
+      return "Couldn't reach server";
     } else {
       return firstPart + secondPart;
     }
@@ -314,7 +313,7 @@ class Forum extends React.Component {
   renderPostsInListGroup = () => {
     return this.state.entries.map((entry) => {
       return (
-        <ListGroupItem
+        <Post
           key={entry._id}
           id={entry._id}
           title={entry.title}
@@ -363,10 +362,9 @@ class Forum extends React.Component {
   };
 
   render() {
-    const { width, highlighted_nav } = this.state;
     return (
       <div>
-        <MobileNavBar page="forum" />
+        <BottomMobileNavBar page="forum" />
         <Container fluid>
           <Row>
             <Button
@@ -437,11 +435,7 @@ class Forum extends React.Component {
               />
             </Col>
             <Col lg={10} sm={12}>
-              {!this.state.isViewingComments && (
-                <ListGroup className="ListGroup">
-                  {this.renderPostsInListGroup()}
-                </ListGroup>
-              )}
+              {!this.state.isViewingComments && this.renderPostsInListGroup()}
               {this.state.isViewingComments && this.renderCommentsInListGroup()}
             </Col>
           </Row>

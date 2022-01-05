@@ -1,5 +1,5 @@
 import React from "react";
-import MobileNavBar from "./MobileNavBar";
+import BottomMobileNavBar from "./BottomMobileNavBar";
 
 class Main extends React.Component {
   state = {
@@ -18,10 +18,9 @@ class Main extends React.Component {
     this.setState({ width: window.innerWidth });
   };
   render() {
-    const { width } = this.state;
     return (
       <div>
-        <MobileNavBar page="home" />
+        <BottomMobileNavBar page="home" />
         <h1>Main</h1>
       </div>
     );

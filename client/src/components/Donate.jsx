@@ -1,5 +1,7 @@
 import React from "react";
-import MobileNavBar from "./MobileNavBar";
+import Post from "./Post";
+import BottomMobileNavBar from "./BottomMobileNavBar";
+import ForumNavIcon from "./ForumNavIcon";
 
 class Donate extends React.Component {
   componentDidMount() {
@@ -19,7 +21,13 @@ class Donate extends React.Component {
   };
 
   render() {
-    return <MobileNavBar page="donate" />;
+    return (
+      <div>
+        <h1>Donate</h1>
+        <BottomMobileNavBar page="donate" />
+        <ForumNavIcon />
+      </div>
+    );
   }
 }
 
