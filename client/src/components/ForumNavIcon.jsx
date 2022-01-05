@@ -14,8 +14,6 @@ class ForumNavIcon extends React.Component {
         onClick={() => console.log("forum nav icon clicked")}
         onMouseOver={() => this.setState({ isHoveredOrTouched: true })}
         onMouseOut={() => this.setState({ isHoveredOrTouched: false })}
-        onTouchStart={() => this.setState({ isHoveredOrTouched: true })}
-        onTouchEnd={() => this.setState({ isHoveredOrTouched: false })}
       >
         <FaWrench />
       </div>
