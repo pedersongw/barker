@@ -12,18 +12,10 @@ class ForumNavIcon extends React.Component {
         className="forum-nav-icon"
         id={this.state.isHoveredOrTouched ? "forum-nav-icon-hovered" : null}
         onClick={() => console.log("forum nav icon clicked")}
-        onMouseOver={() =>
-          this.setState({ isHoveredOrTouched: !this.state.isHoveredOrTouched })
-        }
-        onMouseOut={() =>
-          this.setState({ isHoveredOrTouched: !this.state.isHoveredOrTouched })
-        }
-        onTouchStart={() =>
-          this.setState({ isHoveredOrTouched: !this.state.isHoveredOrTouched })
-        }
-        onTouchEnd={() =>
-          this.setState({ isHoveredOrTouched: !this.state.isHoveredOrTouched })
-        }
+        onMouseOver={() => this.setState({ isHoveredOrTouched: true })}
+        onMouseOut={() => this.setState({ isHoveredOrTouched: false })}
+        onTouchStart={() => this.setState({ isHoveredOrTouched: true })}
+        onTouchEnd={() => this.setState({ isHoveredOrTouched: false })}
       >
         <FaWrench />
       </div>
