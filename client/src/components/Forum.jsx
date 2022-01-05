@@ -9,6 +9,7 @@ import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
 import NavBar from "./navBar";
 import BottomMobileNavBar from "./BottomMobileNavBar";
+import ForumNavIcon from "./ForumNavIcon";
 
 class Forum extends React.Component {
   state = {
@@ -365,6 +366,18 @@ class Forum extends React.Component {
     return (
       <div>
         <BottomMobileNavBar page="forum" />
+        <ForumNavIcon
+          openPostModal={this.openPostModal}
+          openUserModal={this.openUserModal}
+          sortByNew={this.displayPostsSortedByNew}
+          sortByOld={this.displayPostsSortedByOld}
+          logIn={this.openLoginModal}
+          logOut={this.logOut}
+          userLoggedIn={this.userLoggedIn}
+          sortMyPosts={this.updateViewMyPosts}
+          sortPopular={this.displayPostsSortedByPopular}
+          updateView={this.updateView}
+        />
         <Container fluid>
           <Row>
             <Button

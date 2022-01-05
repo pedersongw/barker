@@ -119,6 +119,7 @@ body {
   width: 100%;
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .nav-link-div {
@@ -155,6 +156,7 @@ body {
   font-size: 2.5em;
   text-decoration: none;
   color: rgb(26, 87, 87);
+  cursor: pointer;
 }
 
 #nav-content div {
@@ -185,13 +187,10 @@ body {
   cursor: pointer;
 }
 
-#forum-nav-icon-hovered {
-  background-color: lightblue;
-}
-
 .mobile-nav {
   background: lightblue;
-  height: 90%;
+  height: 100%;
+  width: 75%;
   right: -330px;
   position: fixed;
   border-radius: 20px 0 0 20px;
@@ -202,7 +201,6 @@ body {
   -webkit-transform: translateX(110%);
   -ms-transform: translateX(110%);
   transform: translateX(110%);
-  width: 75%;
 }
 
 .mobile-nav.open {

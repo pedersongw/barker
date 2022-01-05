@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 class ForumNavIcon extends React.Component {
   state = {
-    isHoveredOrTouched: false,
     navOpen: false,
   };
 
@@ -31,16 +30,20 @@ class ForumNavIcon extends React.Component {
     }
   };
 
+  onLogIn = () => {
+    this.setState({ navOpen: false });
+    this.props.logIn();
+  };
+
+  openPostModal = () => {
+    this.setState({ navOpen: false });
+    this.props.openPostModal();
+  };
+
   render() {
     return (
       <div className="entire-menu">
-        <div
-          className="forum-nav-icon"
-          id={this.state.isHoveredOrTouched ? "forum-nav-icon-hovered" : null}
-          onClick={() => this.handleMenuOpen()}
-          onMouseOver={() => this.setState({ isHoveredOrTouched: true })}
-          onMouseOut={() => this.setState({ isHoveredOrTouched: false })}
-        >
+        <div className="forum-nav-icon" onClick={() => this.handleMenuOpen()}>
           <FaWrench />
         </div>
         <div
@@ -50,33 +53,14 @@ class ForumNavIcon extends React.Component {
         >
           <nav id="nav-content">
             <div>
-              {this.props.page === "home" ? (
-                <Link
-                  to="/"
-                  onClick={() =>
-                    this.setState({ navOpen: !this.state.navOpen })
-                  }
-                >
-                  Home
-                </Link>
-              ) : (
-                <Link to="/">Home</Link>
-              )}
+              <a onClick={() => this.onLogIn()}>Login</a>
             </div>
-            <div>
-              {this.props.page === "forum" ? (
-                <Link
-                  to="/forum"
-                  onClick={() =>
-                    this.setState({ navOpen: !this.state.navOpen })
-                  }
-                >
-                  Forum
-                </Link>
-              ) : (
-                <Link to="/forum">Forum</Link>
-              )}
-            </div>
+            {this.props.userLoggedIn() && (
+              <div>
+                <a onClick={() => this.openPostModal()}>Create Post</a>
+              </div>
+            )}
+
             <div>
               {this.props.page === "donate" ? (
                 <Link
