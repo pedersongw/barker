@@ -7,9 +7,9 @@ import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
-import NavBar from "./navBar";
 import BottomMobileNavBar from "./BottomMobileNavBar";
 import ForumNavIcon from "./ForumNavIcon";
+import Pagination from "./Pagination";
 
 class Forum extends React.Component {
   state = {
@@ -28,6 +28,8 @@ class Forum extends React.Component {
     userName: "",
     userEmail: "",
     userPassword: "",
+    currentPage: 1,
+    pageSize: 2,
   };
 
   async componentDidMount() {
@@ -55,6 +57,17 @@ class Forum extends React.Component {
       console.log("Couldn't reach the server", error);
     }
   }
+
+  chunkifyEntries = (entries) => {
+    let otherArr = entries;
+    const res = [];
+    while (otherArr.length > 0) {
+      const chunk = otherArr.splice(0, this.state.pageSize);
+      res.push(chunk);
+    }
+    console.log(res);
+    this.setState({ entries: res });
+  };
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
@@ -180,7 +193,7 @@ class Forum extends React.Component {
       console.log(response);
       localStorage.setItem("token", response.data);
       this.closeLoginModal();
-      window.location = "/";
+      window.location = "/forum";
     } catch (error) {
       console.log(
         error.response.status,
@@ -287,7 +300,7 @@ class Forum extends React.Component {
   logOut = () => {
     localStorage.removeItem("token");
     this.setState({ user: null });
-    window.location = "/";
+    window.location = "/forum";
   };
 
   displayPostsSortedByNew = () => {
@@ -362,7 +375,18 @@ class Forum extends React.Component {
     }
   };
 
+  updateCurrentPage = (newPage) => {
+    console.log(newPage);
+    this.setState({ currentPage: newPage });
+  };
+
+  incrementPage = (num) => {
+    this.setState({ currentPage: num });
+  };
+
   render() {
+    const { currentPage, entries, pageSize } = this.state;
+
     return (
       <div>
         <BottomMobileNavBar page="forum" />
@@ -433,21 +457,17 @@ class Forum extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col lg={2} sm={0}>
-              <NavBar
-                openPostModal={this.openPostModal}
-                openUserModal={this.openUserModal}
-                sortByNew={this.displayPostsSortedByNew}
-                sortByOld={this.displayPostsSortedByOld}
-                logIn={this.openLoginModal}
-                logOut={this.logOut}
-                userLoggedIn={this.userLoggedIn}
-                sortMyPosts={this.updateViewMyPosts}
-                sortPopular={this.displayPostsSortedByPopular}
-                updateView={this.updateView}
+            <Col lg={3} sm={0}>
+              <Pagination
+                currentPage={Number(currentPage)}
+                totalCount={Number(entries.length)}
+                siblingCount={1}
+                pageSize={pageSize}
+                updateCurrentPage={this.updateCurrentPage}
+                incrementPage={this.incrementPage}
               />
             </Col>
-            <Col lg={10} sm={12}>
+            <Col lg={9} sm={12}>
               {!this.state.isViewingComments && this.renderPostsInListGroup()}
               {this.state.isViewingComments && this.renderCommentsInListGroup()}
             </Col>

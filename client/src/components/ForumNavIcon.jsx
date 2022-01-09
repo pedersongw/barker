@@ -1,6 +1,5 @@
 import React from "react";
 import { FaWrench } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 class ForumNavIcon extends React.Component {
   state = {
@@ -35,9 +34,39 @@ class ForumNavIcon extends React.Component {
     this.props.logIn();
   };
 
-  openPostModal = () => {
+  createNewUser = () => {
     this.setState({ navOpen: false });
+    this.props.openUserModal();
+  };
+
+  openPostModal = () => {
     this.props.openPostModal();
+    this.setState({ navOpen: false });
+  };
+
+  updateViewAllPosts = () => {
+    this.props.updateView();
+    this.setState({ navOpen: false });
+  };
+
+  sortByMyPosts = () => {
+    this.props.sortMyPosts();
+    this.setState({ navOpen: false });
+  };
+
+  sortByNew = () => {
+    this.props.sortByNew();
+    this.setState({ navOpen: false });
+  };
+
+  sortByOld = () => {
+    this.props.sortByOld();
+    this.setState({ navOpen: false });
+  };
+
+  sortByPopular = () => {
+    this.props.sortPopular();
+    this.setState({ navOpen: false });
   };
 
   render() {
@@ -52,29 +81,59 @@ class ForumNavIcon extends React.Component {
           }
         >
           <nav id="nav-content">
-            <div>
-              <a onClick={() => this.onLogIn()}>Login</a>
-            </div>
-            {this.props.userLoggedIn() && (
+            {!this.props.userLoggedIn() && (
               <div>
-                <a onClick={() => this.openPostModal()}>Create Post</a>
+                <button onClick={() => this.createNewUser()}>
+                  Create Profile
+                </button>
               </div>
             )}
-
-            <div>
-              {this.props.page === "donate" ? (
-                <Link
-                  to="/donate"
-                  onClick={() =>
-                    this.setState({ navOpen: !this.state.navOpen })
-                  }
-                >
-                  Donate
-                </Link>
-              ) : (
-                <Link to="/donate">Donate</Link>
-              )}
-            </div>
+            {!this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.onLogIn()}>Login</button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.openPostModal()}>
+                  Create Post
+                </button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.updateViewAllPosts()}>
+                  All Posts
+                </button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.sortByMyPosts()}>My Posts</button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.sortByPopular()}>
+                  Sort by Popular
+                </button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.sortByNew()}>Sort by Newest</button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.sortByOld()}>Sort by Oldest</button>
+              </div>
+            )}
+            {this.props.userLoggedIn() && (
+              <div>
+                <button onClick={() => this.props.logOut()}>Logout</button>
+              </div>
+            )}
           </nav>
         </div>
       </div>

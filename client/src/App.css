@@ -11,27 +11,6 @@ body {
   position: relative;
 }
 
-.ListGroup {
-  max-height: 75vh;
-  max-width: 75vw;
-  overflow-y: scroll;
-}
-
-.left-nav-bar {
-  height: 75vh;
-  width: 100%;
-}
-
-.list-group {
-  color: blue;
-}
-
-.card,
-.nav-container {
-  height: 75vh;
-  width: 100%;
-}
-
 .post-card {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -82,66 +61,8 @@ body {
   text-align-last: left;
 }
 
-.username {
-  text-align: left;
-}
-
-.list-group-item {
-  border: none;
-}
-
 .Button {
   width: 30px;
-}
-
-.custom-navbar {
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 50px;
-  width: 100%;
-  background-color: lightblue;
-}
-
-.custom-navbar-button:hover,
-.custom-navbar-button-active,
-.custom-navbar a:hover {
-  background-color: rgb(230, 230, 230);
-  color: black;
-}
-
-.icon {
-  text-align: center;
-}
-
-.custom-navbar a {
-  width: 100%;
-  text-decoration: none;
-  color: black;
-  cursor: pointer;
-}
-
-.nav-link-div {
-  display: flex;
-  border-style: solid;
-  border-bottom-style: none;
-  border-color: lightblue;
-  border-width: 1px;
-  height: 10vh;
-  cursor: pointer;
-}
-
-.nav-link-hovered {
-  background-color: lightgreen;
-}
-
-.nav-link-clicked {
-  background-color: lightblue;
-}
-
-#last-nav-link-div {
-  border-bottom-style: solid;
 }
 
 #nav-content {
@@ -163,13 +84,6 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
-}
-
-.burger {
-  position: absolute;
-  top: 0px;
-  right: 25px;
-  z-index: 20;
 }
 
 .forum-nav-icon {
@@ -256,4 +170,13 @@ body {
 
 #bottom-nav-4 {
   grid-area: four;
+}
+
+.page-button {
+  background-color: white;
+}
+
+.current-page-button {
+  background-color: black;
+  color: white;
 }
