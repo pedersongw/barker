@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { Container, Col, Row, Button } from "react-bootstrap";
+import { config } from "../URLs.jsx";
 import Post from "./Post";
 import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
@@ -44,9 +45,7 @@ class Forum extends React.Component {
       this.setState({ user: null });
     }
     try {
-      const { data: entries } = await axios.get(
-        "http://localhost:3000/api/posts"
-      );
+      const { data: entries } = await axios.get(config + "/api/posts");
       if (entries.length > 0) {
         this.chunkifyEntries(entries);
         this.setState({ entries });
@@ -63,9 +62,7 @@ class Forum extends React.Component {
 
   updateEntriesFromDatabase = async () => {
     try {
-      const { data: entries } = await axios.get(
-        "http://localhost:3000/api/posts"
-      );
+      const { data: entries } = await axios.get(config + "/api/posts");
       console.log("updateEntriesFromDatabase called");
       this.chunkifyEntries(entries);
       this.setState({ isViewingComments: false });
@@ -191,10 +188,7 @@ class Forum extends React.Component {
       likes: [{ ...this.state.user }],
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/posts",
-        postObj
-      );
+      const response = await axios.post(config + "/api/posts", postObj);
       console.log(response);
       this.closePostModal();
       window.location = "/forum";
@@ -212,10 +206,7 @@ class Forum extends React.Component {
       password: userPassword,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/users",
-        postObj
-      );
+      const response = await axios.post(config + "/api/users", postObj);
       console.log(response);
       this.closeUserModal();
       window.location = "/";
@@ -238,10 +229,7 @@ class Forum extends React.Component {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth",
-        postObj
-      );
+      const response = await axios.post(config + "/api/auth", postObj);
       console.log(response);
       localStorage.setItem("token", response.data);
       this.closeLoginModal();
@@ -271,7 +259,7 @@ class Forum extends React.Component {
 
   onDelete = async (id) => {
     try {
-      const response = await axios.delete("http://localhost:3000/api/posts", {
+      const response = await axios.delete(config + "/api/posts", {
         data: { _id: id },
       });
       console.log(response);
@@ -303,10 +291,7 @@ class Forum extends React.Component {
     if (!isAlreadyLiked) {
       try {
         console.log("like try block called");
-        const response = await axios.put(
-          "http://localhost:3000/api/posts/like",
-          data
-        );
+        const response = await axios.put(config + "/api/posts/like", data);
         console.log(response);
         this.updateEntriesFromDatabase();
       } catch (error) {
@@ -315,10 +300,7 @@ class Forum extends React.Component {
     } else {
       try {
         console.log("unlike try block called");
-        const response = await axios.put(
-          "http://localhost:3000/api/posts/unlike",
-          data
-        );
+        const response = await axios.put(config + "/api/posts/unlike", data);
         console.log(response);
         this.updateEntriesFromDatabase();
       } catch (error) {
