@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { Container, Col, Row, Button } from "react-bootstrap";
 import { config } from "../URLs.jsx";
 import Post from "./Post";
 import CreatePostModal from "./createPostModal";
@@ -395,62 +394,63 @@ class Forum extends React.Component {
           sortPopular={this.displayPostsSortedByPopular}
           updateView={this.updateEntriesFromDatabase}
         />
-        <Container fluid>
-          <Row>
-            <Button
-              onClick={() =>
-                this.state.isViewingComments === false
-                  ? this.setState({ isViewingComments: true })
-                  : this.setState({ isViewingComments: false })
-              }
-            >
-              Button
-            </Button>
-            <Button onClick={() => console.log("stuff")}>
-              console.log this.state.entries
-            </Button>
 
-            <Col className="d-flex justify-content-between">
-              <h1>{this.serverStatus()}</h1>
-              {this.state.postModalOpen ? (
-                <CreatePostModal
-                  closePostModal={this.closePostModal}
-                  isOpen={this.state.postModalOpen}
-                  value={this.state.postModalOpen}
-                  updateView={this.updateEntriesFromDatabase}
-                  onSubmit={this.onSubmitPost}
-                  onTitleChange={this.handlePostTitleChange}
-                  onBodyChange={this.handlePostBodyChange}
-                />
-              ) : null}
-              {this.state.userModalOpen ? (
-                <CreateUserModal
-                  closeUserModal={this.closeUserModal}
-                  isOpen={this.state.userModalOpen}
-                  value={this.state.userModalOpen}
-                  updateView={this.updateEntriesFromDatabase}
-                  onSubmit={this.onCreateUser}
-                  onNameChange={this.handleUserNameChange}
-                  onEmailChange={this.handleUserEmailChange}
-                  onPasswordChange={this.handleUserPasswordChange}
-                  error={this.state.createModalError}
-                />
-              ) : null}
-              {this.state.loginModalOpen ? (
-                <CreateLoginModal
-                  closeLoginModal={this.closeLoginModal}
-                  isOpen={this.state.loginModalOpen}
-                  value={this.state.loginModalOpen}
-                  onEmailChange={this.handleUserEmailChange}
-                  onPasswordChange={this.handleUserPasswordChange}
-                  onSubmit={this.onLogin}
-                  error={this.state.createModalError}
-                />
-              ) : null}
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={3} sm={0}>
+        <h1>{this.serverStatus()}</h1>
+        {this.state.postModalOpen ? (
+          <CreatePostModal
+            closePostModal={this.closePostModal}
+            isOpen={this.state.postModalOpen}
+            value={this.state.postModalOpen}
+            updateView={this.updateEntriesFromDatabase}
+            onSubmit={this.onSubmitPost}
+            onTitleChange={this.handlePostTitleChange}
+            onBodyChange={this.handlePostBodyChange}
+          />
+        ) : null}
+        {this.state.userModalOpen ? (
+          <CreateUserModal
+            closeUserModal={this.closeUserModal}
+            isOpen={this.state.userModalOpen}
+            value={this.state.userModalOpen}
+            updateView={this.updateEntriesFromDatabase}
+            onSubmit={this.onCreateUser}
+            onNameChange={this.handleUserNameChange}
+            onEmailChange={this.handleUserEmailChange}
+            onPasswordChange={this.handleUserPasswordChange}
+            error={this.state.createModalError}
+          />
+        ) : null}
+        {this.state.loginModalOpen ? (
+          <CreateLoginModal
+            closeLoginModal={this.closeLoginModal}
+            isOpen={this.state.loginModalOpen}
+            value={this.state.loginModalOpen}
+            onEmailChange={this.handleUserEmailChange}
+            onPasswordChange={this.handleUserPasswordChange}
+            onSubmit={this.onLogin}
+            error={this.state.createModalError}
+          />
+        ) : null}
+        <div
+          className={
+            this.state.width < 600 ? "formum-main" : "forum-main-large"
+          }
+        >
+          <div className="main-pagination-div">
+            <Pagination
+              currentPage={Number(currentPage)}
+              totalCount={Number(this.state.numberOfPages)}
+              siblingCount={1}
+              pageSize={pageSize}
+              updateCurrentPage={this.updateCurrentPage}
+              incrementPage={this.incrementPage}
+            />
+          </div>
+          <div className="posts-div">
+            {this.state.entriesDisplayed && this.renderPostsInListGroup()}
+          </div>
+          {this.state.width < 600 && (
+            <div className="bottom-pagination-div">
               <Pagination
                 currentPage={Number(currentPage)}
                 totalCount={Number(this.state.numberOfPages)}
@@ -459,13 +459,9 @@ class Forum extends React.Component {
                 updateCurrentPage={this.updateCurrentPage}
                 incrementPage={this.incrementPage}
               />
-            </Col>
-            <Col lg={9} sm={12}>
-              {this.state.entriesDisplayed && this.renderPostsInListGroup()}
-              {this.state.isViewingComments && this.renderCommentsInListGroup()}
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

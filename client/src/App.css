@@ -11,6 +11,39 @@ body {
   position: relative;
 }
 
+.forum-main {
+  display: grid;
+  grid-template-rows: 10vh 1fr 10vh;
+  grid-template-areas:
+    "nav"
+    "post"
+    "bottom-nav";
+}
+
+.forum-main-large {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "nav post post post post";
+}
+
+.main-pagination-div {
+  grid-area: nav;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-pagination-div {
+  grid-area: bottom-nav;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.posts-div {
+  grid-area: post;
+}
+
 .post-card {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
