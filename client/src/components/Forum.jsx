@@ -14,6 +14,7 @@ import Pagination from "./Pagination";
 class Forum extends React.Component {
   state = {
     entries: [],
+    entriesDisplayed: false,
     comments: [],
     width: window.innerWidth,
     isViewingComments: false,
@@ -30,6 +31,7 @@ class Forum extends React.Component {
     userPassword: "",
     currentPage: 1,
     pageSize: 2,
+    numberOfPages: 0,
   };
 
   async componentDidMount() {
@@ -46,6 +48,7 @@ class Forum extends React.Component {
         "http://localhost:3000/api/posts"
       );
       if (entries.length > 0) {
+        this.chunkifyEntries(entries);
         this.setState({ entries });
         this.setState({ dbWasContacted: true });
         console.log("state populated from objects in the database");
@@ -58,15 +61,64 @@ class Forum extends React.Component {
     }
   }
 
+  updateEntriesFromDatabase = async () => {
+    try {
+      const { data: entries } = await axios.get(
+        "http://localhost:3000/api/posts"
+      );
+      console.log("updateEntriesFromDatabase called");
+      this.chunkifyEntries(entries);
+      this.setState({ isViewingComments: false });
+      this.setState({ comments: [] });
+    } catch (error) {
+      console.log("Couldn't reach the server", error);
+    }
+  };
+
   chunkifyEntries = (entries) => {
-    let otherArr = entries;
+    let otherArr = [...entries];
     const res = [];
     while (otherArr.length > 0) {
       const chunk = otherArr.splice(0, this.state.pageSize);
       res.push(chunk);
     }
+    let arrLength = res.reduce((acc, val) => acc.concat(val), []);
     console.log(res);
-    this.setState({ entries: res });
+    this.setState({ numberOfPages: arrLength.length });
+    this.setState({ entriesDisplayed: res });
+  };
+
+  displayMyPosts = () => {
+    const unsorted = [...this.state.entries];
+    const sorted = unsorted.filter(
+      (entry) => entry.username[0]["_id"] === this.state.user["_id"]
+    );
+    this.chunkifyEntries(sorted);
+    this.setState({ currentPage: 1 });
+  };
+
+  displayPostsSortedByNew = () => {
+    const sortedEntries = this.state.entries.sort((a, b) => {
+      return new Date(b.timePosted) - new Date(a.timePosted);
+    });
+    this.chunkifyEntries(sortedEntries);
+    this.setState({ currentPage: 1 });
+  };
+
+  displayPostsSortedByOld = () => {
+    const sortedEntries = this.state.entries.sort((a, b) => {
+      return new Date(a.timePosted) - new Date(b.timePosted);
+    });
+    this.chunkifyEntries(sortedEntries);
+    this.setState({ currentPage: 1 });
+  };
+
+  displayPostsSortedByPopular = () => {
+    const sortedEntries = this.state.entries.sort((a, b) => {
+      return b.likes.length - a.likes.length;
+    });
+    this.chunkifyEntries(sortedEntries);
+    this.setState({ currentPage: 1 });
   };
 
   componentWillUnmount() {
@@ -145,7 +197,7 @@ class Forum extends React.Component {
       );
       console.log(response);
       this.closePostModal();
-      window.location = "/";
+      window.location = "/forum";
     } catch (error) {
       console.log(error);
       this.closePostModal();
@@ -205,28 +257,6 @@ class Forum extends React.Component {
     }
   };
 
-  updateView = async () => {
-    try {
-      const { data: entries } = await axios.get(
-        "http://localhost:3000/api/posts"
-      );
-      this.setState({ entries });
-      console.log("update view called");
-      this.setState({ isViewingComments: false });
-      this.setState({ comments: [] });
-    } catch (error) {
-      console.log("Couldn't reach to server", error);
-    }
-  };
-
-  updateViewMyPosts = () => {
-    const unsorted = [...this.state.entries];
-    const sorted = unsorted.filter(
-      (entry) => entry.username[0]["_id"] === this.state.user["_id"]
-    );
-    this.setState({ entries: sorted });
-  };
-
   serverStatus = () => {
     const { dbWasContacted, user } = this.state;
     const firstPart = user === null ? "Please log in" : `Welcome ${user.name}`;
@@ -249,7 +279,7 @@ class Forum extends React.Component {
         (entry) => entry._id !== id
       );
       this.setState({ entries: entriesExceptDeleted });
-      this.updateView();
+      this.updateEntriesFromDatabase();
     } catch (error) {
       console.log(error, "Couldn't delete");
     }
@@ -278,7 +308,7 @@ class Forum extends React.Component {
           data
         );
         console.log(response);
-        this.updateView();
+        this.updateEntriesFromDatabase();
       } catch (error) {
         console.log(error);
       }
@@ -290,7 +320,7 @@ class Forum extends React.Component {
           data
         );
         console.log(response);
-        this.updateView();
+        this.updateEntriesFromDatabase();
       } catch (error) {
         console.log(error);
       }
@@ -303,45 +333,26 @@ class Forum extends React.Component {
     window.location = "/forum";
   };
 
-  displayPostsSortedByNew = () => {
-    const sortedEntries = this.state.entries.sort((a, b) => {
-      return new Date(b.timePosted) - new Date(a.timePosted);
-    });
-    this.setState({ entries: sortedEntries });
-  };
-
-  displayPostsSortedByOld = () => {
-    const sortedEntries = this.state.entries.sort((a, b) => {
-      return new Date(a.timePosted) - new Date(b.timePosted);
-    });
-    this.setState({ entries: sortedEntries });
-  };
-
-  displayPostsSortedByPopular = () => {
-    const sortedEntries = this.state.entries.sort((a, b) => {
-      return b.likes.length - a.likes.length;
-    });
-    this.setState({ entries: sortedEntries });
-  };
-
   renderPostsInListGroup = () => {
-    return this.state.entries.map((entry) => {
-      return (
-        <Post
-          key={entry._id}
-          id={entry._id}
-          title={entry.title}
-          body={entry.body}
-          likes={entry.likes}
-          timePosted={entry.timePosted}
-          username={entry.username}
-          onDelete={this.onDelete}
-          onLike={this.onLike}
-          onClick={this.contactDatabaseUpdateStateWithComments}
-          userLoggedIn={Boolean(this.state.user)}
-        />
-      );
-    });
+    return this.state.entriesDisplayed[this.state.currentPage - 1].map(
+      (entry) => {
+        return (
+          <Post
+            key={entry._id}
+            id={entry._id}
+            title={entry.title}
+            body={entry.body}
+            likes={entry.likes}
+            timePosted={entry.timePosted}
+            username={entry.username}
+            onDelete={this.onDelete}
+            onLike={this.onLike}
+            onClick={this.contactDatabaseUpdateStateWithComments}
+            userLoggedIn={Boolean(this.state.user)}
+          />
+        );
+      }
+    );
   };
 
   renderCommentsInListGroup = () => {
@@ -385,7 +396,7 @@ class Forum extends React.Component {
   };
 
   render() {
-    const { currentPage, entries, pageSize } = this.state;
+    const { currentPage, entries, entriesDisplayed, pageSize } = this.state;
 
     return (
       <div>
@@ -398,9 +409,9 @@ class Forum extends React.Component {
           logIn={this.openLoginModal}
           logOut={this.logOut}
           userLoggedIn={this.userLoggedIn}
-          sortMyPosts={this.updateViewMyPosts}
+          sortMyPosts={this.displayMyPosts}
           sortPopular={this.displayPostsSortedByPopular}
-          updateView={this.updateView}
+          updateView={this.updateEntriesFromDatabase}
         />
         <Container fluid>
           <Row>
@@ -413,8 +424,8 @@ class Forum extends React.Component {
             >
               Button
             </Button>
-            <Button onClick={() => console.log(this.state.width)}>
-              console.log this.state.width
+            <Button onClick={() => console.log("stuff")}>
+              console.log this.state.entries
             </Button>
 
             <Col className="d-flex justify-content-between">
@@ -424,7 +435,7 @@ class Forum extends React.Component {
                   closePostModal={this.closePostModal}
                   isOpen={this.state.postModalOpen}
                   value={this.state.postModalOpen}
-                  updateView={this.updateView}
+                  updateView={this.updateEntriesFromDatabase}
                   onSubmit={this.onSubmitPost}
                   onTitleChange={this.handlePostTitleChange}
                   onBodyChange={this.handlePostBodyChange}
@@ -435,7 +446,7 @@ class Forum extends React.Component {
                   closeUserModal={this.closeUserModal}
                   isOpen={this.state.userModalOpen}
                   value={this.state.userModalOpen}
-                  updateView={this.updateView}
+                  updateView={this.updateEntriesFromDatabase}
                   onSubmit={this.onCreateUser}
                   onNameChange={this.handleUserNameChange}
                   onEmailChange={this.handleUserEmailChange}
@@ -460,7 +471,7 @@ class Forum extends React.Component {
             <Col lg={3} sm={0}>
               <Pagination
                 currentPage={Number(currentPage)}
-                totalCount={Number(entries.length)}
+                totalCount={Number(this.state.numberOfPages)}
                 siblingCount={1}
                 pageSize={pageSize}
                 updateCurrentPage={this.updateCurrentPage}
@@ -468,7 +479,7 @@ class Forum extends React.Component {
               />
             </Col>
             <Col lg={9} sm={12}>
-              {!this.state.isViewingComments && this.renderPostsInListGroup()}
+              {this.state.entriesDisplayed && this.renderPostsInListGroup()}
               {this.state.isViewingComments && this.renderCommentsInListGroup()}
             </Col>
           </Row>
