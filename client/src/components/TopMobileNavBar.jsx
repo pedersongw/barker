@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-class BottomMobileNavBar extends React.Component {
+class TopMobileNavBar extends React.Component {
   render() {
     return (
-      <div className="bottom-nav">
-        <div className="bottom-nav-link" id="bottom-nav-1">
+      <div className="top-nav">
+        <div className="top-nav-link" id="top-nav-1">
           {this.props.page === "home" ? (
             <Link to="/" onClick={() => console.log("already on that page")}>
               Home
@@ -13,7 +13,7 @@ class BottomMobileNavBar extends React.Component {
             <Link to="/">Home</Link>
           )}
         </div>
-        <div className="bottom-nav-link" id="bottom-nav-2">
+        <div className="top-nav-link" id="top-nav-2">
           {this.props.page === "donate" ? (
             <Link
               to="/donate"
@@ -25,7 +25,7 @@ class BottomMobileNavBar extends React.Component {
             <Link to="/donate">Donate</Link>
           )}
         </div>
-        <div className="bottom-nav-link" id="bottom-nav-3">
+        <div className="top-nav-link" id="top-nav-3">
           {this.props.page === "contact" ? (
             <Link
               to="/contact"
@@ -37,7 +37,7 @@ class BottomMobileNavBar extends React.Component {
             <Link to="/contact">Contact</Link>
           )}
         </div>
-        <div className="bottom-nav-link" id="bottom-nav-4">
+        <div className="top-nav-link" id="top-nav-4">
           {this.props.page === "forum" ? (
             <Link
               to="/forum"
@@ -54,4 +54,4 @@ class BottomMobileNavBar extends React.Component {
   }
 }
 
-export default BottomMobileNavBar;
+export default TopMobileNavBar;

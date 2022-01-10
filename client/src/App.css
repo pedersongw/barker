@@ -123,22 +123,22 @@ body {
   transform: translateX(-330px);
 }
 
-.bottom-nav {
+.top-nav {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas: "one two three four";
   position: fixed;
-  bottom: 0;
+  top: 0;
   width: 100%;
   height: 30px;
 }
 
-.bottom-nav-link {
+.top-nav-link {
   background-color: gray;
   cursor: pointer;
 }
 
-.bottom-nav-link a {
+.top-nav-link a {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,27 +148,27 @@ body {
   width: 100%;
 }
 
-.bottom-nav-link a:hover {
+.top-nav-link a:hover {
   color: black;
 }
 
-.bottom-nav-link:hover {
+.top-nav-link:hover {
   background-color: rgb(136, 136, 136);
 }
 
-#bottom-nav-1 {
+#top-nav-1 {
   grid-area: one;
 }
 
-#bottom-nav-2 {
+#top-nav-2 {
   grid-area: two;
 }
 
-#bottom-nav-3 {
+#top-nav-3 {
   grid-area: three;
 }
 
-#bottom-nav-4 {
+#top-nav-4 {
   grid-area: four;
 }
 

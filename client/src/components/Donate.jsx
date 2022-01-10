@@ -1,5 +1,5 @@
 import React from "react";
-import BottomMobileNavBar from "./BottomMobileNavBar";
+import TopMobileNavBar from "./TopMobileNavBar";
 import Pagination from "./Pagination";
 
 class Donate extends React.Component {
@@ -49,7 +49,7 @@ class Donate extends React.Component {
           incrementPage={this.incrementPage}
         />
         <button onClick={() => console.log(this.state)}>current page</button>
-        <BottomMobileNavBar page="donate" />
+        <TopMobileNavBar page="donate" />
       </div>
     );
   }

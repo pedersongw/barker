@@ -8,7 +8,7 @@ import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
 import CreateUserModal from "./createUserModal";
 import CreateLoginModal from "./createLoginModal";
-import BottomMobileNavBar from "./BottomMobileNavBar";
+import TopMobileNavBar from "./TopMobileNavBar";
 import ForumNavIcon from "./ForumNavIcon";
 import Pagination from "./Pagination";
 
@@ -382,7 +382,7 @@ class Forum extends React.Component {
 
     return (
       <div>
-        <BottomMobileNavBar page="forum" />
+        <TopMobileNavBar page="forum" />
         <ForumNavIcon
           openPostModal={this.openPostModal}
           openUserModal={this.openUserModal}

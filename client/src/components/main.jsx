@@ -1,5 +1,5 @@
 import React from "react";
-import BottomMobileNavBar from "./BottomMobileNavBar";
+import TopMobileNavBar from "./TopMobileNavBar";
 
 class Main extends React.Component {
   state = {
@@ -20,7 +20,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-        <BottomMobileNavBar page="home" />
+        <TopMobileNavBar page="home" />
         <h1>Main</h1>
       </div>
     );
