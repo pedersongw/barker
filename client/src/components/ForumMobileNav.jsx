@@ -1,7 +1,7 @@
 import React from "react";
 import { FaWrench } from "react-icons/fa";
 
-class ForumNavIcon extends React.Component {
+class ForumMobileNav extends React.Component {
   state = {
     navOpen: false,
   };
@@ -25,7 +25,6 @@ class ForumNavIcon extends React.Component {
       !container.contains(event.target)
     ) {
       this.handleMenuClose();
-    } else {
     }
   };
 
@@ -83,19 +82,27 @@ class ForumNavIcon extends React.Component {
           <nav id="nav-content">
             {!this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.createNewUser()}>
+                <button
+                  id="create-new-user-button"
+                  onClick={() => this.createNewUser()}
+                >
                   Create Profile
                 </button>
               </div>
             )}
             {!this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.onLogIn()}>Login</button>
+                <button id="login-button" onClick={() => this.onLogIn()}>
+                  Login
+                </button>
               </div>
             )}
             {this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.openPostModal()}>
+                <button
+                  id="create-post-button"
+                  onClick={() => this.openPostModal()}
+                >
                   Create Post
                 </button>
               </div>
@@ -141,4 +148,4 @@ class ForumNavIcon extends React.Component {
   }
 }
 
-export default ForumNavIcon;
+export default ForumMobileNav;

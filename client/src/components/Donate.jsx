@@ -1,6 +1,5 @@
 import React from "react";
 import TopMobileNavBar from "./TopMobileNavBar";
-import Pagination from "./Pagination";
 
 class Donate extends React.Component {
   state = {
@@ -36,19 +35,10 @@ class Donate extends React.Component {
   };
 
   render() {
-    const { currentPage, totalCount, siblingCount, pageSize } = this.state;
     return (
       <div>
         <h1>Donate</h1>
-        <Pagination
-          currentPage={Number(currentPage)}
-          totalCount={Number(totalCount)}
-          siblingCount={Number(siblingCount)}
-          pageSize={Number(pageSize)}
-          updateCurrentPage={this.updateCurrentPage}
-          incrementPage={this.incrementPage}
-        />
-        <button onClick={() => console.log(this.state)}>current page</button>
+
         <TopMobileNavBar page="donate" />
       </div>
     );

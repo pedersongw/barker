@@ -3,17 +3,22 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { config } from "../URLs.jsx";
 import Post from "./Post";
-import CreatePostModal from "./createPostModal";
 import Comment from "./comment";
-import CreateUserModal from "./createUserModal";
-import CreateLoginModal from "./createLoginModal";
+import LoginModal from "./LoginModal";
+import PostModal from "./PostModal";
+import ReplyModal from "./ReplyModal";
+import NewUserModal from "./NewUserModal";
 import TopMobileNavBar from "./TopMobileNavBar";
-import ForumNavIcon from "./ForumNavIcon";
+import ForumMobileNav from "./ForumMobileNav";
 import Pagination from "./Pagination";
+import ForumDesktopNav from "./ForumDesktopNav";
+import SinglePost from "./SinglePost";
 
 class Forum extends React.Component {
   state = {
     entries: [],
+    viewedEntry: {},
+    viewedComment: {},
     entriesDisplayed: false,
     comments: [],
     width: window.innerWidth,
@@ -22,6 +27,7 @@ class Forum extends React.Component {
     postModalOpen: false,
     userModalOpen: false,
     loginModalOpen: false,
+    replyModalOpen: false,
     user: null,
     createModalError: "",
     postTitle: "",
@@ -148,33 +154,106 @@ class Forum extends React.Component {
     });
   };
   openPostModal = () => {
+    window.addEventListener("click", this.handleClickOutsidePostModal);
     this.setState({ postModalOpen: true });
     this.resetStateFormInfoHolders();
   };
 
   closePostModal = () => {
+    window.removeEventListener("click", this.handleClickOutsidePostModal);
     this.setState({ postModalOpen: false });
     this.resetStateFormInfoHolders();
   };
 
+  handleClickOutsidePostModal = (event) => {
+    const container = document.getElementById("post-modal-content");
+    const button = document.getElementById("create-post-button");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      button !== event.target
+    ) {
+      console.log("clicked outside post modal");
+      this.closePostModal();
+    }
+  };
+
+  openReplyModal = (comment) => {
+    window.addEventListener("click", this.handleClickOutsideReplyModal);
+    this.setState({ viewedComment: comment });
+    this.setState({ replyModalOpen: true });
+    this.resetStateFormInfoHolders();
+  };
+
+  closeReplyModal = () => {
+    window.removeEventListener("click", this.handleClickOutsideReplyModal);
+    this.setState({ viewedComment: {} });
+    this.setState({ replyModalOpen: false });
+    this.resetStateFormInfoHolders();
+  };
+
+  handleClickOutsideReplyModal = (event) => {
+    const container = document.getElementById("reply-modal-content");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      event.target.className !== "open-reply-button"
+    ) {
+      console.log("clicked outside reply modal");
+      this.closeReplyModal();
+    } else {
+      console.log("clicked inside reply modal");
+    }
+  };
+
   openUserModal = () => {
+    window.addEventListener("click", this.handleClickOutsideUserModal);
     this.setState({ userModalOpen: true });
     this.resetStateFormInfoHolders();
   };
 
   closeUserModal = () => {
+    window.removeEventListener("click", this.handleClickOutsideUserModal);
     this.setState({ userModalOpen: false });
     this.resetStateFormInfoHolders();
   };
 
+  handleClickOutsideUserModal = (event) => {
+    const container = document.getElementById("user-modal-content");
+    const button = document.getElementById("create-new-user-button");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      button !== event.target
+    ) {
+      console.log("clicked outside user modal");
+      this.closeUserModal();
+    }
+  };
+
   openLoginModal = () => {
+    window.addEventListener("click", this.handleClickOutsideLoginModal);
     this.setState({ loginModalOpen: true });
     this.resetStateFormInfoHolders();
   };
 
   closeLoginModal = () => {
+    window.removeEventListener("click", this.handleClickOutsideLoginModal);
     this.setState({ loginModalOpen: false });
     this.resetStateFormInfoHolders();
+  };
+
+  handleClickOutsideLoginModal = (event) => {
+    const container = document.getElementById("login-modal-content");
+    const button = document.getElementById("login-button");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      button !== event.target
+    ) {
+      console.log("clicked outside login");
+      this.closeLoginModal();
+    }
   };
 
   onSubmitPost = async () => {
@@ -328,22 +407,19 @@ class Forum extends React.Component {
             username={entry.username}
             onDelete={this.onDelete}
             onLike={this.onLike}
-            onClick={this.contactDatabaseUpdateStateWithComments}
             userLoggedIn={Boolean(this.state.user)}
+            onClick={this.contactDatabaseUpdateStateWithComments}
           />
         );
       }
     );
   };
 
-  renderCommentsInListGroup = () => {
-    return this.state.comments.map((comment) => {
-      return <Comment key={comment._id} comment={comment} />;
-    });
-  };
-
   contactDatabaseUpdateStateWithComments = async (postID) => {
     try {
+      this.setState({ isViewingComments: true });
+      let entry = this.state.entries.filter((entry) => entry._id == postID);
+      this.setState({ viewedEntry: entry[0] });
       let searchParam = { parentPost: `${postID}` };
       const { data: comments } = await axios.post(
         "http://localhost:8000/api/comments/get",
@@ -360,7 +436,6 @@ class Forum extends React.Component {
         else dataTree.push(hashTable[comment._id]);
         console.log(dataTree);
         this.setState({ comments: dataTree });
-        this.setState({ isViewingComments: true });
       });
     } catch (error) {
       console.log("catch block called", error);
@@ -382,22 +457,13 @@ class Forum extends React.Component {
     return (
       <div>
         <TopMobileNavBar page="forum" />
-        <ForumNavIcon
-          openPostModal={this.openPostModal}
-          openUserModal={this.openUserModal}
-          sortByNew={this.displayPostsSortedByNew}
-          sortByOld={this.displayPostsSortedByOld}
-          logIn={this.openLoginModal}
-          logOut={this.logOut}
-          userLoggedIn={this.userLoggedIn}
-          sortMyPosts={this.displayMyPosts}
-          sortPopular={this.displayPostsSortedByPopular}
-          updateView={this.updateEntriesFromDatabase}
-        />
 
         <h1>{this.serverStatus()}</h1>
+        <button onClick={() => console.log(this.state)}>
+          console.log state
+        </button>
         {this.state.postModalOpen ? (
-          <CreatePostModal
+          <PostModal
             closePostModal={this.closePostModal}
             isOpen={this.state.postModalOpen}
             value={this.state.postModalOpen}
@@ -408,7 +474,7 @@ class Forum extends React.Component {
           />
         ) : null}
         {this.state.userModalOpen ? (
-          <CreateUserModal
+          <NewUserModal
             closeUserModal={this.closeUserModal}
             isOpen={this.state.userModalOpen}
             value={this.state.userModalOpen}
@@ -421,7 +487,7 @@ class Forum extends React.Component {
           />
         ) : null}
         {this.state.loginModalOpen ? (
-          <CreateLoginModal
+          <LoginModal
             closeLoginModal={this.closeLoginModal}
             isOpen={this.state.loginModalOpen}
             value={this.state.loginModalOpen}
@@ -431,26 +497,73 @@ class Forum extends React.Component {
             error={this.state.createModalError}
           />
         ) : null}
+        {this.state.replyModalOpen ? (
+          <ReplyModal
+            closeModal={this.closeReplyModal}
+            comment={
+              this.state.comment === {}
+                ? this.state.viewedEntry
+                : this.state.viewedComment
+            }
+          />
+        ) : null}
         <div
           className={
-            this.state.width < 600 ? "formum-main" : "forum-main-large"
+            this.state.width < 800 ? "formum-main" : "forum-main-large"
           }
         >
-          <div className="main-pagination-div">
-            <Pagination
-              currentPage={Number(currentPage)}
-              totalCount={Number(this.state.numberOfPages)}
-              siblingCount={1}
-              pageSize={pageSize}
-              updateCurrentPage={this.updateCurrentPage}
-              incrementPage={this.incrementPage}
-            />
-          </div>
+          {this.state.width > 800 && (
+            <div className="desktop-menu-column">
+              <ForumDesktopNav
+                openPostModal={this.openPostModal}
+                openUserModal={this.openUserModal}
+                sortByNew={this.displayPostsSortedByNew}
+                sortByOld={this.displayPostsSortedByOld}
+                logIn={this.openLoginModal}
+                logOut={this.logOut}
+                userLoggedIn={this.userLoggedIn}
+                sortMyPosts={this.displayMyPosts}
+                sortPopular={this.displayPostsSortedByPopular}
+                updateView={this.updateEntriesFromDatabase}
+              />
+              <Pagination
+                currentPage={Number(currentPage)}
+                totalCount={Number(this.state.numberOfPages)}
+                siblingCount={1}
+                pageSize={pageSize}
+                updateCurrentPage={this.updateCurrentPage}
+                incrementPage={this.incrementPage}
+              />
+            </div>
+          )}
+
           <div className="posts-div">
-            {this.state.entriesDisplayed && this.renderPostsInListGroup()}
+            {this.state.entriesDisplayed &&
+              !this.state.isViewingComments &&
+              this.renderPostsInListGroup()}
+            {this.state.isViewingComments && (
+              <SinglePost
+                post={this.state.viewedEntry}
+                openReplyModal={this.openReplyModal}
+                comments={this.state.comments}
+                closeModal={this.closeReplyModal}
+              />
+            )}
           </div>
-          {this.state.width < 600 && (
+          {this.state.width < 800 && (
             <div className="bottom-pagination-div">
+              <ForumMobileNav
+                openPostModal={this.openPostModal}
+                openUserModal={this.openUserModal}
+                sortByNew={this.displayPostsSortedByNew}
+                sortByOld={this.displayPostsSortedByOld}
+                logIn={this.openLoginModal}
+                logOut={this.logOut}
+                userLoggedIn={this.userLoggedIn}
+                sortMyPosts={this.displayMyPosts}
+                sortPopular={this.displayPostsSortedByPopular}
+                updateView={this.updateEntriesFromDatabase}
+              />
               <Pagination
                 currentPage={Number(currentPage)}
                 totalCount={Number(this.state.numberOfPages)}

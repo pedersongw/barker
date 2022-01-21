@@ -6,8 +6,8 @@ const auth = require("../middleware/auth.js");
 const admin = require("../middleware/admin.js");
 
 router.post("/get", async (req, res) => {
-    console.log(req.body)
-    let searchParam = req.body
+  console.log(req.body);
+  let searchParam = req.body;
   Comment.find(searchParam)
     .then((data) => {
       res.send(data);
@@ -26,7 +26,8 @@ router.post("/", async (req, res) => {
   const message = new Comment({
     body: body.body,
     parentPost: body.parentPost,
-    parentComment: body.parentComment
+    parentComment: body.parentComment,
+    timeCommented: body.timeCommented,
   });
   message
     .save()

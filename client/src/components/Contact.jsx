@@ -2,6 +2,11 @@ import React from "react";
 import TopMobileNavBar from "./TopMobileNavBar";
 
 class Contact extends React.Component {
+  state = {
+    username: "",
+    password: "",
+  };
+
   render() {
     return (
       <div>

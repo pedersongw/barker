@@ -1,12 +1,15 @@
 import React from "react";
 import DateComponent from "./date";
+import axios from "axios";
 
 class Post extends React.Component {
   render() {
     const { body, likes, timePosted, username, title } = this.props;
-
     return (
-      <div className="post-container">
+      <div
+        className="post-container"
+        onClick={() => this.props.onClick(this.props.id)}
+      >
         <div className="post-card">
           <h4 className="post-username">
             <b>{username[1]}</b>
