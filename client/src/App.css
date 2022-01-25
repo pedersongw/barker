@@ -232,21 +232,6 @@ a {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 }
-.modal-header {
-  padding: 2px 16px;
-  background-color: #92aee6;
-  color: white;
-}
-
-.modal-body {
-  padding: 2px 16px;
-}
-
-.modal-footer {
-  padding: 2px 16px;
-  background-color: #92aee6;
-  color: white;
-}
 
 .modal-content {
   background-color: #fefefe;
@@ -261,15 +246,15 @@ a {
 }
 
 .close {
+  padding: 0 25px 0;
   color: white;
-  float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: #92aee6;
   text-decoration: none;
   cursor: pointer;
 }
@@ -298,9 +283,11 @@ a {
   width: 75%;
   max-width: 630px;
   min-width: 320px;
-  height: auto;
+  height: 75vh;
   z-index: 2000;
   visibility: hidden;
+  border-radius: 20px;
+  overflow: hidden;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -311,25 +298,101 @@ a {
 }
 
 .md-content {
-  color: #fff;
-  background: #e74c3c;
+  color: #002237;
+  height: 100%;
+  width: 100%;
+  background: #004562;
   position: relative;
-  border-radius: 3px;
   margin: 0 auto;
 }
 
-.md-effect-1 .md-content {
+.modal-header {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  height: 25%;
+  width: 100%;
+  background: #002237;
+  color: #92aee6;
+}
+
+.modal-header-text {
+  padding: 0 25px 0;
+  cursor: default;
+}
+
+.modal-body {
+  height: 50%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas: "reply submit";
+  position: absolute;
+  top: 25%;
+}
+
+.reply {
+  grid-area: reply;
+}
+
+.reply-submit {
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-color: #007498;
+}
+
+.reply-form-input {
+  outline: none;
+  border: none;
+  background: #004562;
+  color: #00b0d7;
+  width: 100%;
+  height: 100%;
+  resize: none;
+}
+
+.form {
+  width: 100%;
+  height: 100%;
+}
+
+.reply-submit {
+  grid-area: submit;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.modal-footer {
+  height: 25%;
+  background-color: #92aee6;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-text {
+  padding: 0 25px 0;
+}
+
+.md-modal .md-content {
   -webkit-transform: scale(0.7);
   -moz-transform: scale(0.7);
   -ms-transform: scale(0.7);
   transform: scale(0.7);
   opacity: 0;
+  border-radius: 20px;
+  overflow: hidden;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
 }
 
-#md-show.md-effect-1 .md-content {
+#md-show.md-modal .md-content {
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -ms-transform: scale(1);

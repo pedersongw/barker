@@ -26,44 +26,45 @@ class ReplyModal extends React.Component {
 
   render() {
     return (
-      <div>
-        <div
-          className="md-modal md-effect-1"
-          id={this.props.isOpen ? "md-show" : null}
-        >
-          <div className="md-content" id="reply-modal-content">
-            <div className="modal-header">
-              <span className="close" onClick={() => this.props.closeModal()}>
-                &times;
-              </span>
-              <h2>Reply</h2>
-            </div>
-            <div className="modal-body">
+      <div className="md-modal" id={this.props.isOpen ? "md-show" : null}>
+        <div className="md-content" id="reply-modal-content">
+          <div className="modal-header">
+            <h2 className="modal-header-text">Reply</h2>
+            <span className="close" onClick={() => this.props.closeModal()}>
+              &times;
+            </span>
+          </div>
+          <div className="modal-body">
+            <div className="reply">
               <form className="form">
-                <label htmlFor="body" className="label">
-                  {this.props.comment
-                    ? this.props.comment.body
-                    : this.props.post.body}
-                </label>
-                <input
+                <label htmlFor="body" className="label"></label>
+                <textarea
                   type="text"
-                  className="form-input"
+                  className="reply-form-input"
                   id="body"
                   name="body"
-                  placeholder="reply"
+                  placeholder="Write your reply here..."
                   onChange={(event) =>
                     this.setState({ replyText: event.target.value })
                   }
-                ></input>
+                ></textarea>
               </form>
             </div>
-            <div className="modal-footer">
+            <div className="submit-reply">
               <button
+                className="reply-submit"
                 type="submit"
                 onClick={() => console.log(this.saveCommentInDatabase())}
               >
                 Submit
               </button>
+            </div>
+          </div>
+          <div className="modal-footer">
+            <div className="footer-text">
+              {this.props.comment
+                ? this.props.comment.body
+                : this.props.post.body}
             </div>
           </div>
         </div>
