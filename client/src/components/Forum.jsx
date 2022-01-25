@@ -423,7 +423,7 @@ class Forum extends React.Component {
       this.setState({ viewedEntry: entry[0] });
       let searchParam = { parentPost: `${postID}` };
       const { data: comments } = await axios.post(
-        "http://localhost:8000/api/comments/get",
+        config + "/api/comments/get",
         searchParam
       );
       const hashTable = Object.create(null);
