@@ -18,7 +18,7 @@ class Forum extends React.Component {
   state = {
     entries: [],
     viewedEntry: {},
-    viewedComment: {},
+    viewedComment: false,
     entriesDisplayed: false,
     comments: [],
     width: window.innerWidth,
@@ -35,6 +35,7 @@ class Forum extends React.Component {
     userName: "",
     userEmail: "",
     userPassword: "",
+    replyText: "",
     currentPage: 1,
     pageSize: 2,
     numberOfPages: 0,
@@ -180,14 +181,14 @@ class Forum extends React.Component {
 
   openReplyModal = (comment) => {
     window.addEventListener("click", this.handleClickOutsideReplyModal);
-    this.setState({ viewedComment: comment });
+    if (comment) this.setState({ viewedComment: comment });
     this.setState({ replyModalOpen: true });
     this.resetStateFormInfoHolders();
   };
 
   closeReplyModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReplyModal);
-    this.setState({ viewedComment: {} });
+    this.setState({ viewedComment: false });
     this.setState({ replyModalOpen: false });
     this.resetStateFormInfoHolders();
   };
@@ -442,6 +443,11 @@ class Forum extends React.Component {
     }
   };
 
+  onChangeReplyModalText = (text) => {
+    this.setState({ replyText: text });
+    console.log(text);
+  };
+
   updateCurrentPage = (newPage) => {
     console.log(newPage);
     this.setState({ currentPage: newPage });
@@ -497,16 +503,14 @@ class Forum extends React.Component {
             error={this.state.createModalError}
           />
         ) : null}
-        {this.state.replyModalOpen ? (
-          <ReplyModal
-            closeModal={this.closeReplyModal}
-            comment={
-              this.state.comment === {}
-                ? this.state.viewedEntry
-                : this.state.viewedComment
-            }
-          />
-        ) : null}
+
+        <ReplyModal
+          closeModal={this.closeReplyModal}
+          isOpen={this.state.replyModalOpen}
+          comment={this.state.viewedComment}
+          post={this.state.viewedEntry}
+        />
+
         <div
           className={
             this.state.width < 800 ? "formum-main" : "forum-main-large"
@@ -546,7 +550,6 @@ class Forum extends React.Component {
                 post={this.state.viewedEntry}
                 openReplyModal={this.openReplyModal}
                 comments={this.state.comments}
-                closeModal={this.closeReplyModal}
               />
             )}
           </div>

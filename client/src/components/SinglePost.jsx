@@ -22,22 +22,6 @@ class SinglePost extends React.Component {
     });
   };
 
-  saveCommentInDatabase = async () => {
-    const { post } = this.props;
-    const commentObj = {
-      body: this.state.reply,
-      timeCommented: new Date(),
-      parentPost: post._id,
-      parentComment: null,
-    };
-    try {
-      const response = await axios.post(config + "/api/comments", commentObj);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   render() {
     const { post } = this.props;
     return (
@@ -48,7 +32,7 @@ class SinglePost extends React.Component {
           <button
             type="submit"
             className="open-reply-button"
-            onClick={() => this.props.openReplyModal(this.props.post)}
+            onClick={() => this.props.openReplyModal()}
           >
             Reply
           </button>
