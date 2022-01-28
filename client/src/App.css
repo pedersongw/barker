@@ -1,5 +1,6 @@
 body {
   font-family: "Catamaran" !important;
+  background-color: #00faff;
 }
 
 .App {
@@ -265,16 +266,74 @@ a {
 }
 
 .viewed-post-wrapper {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  background-color: rgb(188, 229, 240);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.8);
+  background-color: #004562;
+}
+
+.viewed-post {
+  display: grid;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: #007498;
+  grid-template-rows: 2fr 4fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "title user"
+    "body body"
+    "time likes"
+    "reply reply";
+}
+
+.viewed-post-title {
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.viewed-post-user {
+  grid-area: user;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .viewed-post-body {
-  border-style: solid;
-  border-width: 0px 0px 5px 0px;
+  grid-area: body;
+  padding-left: 25px;
+}
+
+.viewed-post-time {
+  grid-area: time;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.viewed-post-likes {
+  grid-area: likes;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewed-post-reply-div {
+  grid-area: reply;
+  text-align: center;
+}
+
+.open-reply-button {
+  border: none;
+  width: 50%;
+  height: 75%;
+  border-radius: 5px;
+  background-color: #00b0d7;
+}
+
+.open-reply-button:hover {
+  background-color: #00faff;
 }
 
 .md-modal {
@@ -343,6 +402,7 @@ a {
   align-items: center;
   border-radius: 10px;
   text-align: center;
+  font-weight: bold;
   height: 75%;
   width: 100%;
   background-color: rgb(226, 88, 88);
