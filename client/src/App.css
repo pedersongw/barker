@@ -337,6 +337,18 @@ a {
   font-size: 2em;
 }
 
+.modal-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 75%;
+  width: 100%;
+  background-color: rgb(226, 88, 88);
+  color: white;
+  opacity: 0.8;
+}
+
 .modal-body {
   height: 50%;
   width: 100%;

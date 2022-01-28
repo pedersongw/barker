@@ -6,6 +6,7 @@ import { FaReply } from "react-icons/fa";
 class ReplyModal extends React.Component {
   state = {
     replyText: "",
+    errorMessage: "",
   };
 
   saveCommentInDatabase = async () => {
@@ -20,6 +21,7 @@ class ReplyModal extends React.Component {
     try {
       const response = await axios.post(config + "/api/comments", commentObj);
       console.log(response);
+      this.props.closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -32,6 +34,19 @@ class ReplyModal extends React.Component {
     if (!body) {
       return null;
     } else return body.length < 90 ? body : body.slice(0, 90) + "...";
+  };
+
+  onTextareaChange = (event) => {
+    this.setState({ replyText: event.target.value });
+    this.setState({ errorMessage: "" });
+  };
+
+  onSubmit = () => {
+    if (this.state.replyText.length < 1) {
+      this.setState({ errorMessage: "Reply cannot be empty" });
+    } else {
+      this.saveCommentInDatabase();
+    }
   };
 
   render() {
@@ -47,6 +62,9 @@ class ReplyModal extends React.Component {
         <div className="md-content" id="reply-modal-content">
           <div className="modal-header">
             <h2 className="modal-header-text">Reply</h2>
+            {this.state.errorMessage ? (
+              <div className="modal-error">{this.state.errorMessage}</div>
+            ) : null}
             <span className="close" onClick={() => this.props.closeModal()}>
               &times;
             </span>
@@ -69,9 +87,7 @@ class ReplyModal extends React.Component {
                   name="body"
                   placeholder="Write your reply here..."
                   maxLength="300"
-                  onChange={(event) =>
-                    this.setState({ replyText: event.target.value })
-                  }
+                  onChange={(event) => this.onTextareaChange(event)}
                 ></textarea>
               </form>
             </div>
@@ -79,7 +95,7 @@ class ReplyModal extends React.Component {
               <button
                 className="submit-reply-btn"
                 type="submit"
-                onClick={() => console.log(this.saveCommentInDatabase())}
+                onClick={() => this.onSubmit()}
               >
                 Submit
               </button>
