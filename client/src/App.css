@@ -341,10 +341,20 @@ a {
   height: 50%;
   width: 100%;
   display: grid;
-  grid-template-columns: 4fr 1fr;
-  grid-template-areas: "reply submit";
   position: absolute;
   top: 25%;
+}
+
+#modal-body-mobile {
+  grid-template-rows: 4fr 1fr;
+  grid-template-areas:
+    "reply"
+    "submit";
+}
+
+#modal-body-desktop {
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas: "reply submit";
 }
 
 .reply {

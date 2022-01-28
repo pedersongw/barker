@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../URLs.jsx";
 import axios from "axios";
-import { FaReplyAll } from "react-icons/fa";
+import { FaReply } from "react-icons/fa";
 
 class ReplyModal extends React.Component {
   state = {
@@ -25,6 +25,15 @@ class ReplyModal extends React.Component {
     }
   };
 
+  returnFooterText = () => {
+    let body = this.props.comment
+      ? this.props.comment.body
+      : this.props.post.body;
+    if (!body) {
+      return null;
+    } else return body.length < 90 ? body : body.slice(0, 90) + "...";
+  };
+
   render() {
     return (
       <div
@@ -42,7 +51,14 @@ class ReplyModal extends React.Component {
               &times;
             </span>
           </div>
-          <div className="modal-body">
+          <div
+            className="modal-body"
+            id={
+              this.props.width < 800
+                ? "modal-body-mobile"
+                : "modal-body-desktop"
+            }
+          >
             <div className="reply">
               <form className="form">
                 <label htmlFor="body" className="label"></label>
@@ -52,6 +68,7 @@ class ReplyModal extends React.Component {
                   id="body"
                   name="body"
                   placeholder="Write your reply here..."
+                  maxLength="300"
                   onChange={(event) =>
                     this.setState({ replyText: event.target.value })
                   }
@@ -69,13 +86,9 @@ class ReplyModal extends React.Component {
             </div>
           </div>
           <div className="modal-footer">
-            <div className="footer-text">
-              {this.props.comment
-                ? this.props.comment.body
-                : this.props.post.body}
-            </div>
+            <div className="footer-text">{this.returnFooterText()}</div>
             <div className="footer-icon">
-              <FaReplyAll className="fa-flip-horizontal" />
+              <FaReply />
             </div>
           </div>
         </div>
