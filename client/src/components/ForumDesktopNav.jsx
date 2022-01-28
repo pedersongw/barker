@@ -4,6 +4,11 @@ class ForumDesktopNav extends React.Component {
   render() {
     return (
       <div className="desktop-menu">
+        <div id="one"> #002237;</div>
+        <div id="two">#004562;</div>
+        <div id="three">#007498;</div>
+        <div id="four">#00b0d7;</div>
+        <div id="five">#00faff;}</div>
         <div>
           <nav id="desktop-nav-content">
             {!this.props.userLoggedIn() && (

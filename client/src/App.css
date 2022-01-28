@@ -97,6 +97,7 @@ body {
 
 .desktop-menu {
   display: flex;
+  flex-direction: column;
 }
 
 #nav-content {
@@ -248,7 +249,7 @@ a {
 .close {
   padding: 0 25px 0;
   color: white;
-  font-size: 28px;
+  font-size: 3em;
   font-weight: bold;
 }
 
@@ -280,10 +281,8 @@ a {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 75%;
   max-width: 630px;
   min-width: 320px;
-  height: 75vh;
   z-index: 2000;
   visibility: hidden;
   border-radius: 20px;
@@ -295,6 +294,20 @@ a {
   -moz-transform: translateX(-50%) translateY(-50%);
   -ms-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+}
+
+.modal-desktop {
+  width: 50%;
+  height: 50vh;
+}
+
+.modal-mobile {
+  width: 75%;
+  height: 75vh;
+}
+
+#md-show {
+  visibility: visible;
 }
 
 .md-content {
@@ -321,6 +334,7 @@ a {
 .modal-header-text {
   padding: 0 25px 0;
   cursor: default;
+  font-size: 2em;
 }
 
 .modal-body {
@@ -337,11 +351,18 @@ a {
   grid-area: reply;
 }
 
-.reply-submit {
+.submit-reply-btn {
+  grid-area: submit;
   height: 100%;
   width: 100%;
+  font-size: 1.5em;
   border: none;
   background-color: #007498;
+  cursor: pointer;
+}
+
+.submit-reply-btn:hover {
+  background-color: #00b0d7;
 }
 
 .reply-form-input {
@@ -352,6 +373,7 @@ a {
   width: 100%;
   height: 100%;
   resize: none;
+  font-size: 1.2em;
 }
 
 .form {
@@ -359,24 +381,32 @@ a {
   height: 100%;
 }
 
-.reply-submit {
-  grid-area: submit;
-  height: 100%;
-  width: 100%;
-  cursor: pointer;
-}
-
 .modal-footer {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas: "text icon";
   height: 25%;
-  background-color: #92aee6;
-  color: white;
+  background-color: #002237;
+  color: #92aee6;
   position: absolute;
   bottom: 0;
   width: 100%;
 }
 
+.footer-icon {
+  grid-area: icon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
+
 .footer-text {
-  padding: 0 25px 0;
+  grid-area: text;
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+  padding: 0 0 0 25px;
 }
 
 .md-modal .md-content {
@@ -400,6 +430,29 @@ a {
   opacity: 1;
 }
 
-#md-show {
-  visibility: visible;
+#one {
+  height: 30px;
+  width: 100%;
+  background-color: #002237;
+}
+
+#two {
+  height: 30px;
+  width: 100%;
+  background-color: #004562;
+}
+#three {
+  height: 30px;
+  width: 100%;
+  background-color: #007498;
+}
+#four {
+  height: 30px;
+  width: 100%;
+  background-color: #00b0d7;
+}
+#five {
+  height: 30px;
+  width: 100%;
+  background-color: #00faff;
 }

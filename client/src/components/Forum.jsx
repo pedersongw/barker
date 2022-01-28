@@ -509,6 +509,7 @@ class Forum extends React.Component {
           isOpen={this.state.replyModalOpen}
           comment={this.state.viewedComment}
           post={this.state.viewedEntry}
+          width={this.state.width}
         />
 
         <div

@@ -1,6 +1,7 @@
 import React from "react";
 import { config } from "../URLs.jsx";
 import axios from "axios";
+import { FaReplyAll } from "react-icons/fa";
 
 class ReplyModal extends React.Component {
   state = {
@@ -26,7 +27,14 @@ class ReplyModal extends React.Component {
 
   render() {
     return (
-      <div className="md-modal" id={this.props.isOpen ? "md-show" : null}>
+      <div
+        className={
+          this.props.width < 800
+            ? "md-modal modal-mobile"
+            : "md-modal modal-desktop"
+        }
+        id={this.props.isOpen ? "md-show" : null}
+      >
         <div className="md-content" id="reply-modal-content">
           <div className="modal-header">
             <h2 className="modal-header-text">Reply</h2>
@@ -50,9 +58,9 @@ class ReplyModal extends React.Component {
                 ></textarea>
               </form>
             </div>
-            <div className="submit-reply">
+            <div className="submit-reply-div">
               <button
-                className="reply-submit"
+                className="submit-reply-btn"
                 type="submit"
                 onClick={() => console.log(this.saveCommentInDatabase())}
               >
@@ -65,6 +73,9 @@ class ReplyModal extends React.Component {
               {this.props.comment
                 ? this.props.comment.body
                 : this.props.post.body}
+            </div>
+            <div className="footer-icon">
+              <FaReplyAll className="fa-flip-horizontal" />
             </div>
           </div>
         </div>
