@@ -277,7 +277,7 @@ a {
   margin: 20px;
   border-radius: 10px;
   background-color: #007498;
-  grid-template-rows: 2fr 4fr 2fr 1fr;
+  grid-template-rows: 2fr auto 2fr 1fr;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     "title user"
@@ -334,6 +334,31 @@ a {
 
 .open-reply-button:hover {
   background-color: #00faff;
+}
+
+.comment-reply {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px;
+  height: 100%;
+  padding: 5px;
+}
+
+.comment-wrapper {
+  margin-left: 25px;
+}
+
+.comment {
+  background-color: #007498;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.comment-body {
+  padding: 5px;
 }
 
 .md-modal {

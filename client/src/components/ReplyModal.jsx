@@ -13,6 +13,7 @@ class ReplyModal extends React.Component {
     let commentObj = {
       body: this.state.replyText,
       timeCommented: new Date(),
+      username: this.props.user,
       parentPost: this.props.comment
         ? this.props.comment.parentPost
         : this.props.post._id,

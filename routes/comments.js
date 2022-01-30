@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
   const message = new Comment({
     body: body.body,
     parentPost: body.parentPost,
+    username: body.username,
     parentComment: body.parentComment,
     timeCommented: body.timeCommented,
   });

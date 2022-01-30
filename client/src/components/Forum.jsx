@@ -510,6 +510,7 @@ class Forum extends React.Component {
           comment={this.state.viewedComment}
           post={this.state.viewedEntry}
           width={this.state.width}
+          user={this.state.user}
         />
 
         <div

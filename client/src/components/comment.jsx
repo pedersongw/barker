@@ -1,6 +1,7 @@
 import React from "react";
 import { config } from "../URLs.jsx";
 import axios from "axios";
+import { FaReply } from "react-icons/fa";
 
 class Comment extends React.Component {
   saveCommentInDatabase = async () => {
@@ -34,18 +35,18 @@ class Comment extends React.Component {
     );
 
     return (
-      <div style={{ marginLeft: "25px", marginTop: "10px" }}>
-        <div>
-          {this.props.comment.body}
+      <div className="comment-wrapper">
+        <div className="comment">
+          <div className="comment-body">{this.props.comment.body}</div>
           <div>
             <button
-              type="submit"
               className="open-reply-button"
               onClick={() => this.props.openReplyModal(this.props.comment)}
             >
               Reply
             </button>
           </div>
+          <small>by {this.props.comment.username.name}</small>
         </div>
         {nestedComments}
       </div>
