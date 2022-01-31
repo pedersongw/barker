@@ -547,15 +547,16 @@ class Forum extends React.Component {
                 comments={this.state.comments}
               />
             )}
-
-            <Pagination
-              currentPage={Number(currentPage)}
-              totalCount={Number(this.state.numberOfPages)}
-              siblingCount={1}
-              pageSize={pageSize}
-              updateCurrentPage={this.updateCurrentPage}
-              incrementPage={this.incrementPage}
-            />
+            {!this.state.isViewingComments && (
+              <Pagination
+                currentPage={Number(currentPage)}
+                totalCount={Number(this.state.numberOfPages)}
+                siblingCount={1}
+                pageSize={pageSize}
+                updateCurrentPage={this.updateCurrentPage}
+                incrementPage={this.incrementPage}
+              />
+            )}
           </div>
           {this.state.width < 800 && (
             <div className="bottom-pagination-div">
