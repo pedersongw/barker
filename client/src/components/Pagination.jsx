@@ -97,12 +97,8 @@ class Pagination extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          {this.mapFromDetermineFunctionToButtons(
-            this.determineHowManyButtons()
-          )}
-        </div>
+      <div className="pagination-div">
+        {this.mapFromDetermineFunctionToButtons(this.determineHowManyButtons())}
       </div>
     );
   }

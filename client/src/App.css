@@ -41,9 +41,25 @@ body {
   align-items: center;
 }
 
+.pagination-div {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination-div button {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  border-radius: 50%;
+  border: none;
+  background-color: #00faff;
+}
+
 .posts-div {
   grid-area: post;
   margin: 0 25px 35px;
+  background-color: #004562;
+  border-radius: 10px;
 }
 
 .post-card {
@@ -57,9 +73,10 @@ body {
 
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: rgb(188, 229, 240);
+  border-radius: 10px;
+  margin: 30px 20px 20px;
+  padding: 20px;
+  background-color: #007498;
 }
 
 .post-title {
@@ -87,7 +104,7 @@ body {
 }
 
 .post-container {
-  margin: 20px 16px;
+  margin: 20px;
   cursor: pointer;
 }
 
