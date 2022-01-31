@@ -334,6 +334,7 @@ a {
 
 .comment-reply-button {
   padding: 0px;
+  text-align: center;
   border: solid;
   border-width: 1px;
   border-color: #00b0d7;
