@@ -1,6 +1,6 @@
 body {
   font-family: "Catamaran" !important;
-  background-color: #00faff;
+  background-color: #007498;
 }
 
 .App {
@@ -324,16 +324,32 @@ a {
   text-align: center;
 }
 
-.open-reply-button {
+.post-reply-button {
   border: none;
+  border-radius: 5px;
   width: 50%;
   height: 75%;
-  border-radius: 5px;
   background-color: #00b0d7;
 }
 
-.open-reply-button:hover {
+.comment-reply-button {
+  border: solid;
+  border-width: 1px;
+  border-color: #00b0d7;
+  border-radius: 5px;
+  width: 50%;
+  height: 100%;
+  color: #00b0d7;
+  background-color: #007498;
+}
+
+.post-reply-button:hover {
   background-color: #00faff;
+}
+
+.comment-reply-button:hover {
+  border-color: #00faff;
+  color: #00faff;
 }
 
 .comment-reply {
@@ -356,13 +372,36 @@ a {
   display: inline-block;
   min-width: 200px;
 }
-
-.comment-body {
+.comment-text {
   padding: 5px;
+}
+.comment-body {
   display: grid;
-  grid-template-rows:
-    "top"
-    "bottom";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "body body"
+    "by reply";
+}
+
+.comment-text {
+  grid-area: body;
+  border-bottom: solid;
+  border-color: #004562;
+  border-width: 1px;
+}
+
+.comment-by {
+  grid-area: by;
+  padding-left: 5px;
+}
+
+.comment-reply-button-div {
+  padding-right: 5px;
+  grid-area: reply;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .md-modal {

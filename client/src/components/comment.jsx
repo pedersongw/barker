@@ -37,19 +37,21 @@ class Comment extends React.Component {
     return (
       <div className="comment-wrapper">
         <div className="comment">
-          <div className="comment-body">{this.props.comment.body}</div>
-          <div className="comment-reply-button-div">
-            <button
-              className="open-reply-button"
-              onClick={() => this.props.openReplyModal(this.props.comment)}
-            >
-              Reply
-            </button>
-          </div>
-          <div className="comment-by">
-            {this.props.comment.username && (
-              <small>by {this.props.comment.username.name}</small>
-            )}
+          <div className="comment-body">
+            <div className="comment-text">{this.props.comment.body}</div>
+            <div className="comment-by">
+              {this.props.comment.username && (
+                <small>by {this.props.comment.username.name}</small>
+              )}
+            </div>
+            <div className="comment-reply-button-div">
+              <button
+                className="comment-reply-button"
+                onClick={() => this.props.openReplyModal(this.props.comment)}
+              >
+                Reply
+              </button>
+            </div>
           </div>
         </div>
         {nestedComments}

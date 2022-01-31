@@ -198,7 +198,8 @@ class Forum extends React.Component {
     if (
       container !== event.target &&
       !container.contains(event.target) &&
-      event.target.className !== "open-reply-button"
+      event.target.className !== "post-reply-button" &&
+      event.target.className !== "comment-reply-button"
     ) {
       console.log("clicked outside reply modal");
       this.closeReplyModal();

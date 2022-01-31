@@ -41,7 +41,7 @@ class SinglePost extends React.Component {
           <div className="viewed-post-reply-div">
             <button
               type="submit"
-              className="open-reply-button"
+              className="post-reply-button"
               onClick={() => this.props.openReplyModal()}
             >
               Reply
