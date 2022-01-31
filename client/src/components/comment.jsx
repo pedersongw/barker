@@ -38,7 +38,7 @@ class Comment extends React.Component {
       <div className="comment-wrapper">
         <div className="comment">
           <div className="comment-body">{this.props.comment.body}</div>
-          <div>
+          <div className="comment-reply-button-div">
             <button
               className="open-reply-button"
               onClick={() => this.props.openReplyModal(this.props.comment)}
@@ -46,7 +46,11 @@ class Comment extends React.Component {
               Reply
             </button>
           </div>
-          <small>by {this.props.comment.username.name}</small>
+          <div className="comment-by">
+            {this.props.comment.username && (
+              <small>by {this.props.comment.username.name}</small>
+            )}
+          </div>
         </div>
         {nestedComments}
       </div>

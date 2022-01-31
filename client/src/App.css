@@ -359,6 +359,10 @@ a {
 
 .comment-body {
   padding: 5px;
+  display: grid;
+  grid-template-rows:
+    "top"
+    "bottom";
 }
 
 .md-modal {
