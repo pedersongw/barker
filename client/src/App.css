@@ -44,6 +44,7 @@ body {
 .pagination-div {
   display: flex;
   justify-content: center;
+  margin: 20px;
 }
 
 .pagination-div button {
@@ -55,6 +56,7 @@ body {
   border-radius: 50%;
   border: none;
   background-color: #00faff;
+  cursor: pointer;
 }
 
 .posts-div {

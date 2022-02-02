@@ -572,14 +572,6 @@ class Forum extends React.Component {
                 sortPopular={this.displayPostsSortedByPopular}
                 updateView={this.updateEntriesFromDatabase}
               />
-              <Pagination
-                currentPage={Number(currentPage)}
-                totalCount={Number(this.state.numberOfPages)}
-                siblingCount={1}
-                pageSize={pageSize}
-                updateCurrentPage={this.updateCurrentPage}
-                incrementPage={this.incrementPage}
-              />
             </div>
           )}
         </div>

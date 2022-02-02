@@ -67,9 +67,7 @@ class Pagination extends React.Component {
             id={arrayIndex}
             className="page-button"
             onClick={() => console.log(arrayIndex)}
-          >
-            {"..."}
-          </button>
+          ></button>
         );
       } else {
         return currentPage === arrayIndex ? (
