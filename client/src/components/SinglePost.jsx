@@ -26,7 +26,7 @@ class SinglePost extends React.Component {
     return (
       <div className="viewed-post-wrapper">
         <div className="viewed-post">
-          <h1 className="viewed-post-title">{post.title}</h1>
+          <h3 className="viewed-post-title">{post.title}</h3>
           <p className="viewed-post-user">posted by {post.username[1]}</p>
           <p className="viewed-post-body">{post.body}</p>
           <p className="viewed-post-likes">

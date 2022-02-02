@@ -30,8 +30,6 @@ class Forum extends React.Component {
     replyModalOpen: false,
     user: null,
     createModalError: "",
-    postTitle: "",
-    postBody: "",
     userName: "",
     userEmail: "",
     userPassword: "",
@@ -135,9 +133,6 @@ class Forum extends React.Component {
   userLoggedIn = () => {
     return this.state.user === null ? false : true;
   };
-
-  handlePostTitleChange = (e) => this.setState({ postTitle: e.target.value });
-  handlePostBodyChange = (e) => this.setState({ postBody: e.target.value });
 
   handleUserEmailChange = (e) => this.setState({ userEmail: e.target.value });
   handleUserPasswordChange = (e) =>
@@ -255,26 +250,6 @@ class Forum extends React.Component {
     ) {
       console.log("clicked outside login");
       this.closeLoginModal();
-    }
-  };
-
-  onSubmitPost = async () => {
-    const { postTitle, postBody } = this.state;
-    const postObj = {
-      title: postTitle,
-      body: postBody,
-      timePosted: new Date(),
-      username: [this.state.user, this.state.user.name],
-      likes: [{ ...this.state.user }],
-    };
-    try {
-      const response = await axios.post(config + "/api/posts", postObj);
-      console.log(response);
-      this.closePostModal();
-      window.location = "/forum";
-    } catch (error) {
-      console.log(error);
-      this.closePostModal();
     }
   };
 
@@ -467,17 +442,14 @@ class Forum extends React.Component {
 
         <h1>{this.serverStatus()}</h1>
 
-        {this.state.postModalOpen ? (
-          <PostModal
-            closePostModal={this.closePostModal}
-            isOpen={this.state.postModalOpen}
-            value={this.state.postModalOpen}
-            updateView={this.updateEntriesFromDatabase}
-            onSubmit={this.onSubmitPost}
-            onTitleChange={this.handlePostTitleChange}
-            onBodyChange={this.handlePostBodyChange}
-          />
-        ) : null}
+        <PostModal
+          closePostModal={this.closePostModal}
+          isOpen={this.state.postModalOpen}
+          value={this.state.postModalOpen}
+          updateView={this.updateEntriesFromDatabase}
+          width={this.state.width}
+          user={this.state.user}
+        />
         {this.state.userModalOpen ? (
           <NewUserModal
             closeUserModal={this.closeUserModal}

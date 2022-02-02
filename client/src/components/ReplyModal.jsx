@@ -9,6 +9,12 @@ class ReplyModal extends React.Component {
     errorMessage: "",
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.isOpen !== prevProps.isOpen) {
+      this.setState({ replyText: "" });
+    }
+  }
+
   saveCommentInDatabase = async () => {
     let commentObj = {
       body: this.state.replyText,
@@ -78,20 +84,20 @@ class ReplyModal extends React.Component {
                 : "modal-body-desktop"
             }
           >
-            <div className="reply">
-              <form className="form">
-                <label htmlFor="body" className="label"></label>
-                <textarea
-                  type="text"
-                  className="reply-form-input"
-                  id="body"
-                  name="body"
-                  placeholder="Write your reply here..."
-                  maxLength="300"
-                  onChange={(event) => this.onTextareaChange(event)}
-                ></textarea>
-              </form>
-            </div>
+            <form className="form">
+              <label htmlFor="body" className="label"></label>
+              <textarea
+                type="text"
+                className="reply-form-input"
+                id="body"
+                name="body"
+                value={this.state.replyText}
+                placeholder="Write your reply here..."
+                maxLength="300"
+                onChange={(event) => this.onTextareaChange(event)}
+              ></textarea>
+            </form>
+
             <div className="submit-reply-div">
               <button
                 className="submit-reply-btn"
