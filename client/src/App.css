@@ -50,6 +50,8 @@ body {
   width: 30px;
   height: 30px;
   margin: 5px;
+  padding: 0;
+  text-align: center;
   border-radius: 50%;
   border: none;
   background-color: #00faff;
