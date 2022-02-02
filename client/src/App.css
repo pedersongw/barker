@@ -58,6 +58,7 @@ body {
   background-color: #00faff;
   cursor: pointer;
   opacity: 0.5;
+  color: black;
 }
 
 .page-button:hover {
