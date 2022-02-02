@@ -27,11 +27,27 @@ body {
   grid-template-areas: "nav post post post post";
 }
 
-.desktop-menu-column {
+.desktop-nav {
   grid-area: nav;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
+  height: 50vh;
+}
+
+.desktop-nav button {
+  border: none;
+  background-color: #002237;
+  padding: 10px;
+  border-radius: 10px;
+  width: 90%;
+  color: #00faff;
+}
+
+.desktop-nav button:hover {
+  background-color: #00faff;
+  color: #002237;
 }
 
 .forum-mobile-nav-div {
@@ -140,11 +156,6 @@ body {
   text-align-last: left;
 }
 
-.desktop-menu {
-  display: flex;
-  flex-direction: column;
-}
-
 #nav-content {
   display: flex;
   font-family: "Itim";
@@ -176,18 +187,23 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 40px;
-  right: 10px;
-  background-color: blue;
-  color: white;
+  bottom: 30px;
+  right: 30px;
+  background-color: #00faff;
+  color: #002237;
+  opacity: 0.75;
   height: 40px;
   width: 40px;
   border-radius: 50%;
   cursor: pointer;
 }
 
+.forum-nav-icon:active {
+  opacity: 1;
+}
+
 .mobile-nav {
-  background: lightblue;
+  background: #004562;
   height: 100%;
   width: 75%;
   right: -330px;
@@ -200,6 +216,22 @@ a {
   -webkit-transform: translateX(110%);
   -ms-transform: translateX(110%);
   transform: translateX(110%);
+}
+
+.mobile-nav button {
+  border: none;
+  background-color: #002237;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  color: #00faff;
+  font-size: 1.5em;
+  white-space: nowrap;
+}
+
+.mobile-nav button:hover {
+  background-color: #00faff;
+  color: #002237;
 }
 
 .mobile-nav.open {
@@ -215,26 +247,28 @@ a {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 30px;
+  height: 50px;
 }
 
 .top-nav-link {
-  background-color: gray;
+  background-color: #002237;
   cursor: pointer;
+  font-size: 1.5em;
 }
 
 .top-nav-link a {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: #00faff;
   text-decoration: none;
   height: 100%;
   width: 100%;
 }
 
 .top-nav-link a:hover {
-  color: black;
+  background-color: #00faff;
+  color: #002237;
 }
 
 .top-nav-link:hover {
@@ -616,31 +650,4 @@ a {
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
-}
-
-#one {
-  height: 30px;
-  width: 100%;
-  background-color: #002237;
-}
-
-#two {
-  height: 30px;
-  width: 100%;
-  background-color: #004562;
-}
-#three {
-  height: 30px;
-  width: 100%;
-  background-color: #007498;
-}
-#four {
-  height: 30px;
-  width: 100%;
-  background-color: #00b0d7;
-}
-#five {
-  height: 30px;
-  width: 100%;
-  background-color: #00faff;
 }

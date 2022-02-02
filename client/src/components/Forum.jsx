@@ -466,9 +466,7 @@ class Forum extends React.Component {
         <TopMobileNavBar page="forum" />
 
         <h1>{this.serverStatus()}</h1>
-        <button onClick={() => console.log(this.state)}>
-          console.log state
-        </button>
+
         {this.state.postModalOpen ? (
           <PostModal
             closePostModal={this.closePostModal}
@@ -520,20 +518,18 @@ class Forum extends React.Component {
           }
         >
           {this.state.width > 800 && (
-            <div className="desktop-menu-column">
-              <ForumDesktopNav
-                openPostModal={this.openPostModal}
-                openUserModal={this.openUserModal}
-                sortByNew={this.displayPostsSortedByNew}
-                sortByOld={this.displayPostsSortedByOld}
-                logIn={this.openLoginModal}
-                logOut={this.logOut}
-                userLoggedIn={this.userLoggedIn}
-                sortMyPosts={this.displayMyPosts}
-                sortPopular={this.displayPostsSortedByPopular}
-                updateView={this.updateEntriesFromDatabase}
-              />
-            </div>
+            <ForumDesktopNav
+              openPostModal={this.openPostModal}
+              openUserModal={this.openUserModal}
+              sortByNew={this.displayPostsSortedByNew}
+              sortByOld={this.displayPostsSortedByOld}
+              logIn={this.openLoginModal}
+              logOut={this.logOut}
+              userLoggedIn={this.userLoggedIn}
+              sortMyPosts={this.displayMyPosts}
+              sortPopular={this.displayPostsSortedByPopular}
+              updateView={this.updateEntriesFromDatabase}
+            />
           )}
 
           <div className="posts-div">
