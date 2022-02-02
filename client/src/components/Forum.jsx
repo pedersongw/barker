@@ -559,7 +559,7 @@ class Forum extends React.Component {
             )}
           </div>
           {this.state.width < 800 && (
-            <div className="bottom-pagination-div">
+            <div className="forum-mobile-nav-div">
               <ForumMobileNav
                 openPostModal={this.openPostModal}
                 openUserModal={this.openUserModal}

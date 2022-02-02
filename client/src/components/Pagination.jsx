@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import { FaEllipsisH } from "react-icons/fa";
 
 class Pagination extends React.Component {
   determineHowManyButtons = () => {
@@ -65,15 +66,17 @@ class Pagination extends React.Component {
           <button
             key={arrayIndex}
             id={arrayIndex}
-            className="page-button"
+            className="page-button elipsis"
             onClick={() => console.log(arrayIndex)}
-          ></button>
+          >
+            <FaEllipsisH />
+          </button>
         );
       } else {
         return currentPage === arrayIndex ? (
           <button
             key={arrayIndex}
-            className="current-page-button"
+            className="page-button current-page-button"
             id={arrayIndex}
             onClick={(event) => updateCurrentPage(event.target.id)}
           >
