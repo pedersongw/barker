@@ -19,7 +19,9 @@ router.post("/", async (req, res) => {
   }
 
   let user = await User.findOne({ email: req.body.email });
+  let name = await User.findOne({ name: req.body.name });
   if (user) return res.status(400).send("User already registered");
+  if (name) return res.status(400).send("Username already taken");
 
   user = new User({
     name: req.body.name,

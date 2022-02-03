@@ -30,10 +30,6 @@ class Forum extends React.Component {
     replyModalOpen: false,
     user: null,
     createModalError: "",
-    userName: "",
-    userEmail: "",
-    userPassword: "",
-    replyText: "",
     currentPage: 1,
     pageSize: 2,
     numberOfPages: 0,
@@ -134,17 +130,11 @@ class Forum extends React.Component {
     return this.state.user === null ? false : true;
   };
 
-  handleUserEmailChange = (e) => this.setState({ userEmail: e.target.value });
-  handleUserPasswordChange = (e) =>
-    this.setState({ userPassword: e.target.value });
-  handleUserNameChange = (e) => this.setState({ userName: e.target.value });
-
   resetStateFormInfoHolders = () => {
     this.setState({
       createModalError: "",
       postTitle: "",
       postBody: "",
-      userName: "",
       userEmail: "",
       userPassword: "",
     });
@@ -250,29 +240,6 @@ class Forum extends React.Component {
     ) {
       console.log("clicked outside login");
       this.closeLoginModal();
-    }
-  };
-
-  onCreateUser = async () => {
-    const { userEmail, userPassword, userName } = this.state;
-    const postObj = {
-      name: userName,
-      email: userEmail,
-      password: userPassword,
-    };
-    try {
-      const response = await axios.post(config + "/api/users", postObj);
-      console.log(response);
-      this.closeUserModal();
-      window.location = "/";
-    } catch (error) {
-      console.log(
-        error.response.status,
-        error.response.data.details[0].message
-      );
-      this.setState({
-        createModalError: error.response.data.details[0].message,
-      });
     }
   };
 
@@ -419,11 +386,6 @@ class Forum extends React.Component {
     }
   };
 
-  onChangeReplyModalText = (text) => {
-    this.setState({ replyText: text });
-    console.log(text);
-  };
-
   updateCurrentPage = (newPage) => {
     console.log(newPage);
     this.setState({ currentPage: newPage });
@@ -450,19 +412,16 @@ class Forum extends React.Component {
           width={this.state.width}
           user={this.state.user}
         />
-        {this.state.userModalOpen ? (
-          <NewUserModal
-            closeUserModal={this.closeUserModal}
-            isOpen={this.state.userModalOpen}
-            value={this.state.userModalOpen}
-            updateView={this.updateEntriesFromDatabase}
-            onSubmit={this.onCreateUser}
-            onNameChange={this.handleUserNameChange}
-            onEmailChange={this.handleUserEmailChange}
-            onPasswordChange={this.handleUserPasswordChange}
-            error={this.state.createModalError}
-          />
-        ) : null}
+
+        <NewUserModal
+          closeUserModal={this.closeUserModal}
+          isOpen={this.state.userModalOpen}
+          value={this.state.userModalOpen}
+          updateView={this.updateEntriesFromDatabase}
+          error={this.state.createModalError}
+          width={this.state.width}
+        />
+
         {this.state.loginModalOpen ? (
           <LoginModal
             closeLoginModal={this.closeLoginModal}
