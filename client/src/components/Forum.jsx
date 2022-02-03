@@ -422,17 +422,13 @@ class Forum extends React.Component {
           width={this.state.width}
         />
 
-        {this.state.loginModalOpen ? (
-          <LoginModal
-            closeLoginModal={this.closeLoginModal}
-            isOpen={this.state.loginModalOpen}
-            value={this.state.loginModalOpen}
-            onEmailChange={this.handleUserEmailChange}
-            onPasswordChange={this.handleUserPasswordChange}
-            onSubmit={this.onLogin}
-            error={this.state.createModalError}
-          />
-        ) : null}
+        <LoginModal
+          closeLoginModal={this.closeLoginModal}
+          isOpen={this.state.loginModalOpen}
+          value={this.state.loginModalOpen}
+          onSubmit={this.onLogin}
+          error={this.state.createModalError}
+        />
 
         <ReplyModal
           closeModal={this.closeReplyModal}
