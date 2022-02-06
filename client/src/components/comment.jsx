@@ -1,9 +1,13 @@
 import React from "react";
 import { config } from "../URLs.jsx";
 import axios from "axios";
-import { FaReply } from "react-icons/fa";
+import { FaEllipsisH } from "react-icons/fa";
 
 class Comment extends React.Component {
+  state = {
+    isHovered: false,
+  };
+
   saveCommentInDatabase = async () => {
     const { comment } = this.props;
     const commentObj = {
@@ -17,6 +21,17 @@ class Comment extends React.Component {
       console.log(response);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  onClick = () => {
+    console.log("just clicked");
+    if (this.state.isHovered) {
+      this.setState({ isHovered: false });
+      console.log("unclicking");
+    } else {
+      this.setState({ isHovered: true });
+      console.log("clicking");
     }
   };
 
@@ -36,7 +51,10 @@ class Comment extends React.Component {
 
     return (
       <div className="comment-wrapper">
-        <div className="comment">
+        <div
+          className="comment"
+          id={this.state.isHovered ? "comment-test" : null}
+        >
           <div className="comment-body">
             <div className="comment-text">{this.props.comment.body}</div>
             <div className="comment-by">
@@ -44,13 +62,13 @@ class Comment extends React.Component {
                 <small>by {this.props.comment.username.name}</small>
               )}
             </div>
-            <div className="comment-reply-button-div">
-              <button
-                className="comment-reply-button"
-                onClick={() => this.props.openReplyModal(this.props.comment)}
-              >
-                Reply
-              </button>
+
+            <div className="ellipsis" onClick={() => this.onClick()}>
+              <FaEllipsisH />
+              <div
+                className="comment-menu"
+                id={this.state.isHovered ? "comment-menu-visible" : null}
+              ></div>
             </div>
           </div>
         </div>
