@@ -1,12 +1,20 @@
 import React from "react";
 import { config } from "../URLs.jsx";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { FaEllipsisH } from "react-icons/fa";
 
 class Comment extends React.Component {
   state = {
     isOpen: false,
+    user: "",
   };
+
+  componentDidMount() {
+    const jwt = localStorage.getItem("token");
+    const user = jwtDecode(jwt);
+    this.setState({ user: user });
+  }
 
   saveCommentInDatabase = async () => {
     const { comment } = this.props;
@@ -36,14 +44,8 @@ class Comment extends React.Component {
   };
 
   handleClickOutsideCommentMenu = (event) => {
-    console.log(event.target);
     let container = document.getElementById(this.props.comment._id);
-    if (
-      event.target.className !== "comment-button" &&
-      event.target.className !== "ellipsis" &&
-      event.target.className.baseVal !== "react-icon" &&
-      !container.contains(event.target)
-    ) {
+    if (!container.contains(event.target)) {
       console.log("clicked outside comment-menu");
       window.removeEventListener("click", this.handleClickOutsideCommentMenu);
       this.setState({ isOpen: false });
@@ -79,14 +81,26 @@ class Comment extends React.Component {
               )}
             </div>
 
-            <div className="ellipsis" onClick={() => this.onClick()}>
-              <FaEllipsisH className="react-icon" id={this.props.comment._id} />
+            <div
+              className="ellipsis"
+              id={this.props.comment._id}
+              onClick={() => this.onClick()}
+            >
+              <FaEllipsisH className="react-icon" />
               <div
                 className="comment-menu"
                 id={this.state.isOpen ? "comment-menu-visible" : null}
               >
-                <button className="comment-button">Reply</button>
-                <button className="comment-button">Delete</button>
+                <button
+                  className="comment-button"
+                  onClick={() => this.props.openReplyModal(this.props.comment)}
+                >
+                  Reply
+                </button>
+                {this.state.user._id == this.props.comment.username._id && (
+                  <button className="comment-button">Delete</button>
+                )}
+
                 <button className="comment-button">Report</button>
               </div>
             </div>

@@ -165,6 +165,7 @@ class Forum extends React.Component {
   };
 
   openReplyModal = (comment) => {
+    console.log(comment);
     window.addEventListener("click", this.handleClickOutsideReplyModal);
     if (comment) this.setState({ viewedComment: comment });
     this.setState({ replyModalOpen: true });
@@ -184,7 +185,7 @@ class Forum extends React.Component {
       container !== event.target &&
       !container.contains(event.target) &&
       event.target.className !== "post-reply-button" &&
-      event.target.className !== "comment-reply-button"
+      event.target.className !== "comment-button"
     ) {
       console.log("clicked outside reply modal");
       this.closeReplyModal();
