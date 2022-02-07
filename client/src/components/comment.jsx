@@ -5,7 +5,7 @@ import { FaEllipsisH } from "react-icons/fa";
 
 class Comment extends React.Component {
   state = {
-    isHovered: false,
+    isOpen: false,
   };
 
   saveCommentInDatabase = async () => {
@@ -26,14 +26,33 @@ class Comment extends React.Component {
 
   onClick = () => {
     console.log("just clicked");
-    if (this.state.isHovered) {
-      this.setState({ isHovered: false });
-      console.log("unclicking");
+    if (this.state.isOpen) {
+      window.removeEventListener("click", this.handleClickOutsideCommentMenu);
+      this.setState({ isOpen: false });
     } else {
-      this.setState({ isHovered: true });
-      console.log("clicking");
+      window.addEventListener("click", this.handleClickOutsideCommentMenu);
+      this.setState({ isOpen: true });
     }
   };
+
+  handleClickOutsideCommentMenu = (event) => {
+    console.log(event.target);
+    let container = document.getElementById(this.props.comment._id);
+    if (
+      event.target.className !== "comment-button" &&
+      event.target.className !== "ellipsis" &&
+      event.target.className.baseVal !== "react-icon" &&
+      !container.contains(event.target)
+    ) {
+      console.log("clicked outside comment-menu");
+      window.removeEventListener("click", this.handleClickOutsideCommentMenu);
+      this.setState({ isOpen: false });
+    }
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.handleClickOutsideCommentMenu);
+  }
 
   render() {
     const nestedComments = (this.props.comment.children || []).map(
@@ -51,10 +70,7 @@ class Comment extends React.Component {
 
     return (
       <div className="comment-wrapper">
-        <div
-          className="comment"
-          id={this.state.isHovered ? "comment-test" : null}
-        >
+        <div className="comment">
           <div className="comment-body">
             <div className="comment-text">{this.props.comment.body}</div>
             <div className="comment-by">
@@ -64,11 +80,15 @@ class Comment extends React.Component {
             </div>
 
             <div className="ellipsis" onClick={() => this.onClick()}>
-              <FaEllipsisH />
+              <FaEllipsisH className="react-icon" id={this.props.comment._id} />
               <div
                 className="comment-menu"
-                id={this.state.isHovered ? "comment-menu-visible" : null}
-              ></div>
+                id={this.state.isOpen ? "comment-menu-visible" : null}
+              >
+                <button className="comment-button">Reply</button>
+                <button className="comment-button">Delete</button>
+                <button className="comment-button">Report</button>
+              </div>
             </div>
           </div>
         </div>
