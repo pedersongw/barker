@@ -44,4 +44,17 @@ router.post("/", async (req, res) => {
     });
 });
 
+router.post("/delete", async (req, res) => {
+  let searchParam = req.body;
+  console.log(req.body);
+  Comment.findOneAndUpdate(searchParam, { deleted: true })
+    .then((data) => {
+      res.send(data);
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;

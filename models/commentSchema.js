@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-
-
 const Comment = mongoose.model(
   "Comment",
   new mongoose.Schema({
@@ -10,7 +8,8 @@ const Comment = mongoose.model(
     username: Object,
     parentPost: String,
     parentComment: String,
-    children: Array
+    children: Array,
+    deleted: Boolean,
   })
 );
 

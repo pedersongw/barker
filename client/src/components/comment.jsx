@@ -32,6 +32,20 @@ class Comment extends React.Component {
     }
   };
 
+  updateDeletedComment = async () => {
+    const { comment } = this.props;
+    let commentID = { _id: comment._id };
+    try {
+      const response = await axios.post(
+        config + "/api/comments/delete",
+        commentID
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   onClick = () => {
     console.log("just clicked");
     if (this.state.isOpen) {
@@ -70,40 +84,59 @@ class Comment extends React.Component {
       }
     );
 
+    let { comment } = this.props;
+
     return (
       <div className="comment-wrapper">
-        <div className="comment">
+        <div
+          className="comment"
+          id={comment.deleted ? "deleted-comment" : null}
+        >
           <div className="comment-body">
-            <div className="comment-text">{this.props.comment.body}</div>
+            <div className="comment-text">
+              {comment.deleted ? (
+                <div>Comment has been deleted</div>
+              ) : (
+                comment.body
+              )}
+            </div>
             <div className="comment-by">
-              {this.props.comment.username && (
+              {!comment.deleted && (
                 <small>by {this.props.comment.username.name}</small>
               )}
             </div>
-
-            <div
-              className="ellipsis"
-              id={this.props.comment._id}
-              onClick={() => this.onClick()}
-            >
-              <FaEllipsisH className="react-icon" />
+            {!comment.deleted && (
               <div
-                className="comment-menu"
-                id={this.state.isOpen ? "comment-menu-visible" : null}
+                className="ellipsis"
+                id={this.props.comment._id}
+                onClick={() => this.onClick()}
               >
-                <button
-                  className="comment-button"
-                  onClick={() => this.props.openReplyModal(this.props.comment)}
+                <FaEllipsisH className="react-icon" />
+                <div
+                  className="comment-menu"
+                  id={this.state.isOpen ? "comment-menu-visible" : null}
                 >
-                  Reply
-                </button>
-                {this.state.user._id == this.props.comment.username._id && (
-                  <button className="comment-button">Delete</button>
-                )}
+                  <button
+                    className="comment-button"
+                    onClick={() =>
+                      this.props.openReplyModal(this.props.comment)
+                    }
+                  >
+                    Reply
+                  </button>
+                  {this.state.user._id == this.props.comment.username._id && (
+                    <button
+                      className="comment-button"
+                      onClick={() => this.updateDeletedComment()}
+                    >
+                      Delete
+                    </button>
+                  )}
 
-                <button className="comment-button">Report</button>
+                  <button className="comment-button">Report</button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
         {nestedComments}

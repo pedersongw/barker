@@ -419,6 +419,12 @@ a {
   min-width: 200px;
 }
 
+#deleted-comment {
+  background-color: rgb(255, 84, 84);
+  opacity: 0.6;
+  color: white;
+}
+
 .comment-text {
   padding: 5px;
 }
