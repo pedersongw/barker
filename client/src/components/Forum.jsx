@@ -23,6 +23,7 @@ class Forum extends React.Component {
     comments: [],
     width: window.innerWidth,
     isViewingComments: false,
+    clickedComment: "",
     dbWasContacted: false,
     postModalOpen: false,
     userModalOpen: false,
@@ -387,6 +388,29 @@ class Forum extends React.Component {
     }
   };
 
+  clickedComment = (comment) => {
+    console.log(comment);
+    let com = comment;
+    com.depth = 0;
+    this.setState({ clickedComment: com });
+    this.setState({ isViewingComments: false });
+  };
+
+  renderClickedComment = () => {
+    const { clickedComment: comment } = this.state;
+    return (
+      <Comment
+        clickedComment={this.clickedComment}
+        depth={0}
+        key={comment._id}
+        openReplyModal={this.openReplyModal}
+        id={comment._id}
+        comment={comment}
+        parentPost={comment.parentPost}
+      />
+    );
+  };
+
   updateCurrentPage = (newPage) => {
     console.log(newPage);
     this.setState({ currentPage: newPage });
@@ -463,24 +487,33 @@ class Forum extends React.Component {
           <div className="posts-div">
             {this.state.entriesDisplayed &&
               !this.state.isViewingComments &&
+              this.state.clickedComment == "" &&
               this.renderPostsInListGroup()}
-            {this.state.isViewingComments && (
-              <SinglePost
-                post={this.state.viewedEntry}
-                openReplyModal={this.openReplyModal}
-                comments={this.state.comments}
-              />
+            {this.state.isViewingComments &&
+              this.state.clickedComment == "" && (
+                <SinglePost
+                  clickedComment={this.clickedComment}
+                  post={this.state.viewedEntry}
+                  openReplyModal={this.openReplyModal}
+                  comments={this.state.comments}
+                />
+              )}
+            {this.state.clickedComment !== "" && (
+              <div className="comment-margin">
+                {this.renderClickedComment()}
+              </div>
             )}
-            {!this.state.isViewingComments && (
-              <Pagination
-                currentPage={Number(currentPage)}
-                totalCount={Number(this.state.numberOfPages)}
-                siblingCount={1}
-                pageSize={pageSize}
-                updateCurrentPage={this.updateCurrentPage}
-                incrementPage={this.incrementPage}
-              />
-            )}
+            {!this.state.isViewingComments &&
+              this.state.clickedComment == "" && (
+                <Pagination
+                  currentPage={Number(currentPage)}
+                  totalCount={Number(this.state.numberOfPages)}
+                  siblingCount={1}
+                  pageSize={pageSize}
+                  updateCurrentPage={this.updateCurrentPage}
+                  incrementPage={this.incrementPage}
+                />
+              )}
           </div>
           {this.state.width < 800 && (
             <div className="forum-mobile-nav-div">

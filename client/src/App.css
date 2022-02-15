@@ -335,10 +335,7 @@ a {
 }
 
 .viewed-post-wrapper {
-  border-radius: 10px;
   padding: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.8);
-  background-color: #004562;
 }
 
 .viewed-post {
@@ -417,6 +414,10 @@ a {
   border-radius: 3px;
   display: inline-block;
   min-width: 200px;
+}
+
+.comment-margin {
+  margin: 25px 0;
 }
 
 #deleted-comment {

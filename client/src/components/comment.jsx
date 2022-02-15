@@ -16,6 +16,15 @@ class Comment extends React.Component {
     this.setState({ user: user });
   }
 
+  onClick = () => {
+    if (this.props.depth > 5) {
+      this.props.clickedComment(this.props.comment);
+    } else {
+      console.log(this.props);
+    }
+    console.log(this.state.user);
+  };
+
   saveCommentInDatabase = async () => {
     const { comment } = this.props;
     const commentObj = {
@@ -46,7 +55,7 @@ class Comment extends React.Component {
     }
   };
 
-  onClick = () => {
+  onEllipsisClick = () => {
     console.log("just clicked");
     if (this.state.isOpen) {
       window.removeEventListener("click", this.handleClickOutsideCommentMenu);
@@ -66,6 +75,26 @@ class Comment extends React.Component {
     }
   };
 
+  displayBody = () => {
+    if (this.props.depth > 5) {
+      return <div>Click to continue thread</div>;
+    } else if (this.props.comment.deleted) {
+      return <div>Comment has been deleted</div>;
+    } else {
+      return this.props.comment.body;
+    }
+  };
+
+  isUserOrAdmin = () => {
+    if (this.state.user.isAdmin) {
+      return true;
+    } else if (this.state.user._id == this.props.comment.username._id) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   componentWillUnmount() {
     window.removeEventListener("click", this.handleClickOutsideCommentMenu);
   }
@@ -75,6 +104,8 @@ class Comment extends React.Component {
       (comment) => {
         return (
           <Comment
+            clickedComment={this.props.clickedComment}
+            depth={this.props.depth + 1}
             key={comment._id}
             openReplyModal={this.props.openReplyModal}
             comment={comment}
@@ -91,25 +122,20 @@ class Comment extends React.Component {
         <div
           className="comment"
           id={comment.deleted ? "deleted-comment" : null}
+          onClick={() => this.onClick()}
         >
           <div className="comment-body">
-            <div className="comment-text">
-              {comment.deleted ? (
-                <div>Comment has been deleted</div>
-              ) : (
-                comment.body
-              )}
-            </div>
+            <div className="comment-text">{this.displayBody()}</div>
             <div className="comment-by">
-              {!comment.deleted && (
+              {!comment.deleted && this.props.depth <= 5 && (
                 <small>by {this.props.comment.username.name}</small>
               )}
             </div>
-            {!comment.deleted && (
+            {!comment.deleted && this.props.depth <= 5 && (
               <div
                 className="ellipsis"
                 id={this.props.comment._id}
-                onClick={() => this.onClick()}
+                onClick={() => this.onEllipsisClick()}
               >
                 <FaEllipsisH className="react-icon" />
                 <div
@@ -124,7 +150,7 @@ class Comment extends React.Component {
                   >
                     Reply
                   </button>
-                  {this.state.user._id == this.props.comment.username._id && (
+                  {this.isUserOrAdmin() && (
                     <button
                       className="comment-button"
                       onClick={() => this.updateDeletedComment()}
@@ -139,7 +165,7 @@ class Comment extends React.Component {
             )}
           </div>
         </div>
-        {nestedComments}
+        {this.props.depth <= 5 && nestedComments}
       </div>
     );
   }
