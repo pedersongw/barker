@@ -27,6 +27,24 @@ body {
   grid-template-areas: "nav post post post post";
 }
 
+.left-placeholder {
+  grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 50vh;
+}
+
+.right-comment-holder {
+  grid-area: post;
+  overflow: auto;
+  margin: 80px 35px 50px;
+  padding: 10px 10px;
+  background-color: #004562;
+  border-radius: 10px;
+}
+
 .desktop-nav {
   grid-area: nav;
   display: flex;

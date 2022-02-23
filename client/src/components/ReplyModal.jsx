@@ -53,6 +53,7 @@ class ReplyModal extends React.Component {
       this.setState({ errorMessage: "Reply cannot be empty" });
     } else {
       this.saveCommentInDatabase();
+      window.location.reload();
     }
   };
 
@@ -109,7 +110,9 @@ class ReplyModal extends React.Component {
             </div>
           </div>
           <div className="modal-footer">
-            <div className="footer-text">{this.returnFooterText()}</div>
+            <div className="footer-text">
+              {this.props.comment ? this.returnFooterText() : null}
+            </div>
             <div className="footer-icon">
               <FaReply />
             </div>

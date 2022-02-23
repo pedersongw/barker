@@ -8,6 +8,7 @@ import App from "./App";
 import Forum from "./components/Forum";
 import Donate from "./components/Donate";
 import Contact from "./components/Contact";
+import DisplayComment from "./components/DisplayComment";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Route path="forum" element={<Forum />} />
         <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

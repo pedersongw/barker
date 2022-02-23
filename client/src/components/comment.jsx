@@ -3,6 +3,7 @@ import { config } from "../URLs.jsx";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { FaEllipsisH } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 class Comment extends React.Component {
   state = {
@@ -17,12 +18,7 @@ class Comment extends React.Component {
   }
 
   onClick = () => {
-    if (this.props.depth > 5) {
-      this.props.clickedComment(this.props.comment);
-    } else {
-      console.log(this.props);
-    }
-    console.log(this.state.user);
+    console.log(this.props);
   };
 
   saveCommentInDatabase = async () => {
@@ -77,7 +73,22 @@ class Comment extends React.Component {
 
   displayBody = () => {
     if (this.props.depth > 5) {
-      return <div>Click to continue thread</div>;
+      return (
+        <React.Fragment>
+          <Link
+            to={`/comment/${this.props.comment._id}/${this.props.comment.parentPost}`}
+          >
+            <div>Click to continue thread</div>
+          </Link>
+          <button
+            onClick={() => {
+              console.log(this.props.comment._id);
+            }}
+          >
+            button
+          </button>
+        </React.Fragment>
+      );
     } else if (this.props.comment.deleted) {
       return <div>Comment has been deleted</div>;
     } else {
@@ -104,7 +115,6 @@ class Comment extends React.Component {
       (comment) => {
         return (
           <Comment
-            clickedComment={this.props.clickedComment}
             depth={this.props.depth + 1}
             key={comment._id}
             openReplyModal={this.props.openReplyModal}

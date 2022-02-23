@@ -11,7 +11,6 @@ class SinglePost extends React.Component {
     return this.props.comments.map((comment) => {
       return (
         <Comment
-          clickedComment={this.props.clickedComment}
           depth={0}
           key={comment._id}
           openReplyModal={this.props.openReplyModal}

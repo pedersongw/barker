@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { config } from "../URLs.jsx";
+import jwtDecode from "jwt-decode";
 import Post from "./Post";
 import Comment from "./comment";
 import LoginModal from "./LoginModal";
