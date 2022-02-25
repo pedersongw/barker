@@ -36,8 +36,7 @@ body {
   height: 50vh;
 }
 
-.right-comment-holder {
-  grid-area: post;
+.comment-holder {
   overflow: auto;
   margin: 80px 35px 50px;
   padding: 10px 10px;
@@ -52,6 +51,12 @@ body {
   align-items: center;
   justify-content: space-between;
   height: 50vh;
+}
+
+.desktop-nav a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .desktop-nav button {
@@ -118,9 +123,13 @@ body {
 .posts-div {
   grid-area: post;
   overflow: auto;
-  margin: 0 25px 35px;
+  margin: 0px 25px 35px;
   background-color: #004562;
   border-radius: 10px;
+}
+
+.posts-spacer {
+  margin-top: 75px;
 }
 
 .post-card {

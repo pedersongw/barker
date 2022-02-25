@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { FaEllipsisH } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 class Pagination extends React.Component {
   determineHowManyButtons = () => {
@@ -19,7 +20,6 @@ class Pagination extends React.Component {
       currentPage + siblingCount,
       totalPageCount
     );
-    console.log(leftSiblingIndex, rightSiblingIndex, currentPage);
     const shouldShowLeftDots = leftSiblingIndex > 2;
     const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
 
@@ -63,34 +63,34 @@ class Pagination extends React.Component {
     return array.map(function (arrayIndex, i) {
       if (typeof arrayIndex === "string") {
         return (
-          <button
-            key={arrayIndex}
-            id={arrayIndex}
-            className="page-button elipsis"
-            onClick={() => console.log(arrayIndex)}
-          >
-            <FaEllipsisH />
-          </button>
+          <Link to={`/forum/${arrayIndex}`}>
+            <button
+              key={arrayIndex}
+              id={arrayIndex}
+              className="page-button elipsis"
+              onClick={() => console.log(arrayIndex)}
+            >
+              <FaEllipsisH />
+            </button>
+          </Link>
         );
       } else {
         return currentPage === arrayIndex ? (
-          <button
-            key={arrayIndex}
-            className="page-button current-page-button"
-            id={arrayIndex}
-            onClick={(event) => updateCurrentPage(event.target.id)}
-          >
-            {arrayIndex}
-          </button>
+          <Link to={`/forum/${arrayIndex}`}>
+            <button
+              key={arrayIndex}
+              className="page-button current-page-button"
+              id={arrayIndex}
+            >
+              {arrayIndex}
+            </button>
+          </Link>
         ) : (
-          <button
-            key={arrayIndex}
-            className="page-button"
-            id={arrayIndex}
-            onClick={(event) => updateCurrentPage(event.target.id)}
-          >
-            {arrayIndex}
-          </button>
+          <Link to={`/forum/${arrayIndex}`}>
+            <button key={arrayIndex} className="page-button" id={arrayIndex}>
+              {arrayIndex}
+            </button>
+          </Link>
         );
       }
     });

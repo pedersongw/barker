@@ -38,16 +38,7 @@ class TopMobileNavBar extends React.Component {
           )}
         </div>
         <div className="top-nav-link" id="top-nav-4">
-          {this.props.page === "forum" ? (
-            <Link
-              to="/forum"
-              onClick={() => console.log("already on that page")}
-            >
-              Forum
-            </Link>
-          ) : (
-            <Link to="/forum">Forum</Link>
-          )}
+          <Link to="/forum/1">Forum</Link>
         </div>
       </div>
     );

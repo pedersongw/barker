@@ -1,26 +1,20 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TopMobileNavBar from "./TopMobileNavBar";
 import CommentHolder from "./CommentHolder";
 
 const DisplayComment = () => {
+  const location = useLocation();
+  const { comment } = location.state;
   const { id } = useParams();
   const { parentPost } = useParams();
 
   return (
-    <div className="forum-main-large">
+    <div>
       <TopMobileNavBar />
 
-      <div className="left-placeholder">
-        <h1>stuff</h1>
-        <h1>stuff</h1>
-        <h1>stuff</h1>
-        <h1>stuff</h1>
-        <h1>stuff</h1>
-        <h1>stuff</h1>
-        <button onClick={() => console.log(id, parentPost)}>use params</button>
-      </div>
-      <div className="right-comment-holder">
+      <div className="comment-holder">
         <CommentHolder id={id} parentPost={parentPost} />
       </div>
     </div>

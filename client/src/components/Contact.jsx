@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 const Contact = () => {
   return (
     <div>
+      <TopMobileNavBar />
       <h1>Contact</h1>
       <h1>Contact</h1>
       <h1>Contact</h1>

@@ -18,6 +18,19 @@ router.get("/", async (req, res) => {
     });
 });
 
+router.get("/single", async (req, res) => {
+  console.log(req.query);
+  Post.findById(req.query)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occured fetching post",
+      });
+    });
+});
+
 router.put("/like", async (req, res) => {
   const filter = { _id: req.body._id };
   const user = { ...req.body.user };

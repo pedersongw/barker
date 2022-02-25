@@ -9,17 +9,20 @@ import Forum from "./components/Forum";
 import Donate from "./components/Donate";
 import Contact from "./components/Contact";
 import DisplayComment from "./components/DisplayComment";
+import SinglePostHolder from "./components/SinglePostHolder";
 import reportWebVitals from "./reportWebVitals";
+import ForumHolder from "./components/ForumHolder";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="forum" element={<Forum />} />
+        <Route path="forum/:page" element={<ForumHolder />} />
         <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
+        <Route path="post/:id" element={<SinglePostHolder />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

@@ -105,14 +105,6 @@ class CommentHolder extends React.Component {
     const { result: comment } = this.state;
     return (
       <div>
-        <button onClick={() => console.log(this.state.result)}>
-          console.log comments
-        </button>
-
-        <button onClick={() => console.log(this.props)}>
-          button searchtree
-        </button>
-        <div></div>
         {this.state.result && (
           <Comment
             depth={0}

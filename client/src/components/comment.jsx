@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../URLs.jsx";
-import jwtDecode from "jwt-decode";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { FaEllipsisH } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -77,6 +77,7 @@ class Comment extends React.Component {
         <React.Fragment>
           <Link
             to={`/comment/${this.props.comment._id}/${this.props.comment.parentPost}`}
+            state={{ comment: this.props.comment }}
           >
             <div>Click to continue thread</div>
           </Link>

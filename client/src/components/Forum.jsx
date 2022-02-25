@@ -31,7 +31,7 @@ class Forum extends React.Component {
     replyModalOpen: false,
     user: null,
     createModalError: "",
-    currentPage: 1,
+    currentPage: this.props.page,
     pageSize: 2,
     numberOfPages: 0,
   };
@@ -58,6 +58,12 @@ class Forum extends React.Component {
       }
     } catch (error) {
       console.log("Couldn't reach the server", error);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      window.location.reload();
     }
   }
 
@@ -340,6 +346,9 @@ class Forum extends React.Component {
   };
 
   renderPostsInListGroup = () => {
+    if (this.state.entriesDisplayed.length < 1) {
+      return <h2>Nothing to display</h2>;
+    }
     return this.state.entriesDisplayed[this.state.currentPage - 1].map(
       (entry) => {
         return (
@@ -489,20 +498,7 @@ class Forum extends React.Component {
               !this.state.isViewingComments &&
               this.state.clickedComment == "" &&
               this.renderPostsInListGroup()}
-            {this.state.isViewingComments &&
-              this.state.clickedComment == "" && (
-                <SinglePost
-                  clickedComment={this.clickedComment}
-                  post={this.state.viewedEntry}
-                  openReplyModal={this.openReplyModal}
-                  comments={this.state.comments}
-                />
-              )}
-            {this.state.clickedComment !== "" && (
-              <div className="comment-margin">
-                {this.renderClickedComment()}
-              </div>
-            )}
+
             {!this.state.isViewingComments &&
               this.state.clickedComment == "" && (
                 <Pagination

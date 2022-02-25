@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class ForumDesktopNav extends React.Component {
   render() {
@@ -26,7 +27,9 @@ class ForumDesktopNav extends React.Component {
           </button>
         )}
         {this.props.userLoggedIn() && (
-          <button onClick={() => this.props.updateView()}>All Posts</button>
+          <Link to="/forum/1">
+            <button>All Posts</button>
+          </Link>
         )}
         {this.props.userLoggedIn() && (
           <button onClick={() => this.props.sortMyPosts()}>My Posts</button>
