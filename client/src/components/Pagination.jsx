@@ -58,14 +58,13 @@ class Pagination extends React.Component {
   };
 
   mapFromDetermineFunctionToButtons = () => {
-    const { updateCurrentPage, currentPage } = this.props;
+    const { updateCurrentPage, currentPage, sort } = this.props;
     let array = this.determineHowManyButtons();
     return array.map(function (arrayIndex, i) {
       if (typeof arrayIndex === "string") {
         return (
-          <Link to={`/forum/${arrayIndex}`}>
+          <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
             <button
-              key={arrayIndex}
               id={arrayIndex}
               className="page-button elipsis"
               onClick={() => console.log(arrayIndex)}
@@ -76,18 +75,14 @@ class Pagination extends React.Component {
         );
       } else {
         return currentPage === arrayIndex ? (
-          <Link to={`/forum/${arrayIndex}`}>
-            <button
-              key={arrayIndex}
-              className="page-button current-page-button"
-              id={arrayIndex}
-            >
+          <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
+            <button className="page-button current-page-button" id={arrayIndex}>
               {arrayIndex}
             </button>
           </Link>
         ) : (
-          <Link to={`/forum/${arrayIndex}`}>
-            <button key={arrayIndex} className="page-button" id={arrayIndex}>
+          <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
+            <button className="page-button" id={arrayIndex}>
               {arrayIndex}
             </button>
           </Link>

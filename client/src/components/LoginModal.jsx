@@ -31,7 +31,7 @@ class LoginModal extends React.Component {
       console.log(response);
       localStorage.setItem("token", response.data);
       this.props.closeLoginModal();
-      window.location = "/forum";
+      window.location = "/forum/1";
     } catch (error) {
       console.log(error);
     }

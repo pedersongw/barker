@@ -27,23 +27,29 @@ class ForumDesktopNav extends React.Component {
           </button>
         )}
         {this.props.userLoggedIn() && (
-          <Link to="/forum/1">
+          <Link to="/forum/1/all">
             <button>All Posts</button>
           </Link>
         )}
         {this.props.userLoggedIn() && (
-          <button onClick={() => this.props.sortMyPosts()}>My Posts</button>
+          <Link to="/forum/1/my">
+            <button>My Posts</button>
+          </Link>
         )}
         {this.props.userLoggedIn() && (
-          <button onClick={() => this.props.sortPopular()}>
-            Sort by Popular
-          </button>
+          <Link to="/forum/1/popular">
+            <button>Sort By Popular</button>
+          </Link>
         )}
         {this.props.userLoggedIn() && (
-          <button onClick={() => this.props.sortByNew()}>Sort by Newest</button>
+          <Link to="/forum/1/new">
+            <button>Sort By New</button>
+          </Link>
         )}
         {this.props.userLoggedIn() && (
-          <button onClick={() => this.props.sortByOld()}>Sort by Oldest</button>
+          <Link to="/forum/1/old">
+            <button>Sort By Old</button>
+          </Link>
         )}
         {this.props.userLoggedIn() && (
           <button onClick={() => this.props.logOut()}>Logout</button>

@@ -18,7 +18,7 @@ ReactDOM.render(
     <React.StrictMode>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="forum/:page" element={<ForumHolder />} />
+        <Route path="forum/:page/:sort" element={<ForumHolder />} />
         <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />

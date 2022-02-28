@@ -1,6 +1,8 @@
 import React from "react";
 import Comment from "./comment";
 import DateComponent from "./date";
+import ReplyModal from "./ReplyModal";
+import jwtDecode from "jwt-decode";
 import TopMobileNavBar from "./TopMobileNavBar";
 import { config } from "../URLs.jsx";
 import axios from "axios";
@@ -10,9 +12,15 @@ class SinglePost extends React.Component {
     reply: "",
     post: null,
     comments: null,
+    replyModalOpen: false,
+    viewedComment: null,
+    user: null,
   };
 
   async componentDidMount() {
+    const jwt = localStorage.getItem("token");
+    const user = jwtDecode(jwt);
+    this.setState({ user: user });
     try {
       const { data } = await axios.get(config + "/api/posts/single", {
         params: {
@@ -53,7 +61,7 @@ class SinglePost extends React.Component {
         <Comment
           depth={0}
           key={comment._id}
-          openReplyModal={this.props.openReplyModal}
+          openReplyModal={this.openReplyModal}
           id={comment._id}
           comment={comment}
           parentPost={comment.parentPost}
@@ -62,13 +70,48 @@ class SinglePost extends React.Component {
     });
   };
 
+  openReplyModal = (comment) => {
+    console.log(comment);
+    window.addEventListener("click", this.handleClickOutsideReplyModal);
+    if (comment) this.setState({ viewedComment: comment });
+    this.setState({ replyModalOpen: true });
+  };
+
+  closeReplyModal = () => {
+    window.removeEventListener("click", this.handleClickOutsideReplyModal);
+    this.setState({ viewedComment: false });
+    this.setState({ replyModalOpen: false });
+  };
+
+  handleClickOutsideReplyModal = (event) => {
+    const container = document.getElementById("reply-modal-content");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      event.target.className !== "post-reply-button" &&
+      event.target.className !== "comment-button"
+    ) {
+      console.log("clicked outside reply modal");
+      this.closeReplyModal();
+    } else {
+      console.log("clicked inside reply modal");
+    }
+  };
+
   render() {
     const { post, comments } = this.state;
     return (
       <React.Fragment>
+        <ReplyModal
+          closeModal={this.closeReplyModal}
+          isOpen={this.state.replyModalOpen}
+          comment={this.state.viewedComment}
+          post={this.state.post}
+          width={this.state.width}
+          user={this.state.user}
+        />
         <TopMobileNavBar />
         <div className="posts-spacer">
-          {" "}
           <div className="posts-div">
             <div className="viewed-post-wrapper">
               {this.state.comments && this.state.post && (
@@ -92,7 +135,7 @@ class SinglePost extends React.Component {
                       <button
                         type="submit"
                         className="post-reply-button"
-                        onClick={() => this.props.openReplyModal()}
+                        onClick={() => this.openReplyModal()}
                       >
                         Reply
                       </button>

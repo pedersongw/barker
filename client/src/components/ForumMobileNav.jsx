@@ -1,5 +1,6 @@
 import React from "react";
 import { FaWrench } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 class ForumMobileNav extends React.Component {
   state = {
@@ -109,31 +110,37 @@ class ForumMobileNav extends React.Component {
             )}
             {this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.updateViewAllPosts()}>
-                  All Posts
-                </button>
+                <Link to="/forum/1/all">
+                  <button>All Posts</button>
+                </Link>
               </div>
             )}
             {this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.sortByMyPosts()}>My Posts</button>
+                <Link to="/forum/1/my">
+                  <button>My Posts</button>
+                </Link>
               </div>
             )}
             {this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.sortByPopular()}>
-                  Sort by Popular
-                </button>
+                <Link to="/forum/1/popular">
+                  <button>Sort By Popular</button>
+                </Link>
               </div>
             )}
             {this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.sortByNew()}>Sort by Newest</button>
+                <Link to="/forum/1/new">
+                  <button>Sort By New</button>
+                </Link>
               </div>
             )}
             {this.props.userLoggedIn() && (
               <div>
-                <button onClick={() => this.sortByOld()}>Sort by Oldest</button>
+                <Link to="/forum/1/old">
+                  <button>Sort By Old</button>
+                </Link>
               </div>
             )}
             {this.props.userLoggedIn() && (

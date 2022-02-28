@@ -32,12 +32,14 @@ class Forum extends React.Component {
     user: null,
     createModalError: "",
     currentPage: this.props.page,
+    sort: this.props.sort,
     pageSize: 2,
     numberOfPages: 0,
   };
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
+    const { sort } = this.props;
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
@@ -58,6 +60,17 @@ class Forum extends React.Component {
       }
     } catch (error) {
       console.log("Couldn't reach the server", error);
+    }
+    if (sort === "all") {
+      return;
+    } else if (sort === "popular") {
+      this.displayPostsSortedByPopular();
+    } else if (sort === "my") {
+      this.displayMyPosts();
+    } else if (sort === "new") {
+      this.displayPostsSortedByNew();
+    } else if (sort === "old") {
+      this.displayPostsSortedByOld();
     }
   }
 
@@ -98,7 +111,6 @@ class Forum extends React.Component {
       (entry) => entry.username[0]["_id"] === this.state.user["_id"]
     );
     this.chunkifyEntries(sorted);
-    this.setState({ currentPage: 1 });
   };
 
   displayPostsSortedByNew = () => {
@@ -106,7 +118,6 @@ class Forum extends React.Component {
       return new Date(b.timePosted) - new Date(a.timePosted);
     });
     this.chunkifyEntries(sortedEntries);
-    this.setState({ currentPage: 1 });
   };
 
   displayPostsSortedByOld = () => {
@@ -114,7 +125,6 @@ class Forum extends React.Component {
       return new Date(a.timePosted) - new Date(b.timePosted);
     });
     this.chunkifyEntries(sortedEntries);
-    this.setState({ currentPage: 1 });
   };
 
   displayPostsSortedByPopular = () => {
@@ -122,7 +132,6 @@ class Forum extends React.Component {
       return b.likes.length - a.likes.length;
     });
     this.chunkifyEntries(sortedEntries);
-    this.setState({ currentPage: 1 });
   };
 
   componentWillUnmount() {
@@ -342,7 +351,7 @@ class Forum extends React.Component {
   logOut = () => {
     localStorage.removeItem("token");
     this.setState({ user: null });
-    window.location = "/forum";
+    window.location = "/forum/1";
   };
 
   renderPostsInListGroup = () => {
@@ -508,6 +517,7 @@ class Forum extends React.Component {
                   pageSize={pageSize}
                   updateCurrentPage={this.updateCurrentPage}
                   incrementPage={this.incrementPage}
+                  sort={this.state.sort}
                 />
               )}
           </div>
