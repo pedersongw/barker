@@ -7,6 +7,7 @@ import "./index.css";
 import App from "./App";
 import Forum from "./components/Forum";
 import Donate from "./components/Donate";
+import Admin from "./components/admin";
 import Contact from "./components/Contact";
 import DisplayComment from "./components/DisplayComment";
 import SinglePostHolder from "./components/SinglePostHolder";
@@ -23,6 +24,7 @@ ReactDOM.render(
         <Route path="contact" element={<Contact />} />
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
         <Route path="post/:id" element={<SinglePostHolder />} />
+        <Route path="admin" element={<Admin />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

@@ -31,7 +31,7 @@ class LoginModal extends React.Component {
       console.log(response);
       localStorage.setItem("token", response.data);
       this.props.closeLoginModal();
-      window.location = "/forum/1";
+      window.location = "/forum/1/all";
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +50,7 @@ class LoginModal extends React.Component {
         <div className="md-content" id="login-modal-content">
           <div className="modal-header">
             {!this.state.errorMessage && (
-              <h2 className="modal-header-text">Create New User</h2>
+              <h2 className="modal-header-text">Log In</h2>
             )}
 
             {this.state.errorMessage ? (

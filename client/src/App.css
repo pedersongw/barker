@@ -504,6 +504,16 @@ a {
   background-color: #00b0d7;
 }
 
+.comment-report-button {
+  border: none;
+  width: 100%;
+  background-color: #00b0d7;
+}
+
+.comment-report-button:hover {
+  background-color: #00faff;
+}
+
 .comment-button:hover {
   background-color: #00faff;
 }
@@ -660,7 +670,7 @@ a {
   justify-content: space-around;
 }
 
-.form input {
+.form .form-input {
   border: none;
   outline: none;
   width: 100%;
@@ -679,10 +689,6 @@ a {
   background: #004562;
   color: #00b0d7;
   resize: none;
-}
-
-.label {
-  display: none;
 }
 
 .modal-footer {

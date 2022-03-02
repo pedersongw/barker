@@ -119,6 +119,7 @@ class Comment extends React.Component {
             depth={this.props.depth + 1}
             key={comment._id}
             openReplyModal={this.props.openReplyModal}
+            openReportModal={this.props.openReportModal}
             comment={comment}
             type="child"
           />
@@ -170,7 +171,12 @@ class Comment extends React.Component {
                     </button>
                   )}
 
-                  <button className="comment-button">Report</button>
+                  <button
+                    onClick={() => this.props.openReportModal()}
+                    className="comment-report-button"
+                  >
+                    Report
+                  </button>
                 </div>
               </div>
             )}

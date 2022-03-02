@@ -1,6 +1,7 @@
 import React from "react";
 import Comment from "./comment";
 import DateComponent from "./date";
+import ReportModal from "./ReportModal";
 import ReplyModal from "./ReplyModal";
 import jwtDecode from "jwt-decode";
 import TopMobileNavBar from "./TopMobileNavBar";
@@ -13,6 +14,7 @@ class SinglePost extends React.Component {
     post: null,
     comments: null,
     replyModalOpen: false,
+    reportModalOpen: false,
     viewedComment: null,
     user: null,
   };
@@ -62,6 +64,7 @@ class SinglePost extends React.Component {
           depth={0}
           key={comment._id}
           openReplyModal={this.openReplyModal}
+          openReportModal={this.openReportModal}
           id={comment._id}
           comment={comment}
           parentPost={comment.parentPost}
@@ -72,9 +75,12 @@ class SinglePost extends React.Component {
 
   openReplyModal = (comment) => {
     console.log(comment);
-    window.addEventListener("click", this.handleClickOutsideReplyModal);
     if (comment) this.setState({ viewedComment: comment });
     this.setState({ replyModalOpen: true });
+    setTimeout(
+      () => window.addEventListener("click", this.handleClickOutsideReplyModal),
+      500
+    );
   };
 
   closeReplyModal = () => {
@@ -85,6 +91,7 @@ class SinglePost extends React.Component {
 
   handleClickOutsideReplyModal = (event) => {
     const container = document.getElementById("reply-modal-content");
+    console.log(container, event.target);
     if (
       container !== event.target &&
       !container.contains(event.target) &&
@@ -98,6 +105,30 @@ class SinglePost extends React.Component {
     }
   };
 
+  openReportModal = () => {
+    window.addEventListener("click", this.handleClickOutsideReportModal);
+    this.setState({ reportModalOpen: true });
+  };
+
+  closeReportModal = () => {
+    window.removeEventListener("click", this.handleClickOutsideReportModal);
+    this.setState({ reportModalOpen: false });
+  };
+
+  handleClickOutsideReportModal = (event) => {
+    const container = document.getElementById("report-modal-content");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      event.target.className !== "comment-report-button"
+    ) {
+      console.log("clicked outside report modal");
+      this.closeReportModal();
+    } else {
+      console.log("clicked inside report modal");
+    }
+  };
+
   render() {
     const { post, comments } = this.state;
     return (
@@ -105,6 +136,14 @@ class SinglePost extends React.Component {
         <ReplyModal
           closeModal={this.closeReplyModal}
           isOpen={this.state.replyModalOpen}
+          comment={this.state.viewedComment}
+          post={this.state.post}
+          width={this.state.width}
+          user={this.state.user}
+        />
+        <ReportModal
+          closeModal={this.closeReportModal}
+          isOpen={this.state.reportModalOpen}
           comment={this.state.viewedComment}
           post={this.state.post}
           width={this.state.width}

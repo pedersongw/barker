@@ -1,6 +1,7 @@
 import React from "react";
 import Comment from "./comment";
 import ReplyModal from "./ReplyModal";
+import ReportModal from "./ReportModal";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { config } from "../URLs.jsx";
@@ -8,6 +9,7 @@ import { config } from "../URLs.jsx";
 class CommentHolder extends React.Component {
   state = {
     replyModalOpen: false,
+    reportModalOpen: false,
     viewedComment: "",
     width: window.innerWidth,
     user: null,
@@ -75,9 +77,12 @@ class CommentHolder extends React.Component {
 
   openReplyModal = (comment) => {
     console.log(comment);
-    window.addEventListener("click", this.handleClickOutsideReplyModal);
     if (comment) this.setState({ viewedComment: comment });
     this.setState({ replyModalOpen: true });
+    setTimeout(
+      () => window.addEventListener("click", this.handleClickOutsideReplyModal),
+      500
+    );
   };
 
   closeReplyModal = () => {
@@ -101,6 +106,30 @@ class CommentHolder extends React.Component {
     }
   };
 
+  openReportModal = () => {
+    window.addEventListener("click", this.handleClickOutsideReportModal);
+    this.setState({ reportModalOpen: true });
+  };
+
+  closeReportModal = () => {
+    window.removeEventListener("click", this.handleClickOutsideReportModal);
+    this.setState({ reportModalOpen: false });
+  };
+
+  handleClickOutsideReportModal = (event) => {
+    const container = document.getElementById("report-modal-content");
+    if (
+      container !== event.target &&
+      !container.contains(event.target) &&
+      event.target.className !== "comment-report-button"
+    ) {
+      console.log("clicked outside report modal");
+      this.closeReportModal();
+    } else {
+      console.log("clicked inside report modal");
+    }
+  };
+
   render() {
     const { result: comment } = this.state;
     return (
@@ -110,6 +139,7 @@ class CommentHolder extends React.Component {
             depth={0}
             key={comment._id}
             openReplyModal={this.openReplyModal}
+            openReportModal={this.openReportModal}
             id={comment._id}
             comment={comment}
             parentPost={comment.parentPost}
@@ -119,6 +149,14 @@ class CommentHolder extends React.Component {
         <ReplyModal
           closeModal={this.closeReplyModal}
           isOpen={this.state.replyModalOpen}
+          comment={this.state.viewedComment}
+          post={this.state.viewedEntry}
+          width={this.state.width}
+          user={this.state.user}
+        />
+        <ReportModal
+          closeModal={this.closeReportModal}
+          isOpen={this.state.reportModalOpen}
           comment={this.state.viewedComment}
           post={this.state.viewedEntry}
           width={this.state.width}
