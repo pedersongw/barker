@@ -15,6 +15,7 @@ class SinglePost extends React.Component {
     comments: null,
     replyModalOpen: false,
     reportModalOpen: false,
+    alreadyReported: false,
     viewedComment: null,
     user: null,
   };
@@ -40,6 +41,7 @@ class SinglePost extends React.Component {
         config + "/api/comments/get",
         searchParam
       );
+      console.log(comments);
       const hashTable = Object.create(null);
       comments.forEach((comment) => (hashTable[comment._id] = { ...comment }));
       const dataTree = [];
@@ -105,14 +107,30 @@ class SinglePost extends React.Component {
     }
   };
 
-  openReportModal = () => {
+  openReportModal = (comment) => {
+    console.log(comment);
+    if (comment.report) {
+      let reported = comment.report.filter(
+        (obj) => obj.user._id == this.state.user._id
+      );
+      reported.length > 0
+        ? this.setState({ alreadyReported: true })
+        : console.log("not yet reported");
+    } else {
+      console.log("not yet reported");
+    }
+
+    if (comment) this.setState({ viewedComment: comment });
     window.addEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: true });
+    this.setState({ viewedComment: comment });
   };
 
   closeReportModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: false });
+    this.setState({ viewedComment: null });
+    setTimeout(() => this.setState({ alreadyReported: false }), 250);
   };
 
   handleClickOutsideReportModal = (event) => {
@@ -145,6 +163,7 @@ class SinglePost extends React.Component {
           closeModal={this.closeReportModal}
           isOpen={this.state.reportModalOpen}
           comment={this.state.viewedComment}
+          reported={this.state.alreadyReported}
           post={this.state.post}
           width={this.state.width}
           user={this.state.user}

@@ -10,6 +10,7 @@ const Comment = mongoose.model(
     parentComment: String,
     children: Array,
     deleted: Boolean,
+    report: Array,
   })
 );
 

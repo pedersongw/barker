@@ -5,6 +5,12 @@ class ForumDesktopNav extends React.Component {
   render() {
     return (
       <nav className="desktop-nav">
+        {this.props.user && this.props.user.isAdmin && (
+          <Link to="/admin">
+            <button>Admin</button>
+          </Link>
+        )}
+
         {!this.props.userLoggedIn() && (
           <button
             id="create-new-user-button"

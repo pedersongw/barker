@@ -7,7 +7,7 @@ import "./index.css";
 import App from "./App";
 import Forum from "./components/Forum";
 import Donate from "./components/Donate";
-import Admin from "./components/admin";
+import Admin from "./components/Admin";
 import Contact from "./components/Contact";
 import DisplayComment from "./components/DisplayComment";
 import SinglePostHolder from "./components/SinglePostHolder";

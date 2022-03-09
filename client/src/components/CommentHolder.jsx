@@ -106,7 +106,9 @@ class CommentHolder extends React.Component {
     }
   };
 
-  openReportModal = () => {
+  openReportModal = (comment) => {
+    console.log(comment);
+    if (comment) this.setState({ viewedComment: comment });
     window.addEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: true });
   };
@@ -114,6 +116,7 @@ class CommentHolder extends React.Component {
   closeReportModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: false });
+    this.setState({ viewedComment: false });
   };
 
   handleClickOutsideReportModal = (event) => {

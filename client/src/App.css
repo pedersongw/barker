@@ -572,7 +572,7 @@ a {
 }
 
 .md-content {
-  color: #002237;
+  color: #00faff;
   height: 100%;
   width: 100%;
   background: #004562;
@@ -738,4 +738,108 @@ a {
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
+}
+
+.admin-holder {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-rows: 5fr 1fr;
+  grid-template-columns: 2fr 3fr;
+  grid-template-areas:
+    "descriptions reported"
+    "buttons buttons";
+}
+
+.report-descriptions-section {
+  grid-area: descriptions;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #004562;
+  overflow-y: scroll;
+}
+
+.reported {
+  grid-area: reported;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #004562;
+  overflow-y: scroll;
+}
+
+.admin-buttons {
+  grid-area: buttons;
+  width: 100%;
+  height: 100%;
+  background-color: #00b0d7;
+}
+
+.reported-comment {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "username body"
+    "time body";
+  height: auto;
+  width: 90%;
+  padding: 5px;
+  background-color: #007498;
+  border-radius: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.report-details {
+  height: auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "username reason"
+    "descriptor explanation";
+  width: 90%;
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #007498;
+  cursor: pointer;
+}
+
+#selected-report {
+  background-color: #00faff;
+}
+
+#highlighted-comment {
+  background-color: #00faff;
+}
+
+.report-user {
+  grid-area: username;
+}
+
+.report-selected-option {
+  grid-area: reason;
+}
+
+.report-description {
+  grid-area: descriptor;
+}
+
+.report-explanation {
+  grid-area: explanation;
+}
+
+.reported-body {
+  grid-area: body;
+}
+
+.admin-h1 {
+  color: #00faff;
 }

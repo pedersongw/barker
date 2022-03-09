@@ -74,6 +74,10 @@ class Forum extends React.Component {
     }
   }
 
+  isAdmin = () => {
+    return this.state.user.isAdmin ? true : false;
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       window.location.reload();
@@ -496,6 +500,7 @@ class Forum extends React.Component {
               logIn={this.openLoginModal}
               logOut={this.logOut}
               userLoggedIn={this.userLoggedIn}
+              user={this.state.user}
               sortMyPosts={this.displayMyPosts}
               sortPopular={this.displayPostsSortedByPopular}
               updateView={this.updateEntriesFromDatabase}

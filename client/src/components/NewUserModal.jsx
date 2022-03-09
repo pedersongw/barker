@@ -43,17 +43,15 @@ export default class NewUserModal extends React.Component {
       name: name,
       email: email,
       password: password,
+      isAdmin: false,
     };
     try {
       const response = await axios.post(config + "/api/users", postObj);
-      console.log(response);
-      this.props.closeUserModal();
-      window.location = "/forum";
+      localStorage.setItem("token", response.headers["x-auth-token"]);
+      window.location.reload();
     } catch (error) {
       console.log(error.response.status, error.response.data);
-      this.setState({
-        errorMessage: error.response.data,
-      });
+      this.setState({ errorMessage: error.response.data });
     }
   };
 

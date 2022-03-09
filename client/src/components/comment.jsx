@@ -172,7 +172,9 @@ class Comment extends React.Component {
                   )}
 
                   <button
-                    onClick={() => this.props.openReportModal()}
+                    onClick={() =>
+                      this.props.openReportModal(this.props.comment)
+                    }
                     className="comment-report-button"
                   >
                     Report
