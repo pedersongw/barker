@@ -355,7 +355,7 @@ class Forum extends React.Component {
   logOut = () => {
     localStorage.removeItem("token");
     this.setState({ user: null });
-    window.location = "/forum/1";
+    window.location = "/forum/1/all";
   };
 
   renderPostsInListGroup = () => {
