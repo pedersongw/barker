@@ -1,6 +1,5 @@
 import React from "react";
 import TopMobileNavBar from "./TopMobileNavBar";
-import { useLocation } from "react-router-dom";
 
 const Contact = () => {
   return (

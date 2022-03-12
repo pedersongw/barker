@@ -10,7 +10,7 @@ class ReportedComment extends React.Component {
     console.log(this.props);
     if (
       !this.props.highlighted ||
-      this.props.highlighted._id != this.props.comment._id
+      this.props.highlighted._id !== this.props.comment._id
     ) {
       return false;
     } else {

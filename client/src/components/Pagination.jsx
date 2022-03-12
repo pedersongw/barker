@@ -58,7 +58,7 @@ class Pagination extends React.Component {
   };
 
   mapFromDetermineFunctionToButtons = () => {
-    const { updateCurrentPage, currentPage, sort } = this.props;
+    const { currentPage, sort } = this.props;
     let array = this.determineHowManyButtons();
     return array.map(function (arrayIndex, i) {
       if (typeof arrayIndex === "string") {

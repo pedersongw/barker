@@ -81,13 +81,6 @@ class Comment extends React.Component {
           >
             <div>Click to continue thread</div>
           </Link>
-          <button
-            onClick={() => {
-              console.log(this.props.comment._id);
-            }}
-          >
-            button
-          </button>
         </React.Fragment>
       );
     } else if (this.props.comment.deleted) {
@@ -100,10 +93,18 @@ class Comment extends React.Component {
   isUserOrAdmin = () => {
     if (this.state.user.isAdmin) {
       return true;
-    } else if (this.state.user._id == this.props.comment.username._id) {
+    } else if (this.state.user._id === this.props.comment.username._id) {
       return true;
     } else {
       return false;
+    }
+  };
+
+  determineCommentId = () => {
+    if (this.props.comment.deleted) {
+      return "deleted-comment";
+    } else {
+      return "comment-depth-" + this.props.depth.toString();
     }
   };
 
@@ -130,10 +131,17 @@ class Comment extends React.Component {
     let { comment } = this.props;
 
     return (
-      <div className="comment-wrapper">
+      <div
+        className="comment-wrapper"
+        id={
+          this.props.comment.children.length !== 0
+            ? "comment-with-children"
+            : null
+        }
+      >
         <div
           className="comment"
-          id={comment.deleted ? "deleted-comment" : null}
+          id={this.determineCommentId()}
           onClick={() => this.onClick()}
         >
           <div className="comment-body">

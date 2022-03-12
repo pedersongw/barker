@@ -111,7 +111,7 @@ class SinglePost extends React.Component {
     console.log(comment);
     if (comment.report) {
       let reported = comment.report.filter(
-        (obj) => obj.user._id == this.state.user._id
+        (obj) => obj.user._id === this.state.user._id
       );
       reported.length > 0
         ? this.setState({ alreadyReported: true })
@@ -148,7 +148,7 @@ class SinglePost extends React.Component {
   };
 
   render() {
-    const { post, comments } = this.state;
+    const { post } = this.state;
     return (
       <React.Fragment>
         <ReplyModal

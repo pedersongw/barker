@@ -47,7 +47,7 @@ export default class PostModal extends React.Component {
       const response = await axios.post(config + "/api/posts", postObj);
       console.log(response);
       this.props.closePostModal();
-      window.location = "/forum/1";
+      window.location = "/forum/1/all";
     } catch (error) {
       console.log(error);
       this.props.closePostModal();

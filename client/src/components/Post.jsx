@@ -1,6 +1,5 @@
 import React from "react";
 import DateComponent from "./date";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 class Post extends React.Component {

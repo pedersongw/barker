@@ -78,7 +78,7 @@ class LoginModal extends React.Component {
               <input
                 type="text"
                 className="form-input"
-                id="username"
+                id="username-login"
                 name="username"
                 placeholder="username"
                 onChange={(event) => this.onEmailChange(event)}
@@ -89,7 +89,7 @@ class LoginModal extends React.Component {
               <input
                 type="password"
                 className="form-input"
-                id="password"
+                id="password-login"
                 name="password"
                 placeholder="password"
                 onChange={(event) => this.onPasswordChange(event)}

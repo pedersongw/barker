@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import jwtDecode from "jwt-decode";
 import { config } from "../URLs.jsx";
 import axios from "axios";

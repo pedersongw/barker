@@ -136,7 +136,7 @@ class CommentHolder extends React.Component {
   render() {
     const { result: comment } = this.state;
     return (
-      <div>
+      <div className="comment-holder">
         {this.state.result && (
           <Comment
             depth={0}

@@ -3,27 +3,20 @@ import axios from "axios";
 import { config } from "../URLs.jsx";
 import jwtDecode from "jwt-decode";
 import Post from "./Post";
-import Comment from "./comment";
 import LoginModal from "./LoginModal";
 import PostModal from "./PostModal";
-import ReplyModal from "./ReplyModal";
 import NewUserModal from "./NewUserModal";
 import TopMobileNavBar from "./TopMobileNavBar";
 import ForumMobileNav from "./ForumMobileNav";
 import Pagination from "./Pagination";
 import ForumDesktopNav from "./ForumDesktopNav";
-import SinglePost from "./SinglePost";
 
 class Forum extends React.Component {
   state = {
     entries: [],
-    viewedEntry: {},
-    viewedComment: false,
     entriesDisplayed: false,
     comments: [],
     width: window.innerWidth,
-    isViewingComments: false,
-    clickedComment: "",
     dbWasContacted: false,
     postModalOpen: false,
     userModalOpen: false,
@@ -33,7 +26,7 @@ class Forum extends React.Component {
     createModalError: "",
     currentPage: this.props.page,
     sort: this.props.sort,
-    pageSize: 2,
+    pageSize: 5,
     numberOfPages: 0,
   };
 
@@ -89,7 +82,6 @@ class Forum extends React.Component {
       const { data: entries } = await axios.get(config + "/api/posts");
       console.log("updateEntriesFromDatabase called");
       this.chunkifyEntries(entries);
-      this.setState({ isViewingComments: false });
       this.setState({ comments: [] });
     } catch (error) {
       console.log("Couldn't reach the server", error);
@@ -184,36 +176,6 @@ class Forum extends React.Component {
     }
   };
 
-  openReplyModal = (comment) => {
-    console.log(comment);
-    window.addEventListener("click", this.handleClickOutsideReplyModal);
-    if (comment) this.setState({ viewedComment: comment });
-    this.setState({ replyModalOpen: true });
-    this.resetStateFormInfoHolders();
-  };
-
-  closeReplyModal = () => {
-    window.removeEventListener("click", this.handleClickOutsideReplyModal);
-    this.setState({ viewedComment: false });
-    this.setState({ replyModalOpen: false });
-    this.resetStateFormInfoHolders();
-  };
-
-  handleClickOutsideReplyModal = (event) => {
-    const container = document.getElementById("reply-modal-content");
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      event.target.className !== "post-reply-button" &&
-      event.target.className !== "comment-button"
-    ) {
-      console.log("clicked outside reply modal");
-      this.closeReplyModal();
-    } else {
-      console.log("clicked inside reply modal");
-    }
-  };
-
   openUserModal = () => {
     window.addEventListener("click", this.handleClickOutsideUserModal);
     this.setState({ userModalOpen: true });
@@ -276,7 +238,7 @@ class Forum extends React.Component {
       console.log(response);
       localStorage.setItem("token", response.data);
       this.closeLoginModal();
-      window.location = "/forum";
+      window.location = "/forum/1/all";
     } catch (error) {
       console.log(
         error.response.status,
@@ -297,22 +259,6 @@ class Forum extends React.Component {
       return "Couldn't reach server";
     } else {
       return firstPart + secondPart;
-    }
-  };
-
-  onDelete = async (id) => {
-    try {
-      const response = await axios.delete(config + "/api/posts", {
-        data: { _id: id },
-      });
-      console.log(response);
-      const entriesExceptDeleted = this.state.entries.filter(
-        (entry) => entry._id !== id
-      );
-      this.setState({ entries: entriesExceptDeleted });
-      this.updateEntriesFromDatabase();
-    } catch (error) {
-      console.log(error, "Couldn't delete");
     }
   };
 
@@ -383,56 +329,6 @@ class Forum extends React.Component {
     );
   };
 
-  contactDatabaseUpdateStateWithComments = async (postID) => {
-    try {
-      this.setState({ isViewingComments: true });
-      let entry = this.state.entries.filter((entry) => entry._id == postID);
-      this.setState({ viewedEntry: entry[0] });
-      let searchParam = { parentPost: `${postID}` };
-      const { data: comments } = await axios.post(
-        config + "/api/comments/get",
-        searchParam
-      );
-      const hashTable = Object.create(null);
-      comments.forEach((comment) => (hashTable[comment._id] = { ...comment }));
-      const dataTree = [];
-      comments.forEach((comment) => {
-        if (comment.parentComment)
-          hashTable[comment.parentComment].children.push(
-            hashTable[comment._id]
-          );
-        else dataTree.push(hashTable[comment._id]);
-        console.log(dataTree);
-        this.setState({ comments: dataTree });
-      });
-    } catch (error) {
-      console.log("catch block called", error);
-    }
-  };
-
-  clickedComment = (comment) => {
-    console.log(comment);
-    let com = comment;
-    com.depth = 0;
-    this.setState({ clickedComment: com });
-    this.setState({ isViewingComments: false });
-  };
-
-  renderClickedComment = () => {
-    const { clickedComment: comment } = this.state;
-    return (
-      <Comment
-        clickedComment={this.clickedComment}
-        depth={0}
-        key={comment._id}
-        openReplyModal={this.openReplyModal}
-        id={comment._id}
-        comment={comment}
-        parentPost={comment.parentPost}
-      />
-    );
-  };
-
   updateCurrentPage = (newPage) => {
     console.log(newPage);
     this.setState({ currentPage: newPage });
@@ -443,14 +339,12 @@ class Forum extends React.Component {
   };
 
   render() {
-    const { currentPage, entries, entriesDisplayed, pageSize } = this.state;
+    const { currentPage, pageSize } = this.state;
 
     return (
       <div>
         <TopMobileNavBar page="forum" />
-
-        <h1>{this.serverStatus()}</h1>
-
+        <div className="spacer-for-header"></div>
         <PostModal
           closePostModal={this.closePostModal}
           isOpen={this.state.postModalOpen}
@@ -477,15 +371,6 @@ class Forum extends React.Component {
           error={this.state.createModalError}
         />
 
-        <ReplyModal
-          closeModal={this.closeReplyModal}
-          isOpen={this.state.replyModalOpen}
-          comment={this.state.viewedComment}
-          post={this.state.viewedEntry}
-          width={this.state.width}
-          user={this.state.user}
-        />
-
         <div
           className={
             this.state.width < 800 ? "formum-main" : "forum-main-large"
@@ -508,23 +393,21 @@ class Forum extends React.Component {
           )}
 
           <div className="posts-div">
+            {!this.state.user && this.serverStatus()}
             {this.state.entriesDisplayed &&
-              !this.state.isViewingComments &&
-              this.state.clickedComment == "" &&
+              this.state.user &&
               this.renderPostsInListGroup()}
-
-            {!this.state.isViewingComments &&
-              this.state.clickedComment == "" && (
-                <Pagination
-                  currentPage={Number(currentPage)}
-                  totalCount={Number(this.state.numberOfPages)}
-                  siblingCount={1}
-                  pageSize={pageSize}
-                  updateCurrentPage={this.updateCurrentPage}
-                  incrementPage={this.incrementPage}
-                  sort={this.state.sort}
-                />
-              )}
+            {this.state.user && (
+              <Pagination
+                currentPage={Number(currentPage)}
+                totalCount={Number(this.state.numberOfPages)}
+                siblingCount={1}
+                pageSize={pageSize}
+                updateCurrentPage={this.updateCurrentPage}
+                incrementPage={this.incrementPage}
+                sort={this.state.sort}
+              />
+            )}
           </div>
           {this.state.width < 800 && (
             <div className="forum-mobile-nav-div">
