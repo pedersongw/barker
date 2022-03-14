@@ -3,6 +3,8 @@ import Comment from "./comment";
 import DateComponent from "./date";
 import ReportModal from "./ReportModal";
 import ReplyModal from "./ReplyModal";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import jwtDecode from "jwt-decode";
 import TopMobileNavBar from "./TopMobileNavBar";
 import { config } from "../URLs.jsx";
@@ -84,6 +86,43 @@ class SinglePost extends React.Component {
         />
       );
     });
+  };
+
+  onLike = async () => {
+    let id = this.props.id;
+    const userID = this.state.user._id;
+    const data = {
+      _id: id,
+      user: { ...this.state.user },
+    };
+    let post = this.state.post;
+    let isAlreadyLiked = false;
+    for (let i = 0; i < post.likes.length; i++) {
+      if (post.likes[i]["_id"] === userID) {
+        isAlreadyLiked = true;
+      }
+    }
+    console.log(isAlreadyLiked);
+
+    if (!isAlreadyLiked) {
+      try {
+        console.log("like try block called");
+        const response = await axios.put(config + "/api/posts/like", data);
+        console.log(response);
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        console.log("unlike try block called");
+        const response = await axios.put(config + "/api/posts/unlike", data);
+        console.log(response);
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   openReplyModal = (comment) => {
@@ -201,13 +240,20 @@ class SinglePost extends React.Component {
                       <DateComponent time={post.timePosted} />
                     </div>
                     <div className="viewed-post-reply-div">
-                      <button
-                        type="submit"
-                        className="post-reply-button"
-                        onClick={() => this.openReplyModal()}
-                      >
-                        Reply
-                      </button>
+                      <div className="likes-heart">
+                        <FaHeart />
+                        <FaRegHeart />
+                        <button onClick={() => this.onLike()}>like</button>
+                      </div>
+                      <div className="post-reply-holder">
+                        <button
+                          type="submit"
+                          className="post-reply-button"
+                          onClick={() => console.log(this.state.post)}
+                        >
+                          Reply
+                        </button>
+                      </div>
                     </div>
                   </div>
 

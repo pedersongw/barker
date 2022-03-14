@@ -27,6 +27,15 @@ body {
   grid-template-areas: "nav post post post post";
 }
 
+.please-login {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: post;
+}
+
 .left-placeholder {
   grid-area: nav;
   display: flex;
@@ -420,14 +429,29 @@ a {
 
 .viewed-post-reply-div {
   grid-area: reply;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "likes reply report";
   text-align: center;
 }
 
+.likes-heart {
+  grid-area: likes;
+}
+
+.post-reply-holder {
+  width: 100%;
+  height: 100%;
+  grid-area: reply;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .post-reply-button {
   border: none;
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
-  width: 50%;
-  height: 75%;
   background-color: #00b0d7;
 }
 

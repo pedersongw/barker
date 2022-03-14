@@ -262,42 +262,6 @@ class Forum extends React.Component {
     }
   };
 
-  onLike = async (id) => {
-    const userID = this.state.user._id;
-    const data = {
-      _id: id,
-      user: { ...this.state.user },
-    };
-    let post = this.state.entries.filter((entry) => entry._id === id);
-    let isAlreadyLiked = false;
-    for (let i = 0; i < post[0].likes.length; i++) {
-      if (post[0].likes[i]["_id"] === userID) {
-        isAlreadyLiked = true;
-      }
-    }
-    console.log(isAlreadyLiked);
-
-    if (!isAlreadyLiked) {
-      try {
-        console.log("like try block called");
-        const response = await axios.put(config + "/api/posts/like", data);
-        console.log(response);
-        this.updateEntriesFromDatabase();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        console.log("unlike try block called");
-        const response = await axios.put(config + "/api/posts/unlike", data);
-        console.log(response);
-        this.updateEntriesFromDatabase();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
   logOut = () => {
     localStorage.removeItem("token");
     this.setState({ user: null });
@@ -391,24 +355,29 @@ class Forum extends React.Component {
               updateView={this.updateEntriesFromDatabase}
             />
           )}
-
-          <div className="posts-div">
-            {!this.state.user && this.serverStatus()}
-            {this.state.entriesDisplayed &&
-              this.state.user &&
-              this.renderPostsInListGroup()}
-            {this.state.user && (
-              <Pagination
-                currentPage={Number(currentPage)}
-                totalCount={Number(this.state.numberOfPages)}
-                siblingCount={1}
-                pageSize={pageSize}
-                updateCurrentPage={this.updateCurrentPage}
-                incrementPage={this.incrementPage}
-                sort={this.state.sort}
-              />
-            )}
+          <div className="please-login">
+            <h1>{!this.state.user && this.serverStatus()}</h1>
           </div>
+
+          {this.state.user && (
+            <div className="posts-div">
+              {this.state.entriesDisplayed &&
+                this.state.user &&
+                this.renderPostsInListGroup()}
+              {this.state.user && (
+                <Pagination
+                  currentPage={Number(currentPage)}
+                  totalCount={Number(this.state.numberOfPages)}
+                  siblingCount={1}
+                  pageSize={pageSize}
+                  updateCurrentPage={this.updateCurrentPage}
+                  incrementPage={this.incrementPage}
+                  sort={this.state.sort}
+                />
+              )}
+            </div>
+          )}
+
           {this.state.width < 800 && (
             <div className="forum-mobile-nav-div">
               <ForumMobileNav
