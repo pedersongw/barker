@@ -154,7 +154,9 @@ class Comment extends React.Component {
         <div
           className="comment"
           id={this.determineCommentId()}
-          onClick={() => console.log(this.props, nestedComments[0])}
+          onClick={() =>
+            console.log(this.props, this.isAlmostDeep(), this.isDeep())
+          }
         >
           <div className="comment-body">
             <div className="comment-text">{this.displayBody()}</div>

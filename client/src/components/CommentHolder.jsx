@@ -145,7 +145,7 @@ class CommentHolder extends React.Component {
             openReplyModal={this.openReplyModal}
             openReportModal={this.openReportModal}
             id={comment._id}
-            width={this.state.innerWidth}
+            width={this.state.width}
             comment={comment}
             parentPost={comment.parentPost}
           />
