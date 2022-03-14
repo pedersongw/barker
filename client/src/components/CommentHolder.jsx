@@ -137,6 +137,7 @@ class CommentHolder extends React.Component {
     const { result: comment } = this.state;
     return (
       <div className="comment-holder">
+        <button onClick={() => console.log(this.state)}>state</button>
         {this.state.result && (
           <Comment
             depth={0}
@@ -144,6 +145,7 @@ class CommentHolder extends React.Component {
             openReplyModal={this.openReplyModal}
             openReportModal={this.openReportModal}
             id={comment._id}
+            width={this.state.innerWidth}
             comment={comment}
             parentPost={comment.parentPost}
           />

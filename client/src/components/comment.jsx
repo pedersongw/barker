@@ -17,10 +17,6 @@ class Comment extends React.Component {
     this.setState({ user: user });
   }
 
-  onClick = () => {
-    console.log(this.props);
-  };
-
   saveCommentInDatabase = async () => {
     const { comment } = this.props;
     const commentObj = {
@@ -70,13 +66,28 @@ class Comment extends React.Component {
       this.setState({ isOpen: false });
     }
   };
+  isAlmostDeep = () => {
+    if (this.props.width < 800) {
+      return this.props.depth === 3 ? true : false;
+    } else {
+      return this.props.depth === 5 ? true : false;
+    }
+  };
+
+  isDeep = () => {
+    if (this.props.width < 800) {
+      return this.props.depth > 3 ? true : false;
+    } else {
+      return this.props.depth > 5 ? true : false;
+    }
+  };
 
   displayBody = () => {
-    if (this.props.depth > 5) {
+    if (this.isDeep()) {
       return (
         <React.Fragment>
           <Link
-            to={`/comment/${this.props.comment._id}/${this.props.comment.parentPost}`}
+            to={`/comment/${this.props.comment.parentComment}/${this.props.comment.parentPost}`}
             state={{ comment: this.props.comment }}
           >
             <div>Click to continue thread</div>
@@ -123,6 +134,7 @@ class Comment extends React.Component {
             openReportModal={this.props.openReportModal}
             comment={comment}
             type="child"
+            width={this.props.width}
           />
         );
       }
@@ -142,16 +154,16 @@ class Comment extends React.Component {
         <div
           className="comment"
           id={this.determineCommentId()}
-          onClick={() => this.onClick()}
+          onClick={() => console.log(this.props, nestedComments[0])}
         >
           <div className="comment-body">
             <div className="comment-text">{this.displayBody()}</div>
             <div className="comment-by">
-              {!comment.deleted && this.props.depth <= 5 && (
+              {!comment.deleted && !this.isDeep() && (
                 <small>by {this.props.comment.username.name}</small>
               )}
             </div>
-            {!comment.deleted && this.props.depth <= 5 && (
+            {!comment.deleted && !this.isDeep() && (
               <div
                 className="ellipsis"
                 id={this.props.comment._id}
@@ -192,7 +204,8 @@ class Comment extends React.Component {
             )}
           </div>
         </div>
-        {this.props.depth <= 5 && nestedComments}
+        {!this.isDeep() && !this.isAlmostDeep() && nestedComments}
+        {this.isAlmostDeep() && nestedComments[0]}
       </div>
     );
   }

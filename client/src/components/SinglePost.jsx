@@ -18,9 +18,11 @@ class SinglePost extends React.Component {
     alreadyReported: false,
     viewedComment: null,
     user: null,
+    width: window.innerWidth,
   };
 
   async componentDidMount() {
+    window.addEventListener("resize", this.handleWindowSizeChange);
     const jwt = localStorage.getItem("token");
     const user = jwtDecode(jwt);
     this.setState({ user: user });
@@ -59,6 +61,14 @@ class SinglePost extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
   renderCommentsInListGroup = () => {
     return this.state.comments.map((comment) => {
       return (
@@ -70,6 +80,7 @@ class SinglePost extends React.Component {
           id={comment._id}
           comment={comment}
           parentPost={comment.parentPost}
+          width={this.state.width}
         />
       );
     });
