@@ -177,12 +177,12 @@ class Comment extends React.Component {
                   id={this.state.isOpen ? "comment-menu-visible" : null}
                 >
                   <button
-                    className="comment-button"
                     onClick={() =>
-                      this.props.openReplyModal(this.props.comment)
+                      this.props.openReportModal(this.props.comment)
                     }
+                    className="comment-report-button"
                   >
-                    Reply
+                    Report
                   </button>
                   {this.isUserOrAdmin() && (
                     <button
@@ -192,14 +192,13 @@ class Comment extends React.Component {
                       Delete
                     </button>
                   )}
-
                   <button
+                    className="comment-button"
                     onClick={() =>
-                      this.props.openReportModal(this.props.comment)
+                      this.props.openReplyModal(this.props.comment)
                     }
-                    className="comment-report-button"
                   >
-                    Report
+                    Reply
                   </button>
                 </div>
               </div>

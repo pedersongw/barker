@@ -74,6 +74,7 @@ class Forum extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       window.location.reload();
+      window.scrollTo(0, 0);
     }
   }
 
@@ -308,7 +309,12 @@ class Forum extends React.Component {
     return (
       <div>
         <TopMobileNavBar page="forum" />
-        <div className="spacer-for-header"></div>
+        {this.state.width > 800 ? (
+          <div className="spacer-for-desktop-header"></div>
+        ) : (
+          <div className="spacer-for-mobile-header"></div>
+        )}
+
         <PostModal
           closePostModal={this.closePostModal}
           isOpen={this.state.postModalOpen}

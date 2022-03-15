@@ -141,8 +141,12 @@ body {
   margin-top: 75px;
 }
 
-.spacer-for-header {
+.spacer-for-desktop-header {
   height: 100px;
+}
+
+.spacer-for-mobile-header {
+  height: 25px;
 }
 
 .post-card {
@@ -441,6 +445,10 @@ a {
   grid-area: likes;
 }
 
+.heart-icon {
+  cursor: pointer;
+}
+
 .post-reply-holder {
   width: 100%;
   height: 100%;
@@ -451,6 +459,7 @@ a {
 }
 .post-reply-button {
   border: none;
+  cursor: pointer;
   width: 100%;
   height: 100%;
   border-radius: 5px;
@@ -459,6 +468,16 @@ a {
 
 .post-reply-button:hover {
   background-color: #00faff;
+}
+
+.post-ellipsis-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-ellipsis:hover {
+  color: #00faff;
 }
 
 .comment-wrapper {

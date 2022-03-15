@@ -5,6 +5,7 @@ import ReportModal from "./ReportModal";
 import ReplyModal from "./ReplyModal";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import { FaEllipsisH } from "react-icons/fa";
 import jwtDecode from "jwt-decode";
 import TopMobileNavBar from "./TopMobileNavBar";
 import { config } from "../URLs.jsx";
@@ -25,6 +26,7 @@ class SinglePost extends React.Component {
   };
 
   async componentDidMount() {
+    window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
     const jwt = localStorage.getItem("token");
     const user = jwtDecode(jwt);
@@ -271,9 +273,15 @@ class SinglePost extends React.Component {
                     <div className="viewed-post-reply-div">
                       <div className="likes-heart">
                         {this.isLiked() ? (
-                          <FaHeart onClick={() => this.onLike()} />
+                          <FaHeart
+                            className="heart-icon"
+                            onClick={() => this.onLike()}
+                          />
                         ) : (
-                          <FaRegHeart onClick={() => this.onLike()} />
+                          <FaRegHeart
+                            className="heart-icon"
+                            onClick={() => this.onLike()}
+                          />
                         )}
                       </div>
                       <div className="post-reply-holder">
@@ -284,6 +292,12 @@ class SinglePost extends React.Component {
                         >
                           Reply
                         </button>
+                      </div>
+                      <div className="post-ellipsis-holder">
+                        <FaEllipsisH
+                          className="post-ellipsis"
+                          onClick={() => console.log("ellipsis clicked")}
+                        />
                       </div>
                     </div>
                   </div>
