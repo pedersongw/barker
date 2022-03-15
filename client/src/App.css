@@ -436,6 +436,8 @@ a {
 }
 
 .likes-heart {
+  color: lightpink;
+  font-size: 1.5em;
   grid-area: likes;
 }
 
@@ -473,7 +475,6 @@ a {
   border-radius: 10px;
   margin-bottom: 20px;
   display: inline-block;
-  min-width: 200px;
 }
 
 #comment-depth-0 {

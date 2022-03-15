@@ -19,6 +19,7 @@ class SinglePost extends React.Component {
     reportModalOpen: false,
     alreadyReported: false,
     viewedComment: null,
+    isLiked: false,
     user: null,
     width: window.innerWidth,
   };
@@ -67,6 +68,12 @@ class SinglePost extends React.Component {
     window.removeEventListener("resize", this.handleWindowSizeChange);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.post !== this.state.post) {
+      console.log("pokemons state has changed.");
+    }
+  }
+
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
@@ -86,6 +93,28 @@ class SinglePost extends React.Component {
         />
       );
     });
+  };
+
+  updatePost = async () => {
+    const { data } = await axios.get(config + "/api/posts/single", {
+      params: {
+        _id: this.props.id,
+      },
+    });
+    console.log(data);
+    this.setState({ post: data });
+  };
+
+  isLiked = () => {
+    const { post } = this.state;
+    const userID = this.state.user._id;
+    let isAlreadyLiked = false;
+    for (let i = 0; i < post.likes.length; i++) {
+      if (post.likes[i]["_id"] === userID) {
+        isAlreadyLiked = true;
+      }
+    }
+    return isAlreadyLiked;
   };
 
   onLike = async () => {
@@ -109,7 +138,7 @@ class SinglePost extends React.Component {
         console.log("like try block called");
         const response = await axios.put(config + "/api/posts/like", data);
         console.log(response);
-        window.location.reload();
+        this.updatePost();
       } catch (error) {
         console.log(error);
       }
@@ -118,7 +147,7 @@ class SinglePost extends React.Component {
         console.log("unlike try block called");
         const response = await axios.put(config + "/api/posts/unlike", data);
         console.log(response);
-        window.location.reload();
+        this.updatePost();
       } catch (error) {
         console.log(error);
       }
@@ -241,9 +270,11 @@ class SinglePost extends React.Component {
                     </div>
                     <div className="viewed-post-reply-div">
                       <div className="likes-heart">
-                        <FaHeart />
-                        <FaRegHeart />
-                        <button onClick={() => this.onLike()}>like</button>
+                        {this.isLiked() ? (
+                          <FaHeart onClick={() => this.onLike()} />
+                        ) : (
+                          <FaRegHeart onClick={() => this.onLike()} />
+                        )}
                       </div>
                       <div className="post-reply-holder">
                         <button
