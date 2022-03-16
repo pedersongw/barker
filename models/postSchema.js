@@ -8,6 +8,7 @@ const Post = mongoose.model(
     username: Object,
     timePosted: Date,
     likes: Array,
+    report: Array,
   })
 );
 

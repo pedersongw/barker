@@ -10,6 +10,7 @@ class Admin extends React.Component {
     user: null,
     isAdmin: false,
     comments: null,
+    posts: null,
     highlighted: null,
     selectedReport: null,
   };
@@ -28,6 +29,14 @@ class Admin extends React.Component {
       );
       console.log(filtered);
       this.setState({ comments: filtered });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axios.get(config + "/api/posts");
+      let filtered = data.filter((post) => post.report.length > 0);
+      console.log(filtered);
+      this.setState({ posts: filtered });
     } catch (err) {
       console.log(err);
     }
@@ -56,11 +65,16 @@ class Admin extends React.Component {
     const comment = this.state.highlighted;
     let commentID = { _id: comment._id };
     try {
-      const response = await axios.post(
-        config + "/api/comments/delete",
-        commentID
-      );
-      console.log(response);
+      let urlSegment;
+      if (comment.timePosted) {
+        urlSegment = "/api/posts/delete";
+        const response = await axios.post(config + urlSegment, commentID);
+        console.log(response);
+      } else {
+        urlSegment = "/api/comments/delete";
+        const response = await axios.post(config + urlSegment, commentID);
+        console.log(response);
+      }
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -71,8 +85,9 @@ class Admin extends React.Component {
     const { highlighted, selectedReport } = this.state;
     let unreportObj = { id: highlighted._id, index: selectedReport };
     try {
+      let urlSegment = highlighted.timePosted ? "posts" : "comments";
       const response = await axios.post(
-        config + "/api/comments/unreport",
+        config + `/api/${urlSegment}/unreport`,
         unreportObj
       );
       console.log(response);
@@ -89,6 +104,19 @@ class Admin extends React.Component {
           highlightFunc={this.highlightComment}
           key={comment._id}
           comment={comment}
+          highlighted={this.state.highlighted}
+        />
+      );
+    });
+  };
+
+  mapPosts = () => {
+    return this.state.posts.map((post) => {
+      return (
+        <ReportedComment
+          highlightFunc={this.highlightComment}
+          key={post._id}
+          post={post}
           highlighted={this.state.highlighted}
         />
       );
@@ -117,9 +145,13 @@ class Admin extends React.Component {
             <h1 className="admin-h1">Report Details</h1>
             {this.state.highlighted && this.mapReports()}
           </div>
-          <div className="reported">
+          <div className="reported-comments">
             <h1 className="admin-h1">Reported Comments</h1>
             {this.state.comments && this.mapComments()}
+          </div>
+          <div className="reported-posts">
+            <h1 className="admin-h1">Reported Posts</h1>
+            {this.state.posts && this.mapPosts()}
           </div>
           <div className="admin-buttons">
             {this.state.highlighted && (

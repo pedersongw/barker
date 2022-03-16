@@ -41,16 +41,22 @@ class ReportModal extends React.Component {
     if (selectedOption === "Other" && !otherText) {
       this.setState({ errorMessage: "Text input cannot be empty" });
     }
+    const { comment, post, user } = this.props;
     let obj = {
-      id: this.props.comment._id,
+      id: comment ? comment._id : post._id,
       reportObj: {
-        user: this.props.user,
+        user: user,
         selectedOption: selectedOption,
         otherText: otherText,
       },
     };
+
     try {
-      const response = await axios.post(config + "/api/comments/report", obj);
+      let urlSegment = comment ? "comments" : "posts";
+      const response = await axios.post(
+        config + `/api/${urlSegment}/report`,
+        obj
+      );
       console.log(response);
       window.location.reload();
     } catch (error) {
@@ -75,9 +81,7 @@ class ReportModal extends React.Component {
               <div className="modal-error">{this.state.errorMessage}</div>
             ) : null}
             {this.props.reported ? (
-              <div className="modal-error">
-                You've already reported this comment
-              </div>
+              <div className="modal-error">You've already reported this</div>
             ) : null}
             <span className="close" onClick={() => this.props.closeModal()}>
               &times;

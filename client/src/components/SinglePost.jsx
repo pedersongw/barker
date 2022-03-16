@@ -189,9 +189,13 @@ class SinglePost extends React.Component {
   };
 
   openReportModal = (comment) => {
-    console.log(comment);
-    if (comment.report) {
-      let reported = comment.report.filter(
+    let obj = comment;
+    if (!obj) {
+      obj = this.state.post;
+    }
+    console.log(obj);
+    if (obj.report) {
+      let reported = obj.report.filter(
         (obj) => obj.user._id === this.state.user._id
       );
       reported.length > 0
@@ -200,7 +204,6 @@ class SinglePost extends React.Component {
     } else {
       console.log("not yet reported");
     }
-
     if (comment) this.setState({ viewedComment: comment });
     window.addEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: true });
@@ -219,7 +222,8 @@ class SinglePost extends React.Component {
     if (
       container !== event.target &&
       !container.contains(event.target) &&
-      event.target.className !== "comment-report-button"
+      event.target.className !== "comment-report-button" &&
+      event.target.className !== "post-report"
     ) {
       console.log("clicked outside report modal");
       this.closeReportModal();
@@ -288,16 +292,18 @@ class SinglePost extends React.Component {
                         <button
                           type="submit"
                           className="post-reply-button"
-                          onClick={() => console.log(this.state.post)}
+                          onClick={() => this.openReplyModal()}
                         >
                           Reply
                         </button>
                       </div>
-                      <div className="post-ellipsis-holder">
-                        <FaEllipsisH
-                          className="post-ellipsis"
-                          onClick={() => console.log("ellipsis clicked")}
-                        />
+                      <div className="post-report-holder">
+                        <small
+                          className="post-report"
+                          onClick={() => this.openReportModal()}
+                        >
+                          report
+                        </small>
                       </div>
                     </div>
                   </div>

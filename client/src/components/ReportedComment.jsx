@@ -2,16 +2,9 @@ import React from "react";
 import DateComponent from "./date";
 
 class ReportedComment extends React.Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   highlighted = () => {
-    console.log(this.props);
-    if (
-      !this.props.highlighted ||
-      this.props.highlighted._id !== this.props.comment._id
-    ) {
+    let obj = this.props.comment ? this.props.comment : this.props.post;
+    if (!this.props.highlighted || this.props.highlighted._id !== obj._id) {
       return false;
     } else {
       return true;
@@ -26,18 +19,30 @@ class ReportedComment extends React.Component {
   };
 
   render() {
-    const { comment } = this.props;
+    const { comment, post } = this.props;
     return (
       <div
-        onClick={() => this.props.highlightFunc(comment)}
+        onClick={
+          comment
+            ? () => this.props.highlightFunc(comment)
+            : () => this.props.highlightFunc(post)
+        }
         className="reported-comment"
         id={this.highlighted() ? "highlighted-comment" : null}
       >
-        <div className="reported-username">{comment.username.name}</div>
-        <div className="reported-time">
-          <DateComponent time={comment.timeCommented} />
+        {post && <div className="reported-title">{post.title}</div>}
+
+        <div className="reported-username">
+          {comment ? comment.username.name : post.username[1]}
         </div>
-        <div className="reported-body">{comment.body}</div>
+        <div className="reported-time">
+          <DateComponent
+            time={comment ? comment.timeCommented : post.timePosted}
+          />
+        </div>
+        <div className="reported-body">
+          {comment ? comment.body : post.body}
+        </div>
       </div>
     );
   }

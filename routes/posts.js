@@ -90,7 +90,7 @@ router.post("/", async (req, res) => {
     });
 });
 
-router.delete("/", async (req, res) => {
+router.post("/delete", async (req, res) => {
   console.log(req.body._id);
   Post.deleteOne({ _id: req.body["_id"] }, function (err) {
     if (err) console.log(err);
@@ -101,6 +101,47 @@ router.delete("/", async (req, res) => {
     })
     .catch((err) => {
       res.send(err);
+    });
+});
+
+router.post("/report", async (req, res) => {
+  let searchParam = { _id: req.body.id };
+  let post = await Post.findOne(searchParam);
+  if (!post.report) {
+    post.report = [req.body.reportObj];
+  } else {
+    post.report.push(req.body.reportObj);
+  }
+  post
+    .save()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the report.",
+      });
+    });
+});
+
+router.post("/unreport", async (req, res) => {
+  let searchParam = { _id: req.body.id };
+  let post = await Post.findOne(searchParam);
+  post.report.splice(req.body.index, 1);
+
+  post
+    .save()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the report.",
+      });
     });
 });
 
