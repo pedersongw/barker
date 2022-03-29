@@ -666,7 +666,7 @@ a {
 #report-modal-form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 #report-modal-form input {

@@ -148,13 +148,13 @@ class Forum extends React.Component {
     });
   };
   openPostModal = () => {
-    window.addEventListener("click", this.handleClickOutsidePostModal);
+    window.addEventListener("mousedown", this.handleClickOutsidePostModal);
     this.setState({ postModalOpen: true });
     this.resetStateFormInfoHolders();
   };
 
   closePostModal = () => {
-    window.removeEventListener("click", this.handleClickOutsidePostModal);
+    window.removeEventListener("mousedown", this.handleClickOutsidePostModal);
     this.setState({ postModalOpen: false });
     this.resetStateFormInfoHolders();
   };
