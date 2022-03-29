@@ -663,6 +663,16 @@ a {
   margin: 0 auto;
 }
 
+#report-modal-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#report-modal-form input {
+  margin: 0 10px 0 25px;
+}
+
 .modal-header {
   position: absolute;
   display: flex;
@@ -1010,7 +1020,7 @@ a {
 
 #create-user-submit button {
   width: 40%;
-  font-size: 1.5em;
+  font-size: 5vh;
   border: none;
   border-radius: 5px;
   background-color: #007498;

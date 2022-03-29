@@ -97,7 +97,7 @@ class ReportModal extends React.Component {
           >
             {!this.props.reported && (
               <React.Fragment>
-                <form>
+                <form id="report-modal-form">
                   <div className="radio">
                     <label>
                       <input
