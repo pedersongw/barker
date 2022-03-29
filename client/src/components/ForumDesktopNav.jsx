@@ -12,17 +12,14 @@ class ForumDesktopNav extends React.Component {
         )}
 
         {!this.props.userLoggedIn() && (
-          <button
-            id="create-new-user-button"
-            onClick={() => this.props.openUserModal()}
-          >
-            Create Profile
-          </button>
+          <Link to="/login/create">
+            <button>Create New User</button>
+          </Link>
         )}
         {!this.props.userLoggedIn() && (
-          <button id="login-button" onClick={() => this.props.logIn()}>
-            Login
-          </button>
+          <Link to="/login/login">
+            <button>Login</button>
+          </Link>
         )}
         {this.props.userLoggedIn() && (
           <button

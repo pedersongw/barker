@@ -83,19 +83,16 @@ class ForumMobileNav extends React.Component {
           <nav id="nav-content">
             {!this.props.userLoggedIn() && (
               <div>
-                <button
-                  id="create-new-user-button"
-                  onClick={() => this.createNewUser()}
-                >
-                  Create Profile
-                </button>
+                <Link to="/login/create">
+                  <button>Create New User</button>
+                </Link>
               </div>
             )}
             {!this.props.userLoggedIn() && (
               <div>
-                <button id="login-button" onClick={() => this.onLogIn()}>
-                  Login
-                </button>
+                <Link to="/login/login">
+                  <button>Login</button>
+                </Link>
               </div>
             )}
             {this.props.userLoggedIn() && (

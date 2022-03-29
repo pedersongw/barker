@@ -3,9 +3,7 @@ import axios from "axios";
 import { config } from "../URLs.jsx";
 import jwtDecode from "jwt-decode";
 import Post from "./Post";
-import LoginModal from "./LoginModal";
 import PostModal from "./PostModal";
-import NewUserModal from "./NewUserModal";
 import TopMobileNavBar from "./TopMobileNavBar";
 import ForumMobileNav from "./ForumMobileNav";
 import Pagination from "./Pagination";
@@ -19,9 +17,6 @@ class Forum extends React.Component {
     width: window.innerWidth,
     dbWasContacted: false,
     postModalOpen: false,
-    userModalOpen: false,
-    loginModalOpen: false,
-    replyModalOpen: false,
     user: null,
     createModalError: "",
     currentPage: this.props.page,
@@ -177,80 +172,6 @@ class Forum extends React.Component {
     }
   };
 
-  openUserModal = () => {
-    window.addEventListener("click", this.handleClickOutsideUserModal);
-    this.setState({ userModalOpen: true });
-    this.resetStateFormInfoHolders();
-  };
-
-  closeUserModal = () => {
-    window.removeEventListener("click", this.handleClickOutsideUserModal);
-    this.setState({ userModalOpen: false });
-    this.resetStateFormInfoHolders();
-  };
-
-  handleClickOutsideUserModal = (event) => {
-    const container = document.getElementById("user-modal-content");
-    const button = document.getElementById("create-new-user-button");
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      button !== event.target
-    ) {
-      console.log("clicked outside user modal");
-      this.closeUserModal();
-    }
-  };
-
-  openLoginModal = () => {
-    window.addEventListener("click", this.handleClickOutsideLoginModal);
-    this.setState({ loginModalOpen: true });
-    this.resetStateFormInfoHolders();
-  };
-
-  closeLoginModal = () => {
-    window.removeEventListener("click", this.handleClickOutsideLoginModal);
-    this.setState({ loginModalOpen: false });
-    this.resetStateFormInfoHolders();
-  };
-
-  handleClickOutsideLoginModal = (event) => {
-    const container = document.getElementById("login-modal-content");
-    const button = document.getElementById("login-button");
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      button !== event.target
-    ) {
-      console.log("clicked outside login");
-      this.closeLoginModal();
-    }
-  };
-
-  onLogin = async () => {
-    const { userEmail, userPassword } = this.state;
-    const postObj = {
-      email: userEmail,
-      password: userPassword,
-    };
-
-    try {
-      const response = await axios.post(config + "/api/auth", postObj);
-      console.log(response);
-      localStorage.setItem("token", response.data);
-      this.closeLoginModal();
-      window.location = "/forum/1/all";
-    } catch (error) {
-      console.log(
-        error.response.status,
-        error.response.data.details[0].message
-      );
-      this.setState({
-        createModalError: error.response.data.details[0].message,
-      });
-    }
-  };
-
   serverStatus = () => {
     const { dbWasContacted, user } = this.state;
     const firstPart = user === null ? "Please log in" : `Welcome ${user.name}`;
@@ -324,23 +245,6 @@ class Forum extends React.Component {
           user={this.state.user}
         />
 
-        <NewUserModal
-          closeUserModal={this.closeUserModal}
-          isOpen={this.state.userModalOpen}
-          value={this.state.userModalOpen}
-          updateView={this.updateEntriesFromDatabase}
-          error={this.state.createModalError}
-          width={this.state.width}
-        />
-
-        <LoginModal
-          closeLoginModal={this.closeLoginModal}
-          isOpen={this.state.loginModalOpen}
-          value={this.state.loginModalOpen}
-          onSubmit={this.onLogin}
-          error={this.state.createModalError}
-        />
-
         <div
           className={
             this.state.width < 800 ? "formum-main" : "forum-main-large"
@@ -352,7 +256,6 @@ class Forum extends React.Component {
               openUserModal={this.openUserModal}
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
-              logIn={this.openLoginModal}
               logOut={this.logOut}
               userLoggedIn={this.userLoggedIn}
               user={this.state.user}
@@ -391,7 +294,6 @@ class Forum extends React.Component {
                 openUserModal={this.openUserModal}
                 sortByNew={this.displayPostsSortedByNew}
                 sortByOld={this.displayPostsSortedByOld}
-                logIn={this.openLoginModal}
                 logOut={this.logOut}
                 userLoggedIn={this.userLoggedIn}
                 sortMyPosts={this.displayMyPosts}

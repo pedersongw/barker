@@ -12,6 +12,7 @@ import DisplayComment from "./components/DisplayComment";
 import SinglePostHolder from "./components/SinglePostHolder";
 import reportWebVitals from "./reportWebVitals";
 import ForumHolder from "./components/ForumHolder";
+import LoginPage from "./components/LoginOrCreate";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
         <Route path="post/:id" element={<SinglePostHolder />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="login/:loginOrCreate" element={<LoginPage />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,
