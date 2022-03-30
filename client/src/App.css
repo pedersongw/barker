@@ -75,6 +75,7 @@ body {
   border-radius: 10px;
   width: 90%;
   color: #00faff;
+  cursor: pointer;
 }
 
 .desktop-nav button:hover {
@@ -272,6 +273,7 @@ a {
   color: #00faff;
   font-size: 2em;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .mobile-nav button:hover {
@@ -812,6 +814,10 @@ a {
   padding: 0 0 0 25px;
 }
 
+#post-modal-content label {
+  display: none;
+}
+
 .md-modal .md-content {
   -webkit-transform: scale(0.7);
   -moz-transform: scale(0.7);
@@ -1013,13 +1019,13 @@ a {
   justify-content: space-between;
 }
 
-#create-user-submit {
+.create-user-submit {
   margin: 25px 0;
   text-align: center;
 }
 
-#create-user-submit button {
-  width: 40%;
+.create-user-submit button {
+  width: auto;
   font-size: 5vh;
   border: none;
   border-radius: 5px;
@@ -1027,6 +1033,6 @@ a {
   cursor: pointer;
 }
 
-#create-user-submit button:hover {
+.create-user-submit button:hover {
   background-color: #00b0d7;
 }

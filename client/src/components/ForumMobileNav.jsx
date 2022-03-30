@@ -8,12 +8,12 @@ class ForumMobileNav extends React.Component {
   };
 
   handleMenuOpen = () => {
-    window.addEventListener("click", this.handleClickOutsideMenu);
+    window.addEventListener("mousedown", this.handleClickOutsideMenu);
     this.setState({ navOpen: true });
   };
 
   handleMenuClose = () => {
-    window.removeEventListener("click", this.handleClickOutsideMenu);
+    window.removeEventListener("mousedown", this.handleClickOutsideMenu);
     this.setState({ navOpen: false });
   };
 
@@ -25,6 +25,7 @@ class ForumMobileNav extends React.Component {
       container !== event.target &&
       !container.contains(event.target)
     ) {
+      console.log("clicked outside mobile nav menu", event.target);
       this.handleMenuClose();
     }
   };

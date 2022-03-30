@@ -67,7 +67,7 @@ class Login extends React.Component {
               onChange={(event) => this.onPasswordChange(event)}
             ></input>
           </form>
-          <div id="create-user-submit">
+          <div className="create-user-submit">
             <button type="submit" onClick={() => this.onLogin()}>
               Submit
             </button>
