@@ -5,25 +5,30 @@ import { Link } from "react-router-dom";
 class ForumMobileNav extends React.Component {
   state = {
     navOpen: false,
+    sortByClicked: false,
   };
 
   handleMenuOpen = () => {
     window.addEventListener("mousedown", this.handleClickOutsideMenu);
+    this.props.navOpen();
     this.setState({ navOpen: true });
   };
 
   handleMenuClose = () => {
     window.removeEventListener("mousedown", this.handleClickOutsideMenu);
+    this.props.navOpen();
     this.setState({ navOpen: false });
+    this.setState({ sortByClicked: false });
   };
 
   handleClickOutsideMenu = (event) => {
     const container = document.getElementsByClassName("entire-menu")[0];
+    console.log(event.target);
     if (container === undefined) {
-      window.removeEventListener("click", this.handleClickOutsideMenu);
+      window.removeEventListener("mousedown", this.handleClickOutsideMenu);
     } else if (
-      container !== event.target &&
-      !container.contains(event.target)
+      event.target.className === "blur-filter" ||
+      event.target.id === "nav-mobile"
     ) {
       console.log("clicked outside mobile nav menu", event.target);
       this.handleMenuClose();
@@ -45,108 +50,75 @@ class ForumMobileNav extends React.Component {
     this.setState({ navOpen: false });
   };
 
-  updateViewAllPosts = () => {
-    this.props.updateView();
-    this.setState({ navOpen: false });
+  sortByArgument = (argument) => {
+    window.location.href = `/forum/1/${argument}`;
   };
 
-  sortByMyPosts = () => {
-    this.props.sortMyPosts();
-    this.setState({ navOpen: false });
-  };
-
-  sortByNew = () => {
-    this.props.sortByNew();
-    this.setState({ navOpen: false });
-  };
-
-  sortByOld = () => {
-    this.props.sortByOld();
-    this.setState({ navOpen: false });
-  };
-
-  sortByPopular = () => {
-    this.props.sortPopular();
-    this.setState({ navOpen: false });
+  sortBy = () => {
+    console.log("sort by button clicked");
+    this.setState({ sortByClicked: !this.state.sortByClicked });
   };
 
   render() {
     return (
       <div className="entire-menu">
-        <div className="forum-nav-icon" onClick={() => this.handleMenuOpen()}>
-          <FaWrench />
+        <div
+          className="blur-filter"
+          id={this.state.navOpen ? "blur-filter" : null}
+        ></div>
+        <div
+          className="forum-nav-icon"
+          onClick={() => this.handleMenuOpen()}
+          id={this.state.navOpen ? "hide-icon" : null}
+        >
+          Menu
         </div>
         <div
           className={
-            this.state.navOpen === true ? "mobile-nav open" : "mobile-nav"
+            this.state.navOpen === true ? "nav-mobile open" : "nav-mobile"
           }
+          id="nav-mobile"
         >
-          <nav id="nav-content">
-            {!this.props.userLoggedIn() && (
-              <div>
-                <Link to="/login/create">
-                  <button>Create New User</button>
-                </Link>
-              </div>
-            )}
-            {!this.props.userLoggedIn() && (
-              <div>
-                <Link to="/login/login">
-                  <button>Login</button>
-                </Link>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <button
-                  id="create-post-button"
-                  onClick={() => this.openPostModal()}
-                >
-                  Create Post
-                </button>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <Link to="/forum/1/all">
-                  <button>All Posts</button>
-                </Link>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <Link to="/forum/1/my">
-                  <button>My Posts</button>
-                </Link>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <Link to="/forum/1/popular">
-                  <button>Sort By Popular</button>
-                </Link>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <Link to="/forum/1/new">
-                  <button>Sort By New</button>
-                </Link>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <Link to="/forum/1/old">
-                  <button>Sort By Old</button>
-                </Link>
-              </div>
-            )}
-            {this.props.userLoggedIn() && (
-              <div>
-                <button onClick={() => this.props.logOut()}>Logout</button>
-              </div>
-            )}
-          </nav>
+          <div
+            className="sort-by mobile-nav-button"
+            onClick={() => this.sortBy()}
+          >
+            Sort By
+            <nav
+              onClick={(e) => e.stopPropagation()}
+              className="sort-by-nav"
+              id={
+                this.state.sortByClicked && this.state.navOpen
+                  ? "sort-by-open"
+                  : "sort-by-closed"
+              }
+            >
+              <ul className="sort-by-ul">
+                <li onClick={() => this.sortByArgument("all")}>All</li>
+                <li onClick={() => this.sortByArgument("popular")}>Popular</li>
+                <li onClick={() => this.sortByArgument("my")}>My Posts</li>
+                <li onClick={() => this.sortByArgument("new")}>New</li>
+                <li onClick={() => this.sortByArgument("old")}>Old</li>
+              </ul>
+            </nav>
+          </div>
+          <div
+            className="mobile-nav-button"
+            onClick={() => this.openPostModal()}
+          >
+            Create Post
+          </div>
+          {this.props.userLoggedIn() && (
+            <div
+              className="mobile-nav-button"
+              onClick={() => this.props.logOut()}
+            >
+              Logout
+            </div>
+          )}
+        </div>
+        <div className={null}>
+          <nav id="nav-content"></nav>
         </div>
       </div>
     );

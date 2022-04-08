@@ -23,6 +23,7 @@ class Forum extends React.Component {
     sort: this.props.sort,
     pageSize: 5,
     numberOfPages: 0,
+    navOpen: false,
   };
 
   async componentDidMount() {
@@ -208,7 +209,6 @@ class Forum extends React.Component {
             onDelete={this.onDelete}
             onLike={this.onLike}
             userLoggedIn={Boolean(this.state.user)}
-            onClick={this.contactDatabaseUpdateStateWithComments}
           />
         );
       }
@@ -222,6 +222,10 @@ class Forum extends React.Component {
 
   incrementPage = (num) => {
     this.setState({ currentPage: num });
+  };
+
+  navOpen = () => {
+    this.setState({ navOpen: !this.state.navOpen });
   };
 
   render() {
@@ -299,6 +303,7 @@ class Forum extends React.Component {
                 sortMyPosts={this.displayMyPosts}
                 sortPopular={this.displayPostsSortedByPopular}
                 updateView={this.updateEntriesFromDatabase}
+                navOpen={this.navOpen}
               />
             </div>
           )}

@@ -243,47 +243,88 @@ a {
   cursor: pointer;
 }
 
+#hide-icon {
+  display: none;
+}
+
 .forum-nav-icon:active {
   opacity: 1;
 }
 
-.mobile-nav {
-  background: #004562;
-  height: 100%;
-  width: 75%;
-  right: -330px;
-  position: fixed;
-  border-radius: 20px 0 0 20px;
-  z-index: 5;
-  top: 0;
-  transition: -webkit-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  -webkit-transform: translateX(110%);
-  -ms-transform: translateX(110%);
-  transform: translateX(110%);
-}
-
-.mobile-nav button {
-  border: none;
-  background-color: #002237;
-  padding: 10px;
-  border-radius: 10px;
+.nav-mobile {
+  height: 50vh;
   width: 100%;
-  color: #00faff;
-  font-size: 2em;
-  white-space: nowrap;
-  cursor: pointer;
+  z-index: 5;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  -webkit-transform: translateY(100vh);
+  -ms-transform: translateY(100vh);
+  transform: translateY(100vh);
 }
 
-.mobile-nav button:hover {
-  background-color: #00faff;
-  color: #002237;
+.mobile-nav-button {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: lightblue;
+  font-size: 1.5em;
+  height: 10vh;
+  width: 75vw;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
 }
 
-.mobile-nav.open {
-  -webkit-transform: translateX(-330px);
-  -ms-transform: translateX(-330px);
-  transform: translateX(-330px);
+.blur-filter {
+  backdrop-filter: blur(2px);
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+#blur-filter {
+  display: block;
+}
+
+.nav-mobile.open {
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.sort-by {
+  position: relative;
+}
+
+.sort-by-nav {
+  height: 0px;
+  position: absolute;
+  bottom: 210px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sort-by-ul {
+  background-color: white;
+  color: black;
+}
+
+#sort-by-open {
+  visibility: visible;
+  opacity: 1;
 }
 
 .top-nav {
