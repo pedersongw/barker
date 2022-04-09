@@ -312,7 +312,7 @@ a {
 .sort-by-nav {
   height: 0px;
   position: absolute;
-  bottom: 50vh;
+  bottom: 42vh;
   display: flex;
   justify-content: center;
   visibility: hidden;
