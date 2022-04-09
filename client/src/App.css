@@ -274,7 +274,7 @@ a {
   margin-bottom: 10px;
   justify-content: center;
   align-items: center;
-  background-color: lightblue;
+  background-color: #00b0d7;
   font-size: 1.5em;
   height: 8vh;
   width: 60vw;
@@ -334,6 +334,12 @@ a {
   border-style: solid;
   border-width: 1px;
   border-radius: 15px;
+}
+
+#li-selected {
+  background-color: #00faff;
+  border-style: none;
+  color: #002237;
 }
 
 #sort-by-open {

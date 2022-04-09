@@ -1,6 +1,4 @@
 import React from "react";
-import { FaWrench } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 class ForumMobileNav extends React.Component {
   state = {
@@ -104,13 +102,39 @@ class ForumMobileNav extends React.Component {
                 }
               >
                 <ul className="sort-by-ul">
-                  <li onClick={() => this.sortByArgument("all")}>All</li>
-                  <li onClick={() => this.sortByArgument("popular")}>
+                  <li
+                    id={this.props.sort === "all" ? "li-selected" : null}
+                    onClick={() => this.sortByArgument("all")}
+                  >
+                    All
+                  </li>
+                  <li
+                    id={this.props.sort === "popular" ? "li-selected" : null}
+                    onClick={() => this.sortByArgument("popular")}
+                  >
                     Popular
                   </li>
-                  <li onClick={() => this.sortByArgument("my")}>My Posts</li>
-                  <li onClick={() => this.sortByArgument("new")}>New</li>
-                  <li onClick={() => this.sortByArgument("old")}>Old</li>
+
+                  <li
+                    id={this.props.sort === "my" ? "li-selected" : null}
+                    onClick={() => this.sortByArgument("my")}
+                  >
+                    My Posts
+                  </li>
+
+                  <li
+                    id={this.props.sort === "new" ? "li-selected" : null}
+                    onClick={() => this.sortByArgument("new")}
+                  >
+                    New
+                  </li>
+
+                  <li
+                    id={this.props.sort === "old" ? "li-selected" : null}
+                    onClick={() => this.sortByArgument("old")}
+                  >
+                    Old
+                  </li>
                 </ul>
               </nav>
             </div>

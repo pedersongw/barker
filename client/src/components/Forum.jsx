@@ -304,6 +304,7 @@ class Forum extends React.Component {
                 sortPopular={this.displayPostsSortedByPopular}
                 updateView={this.updateEntriesFromDatabase}
                 navOpen={this.navOpen}
+                sort={this.props.sort}
               />
             </div>
           )}
