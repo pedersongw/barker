@@ -252,7 +252,7 @@ a {
 }
 
 .nav-mobile {
-  height: 50vh;
+  height: 40vh;
   width: 100%;
   z-index: 5;
   bottom: 0;
@@ -262,8 +262,8 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
+  transition: -webkit-transform 0.4s ease;
+  transition: transform 0.4s ease;
   -webkit-transform: translateY(100vh);
   -ms-transform: translateY(100vh);
   transform: translateY(100vh);
@@ -276,11 +276,11 @@ a {
   align-items: center;
   background-color: lightblue;
   font-size: 1.5em;
-  height: 10vh;
-  width: 75vw;
+  height: 8vh;
+  width: 60vw;
   border-style: solid;
   border-width: 1px;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .blur-filter {
@@ -306,20 +306,29 @@ a {
 
 .sort-by {
   position: relative;
+  margin-bottom: 25px;
 }
 
 .sort-by-nav {
   height: 0px;
   position: absolute;
-  bottom: 210px;
+  bottom: 50vh;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .sort-by-ul {
-  background-color: white;
-  color: black;
+  list-style-type: none;
+  padding: 0;
+  color: #00faff;
+  width: 50vw;
+}
+
+.sort-by-ul li {
+  width: 100%;
+  text-align: center;
+  margin: 3px;
 }
 
 #sort-by-open {
@@ -1010,7 +1019,6 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
 #create-user-wrapper h3 {

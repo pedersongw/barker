@@ -51,7 +51,16 @@ class ForumMobileNav extends React.Component {
   };
 
   sortByArgument = (argument) => {
+    this.setState({ navOpen: false });
     window.location.href = `/forum/1/${argument}`;
+  };
+
+  navigate = (url) => {
+    this.setState({ navOpen: false });
+    if (url === "logout") {
+      this.props.logOut();
+    }
+    window.location.href = `${url}`;
   };
 
   sortBy = () => {
@@ -79,41 +88,65 @@ class ForumMobileNav extends React.Component {
           }
           id="nav-mobile"
         >
-          <div
-            className="sort-by mobile-nav-button"
-            onClick={() => this.sortBy()}
-          >
-            Sort By
-            <nav
-              onClick={(e) => e.stopPropagation()}
-              className="sort-by-nav"
-              id={
-                this.state.sortByClicked && this.state.navOpen
-                  ? "sort-by-open"
-                  : "sort-by-closed"
-              }
+          {this.props.userLoggedIn() && (
+            <div
+              className="sort-by mobile-nav-button"
+              onClick={() => this.sortBy()}
             >
-              <ul className="sort-by-ul">
-                <li onClick={() => this.sortByArgument("all")}>All</li>
-                <li onClick={() => this.sortByArgument("popular")}>Popular</li>
-                <li onClick={() => this.sortByArgument("my")}>My Posts</li>
-                <li onClick={() => this.sortByArgument("new")}>New</li>
-                <li onClick={() => this.sortByArgument("old")}>Old</li>
-              </ul>
-            </nav>
-          </div>
-          <div
-            className="mobile-nav-button"
-            onClick={() => this.openPostModal()}
-          >
-            Create Post
-          </div>
+              Sort By
+              <nav
+                onClick={(e) => e.stopPropagation()}
+                className="sort-by-nav"
+                id={
+                  this.state.sortByClicked && this.state.navOpen
+                    ? "sort-by-open"
+                    : "sort-by-closed"
+                }
+              >
+                <ul className="sort-by-ul">
+                  <li onClick={() => this.sortByArgument("all")}>All</li>
+                  <li onClick={() => this.sortByArgument("popular")}>
+                    Popular
+                  </li>
+                  <li onClick={() => this.sortByArgument("my")}>My Posts</li>
+                  <li onClick={() => this.sortByArgument("new")}>New</li>
+                  <li onClick={() => this.sortByArgument("old")}>Old</li>
+                </ul>
+              </nav>
+            </div>
+          )}
+
           {this.props.userLoggedIn() && (
             <div
               className="mobile-nav-button"
-              onClick={() => this.props.logOut()}
+              onClick={() => this.openPostModal()}
+            >
+              Create Post
+            </div>
+          )}
+
+          {this.props.userLoggedIn() && (
+            <div
+              className="mobile-nav-button"
+              onClick={() => this.navigate("logout")}
             >
               Logout
+            </div>
+          )}
+          {!this.props.userLoggedIn() && (
+            <div
+              className="mobile-nav-button"
+              onClick={() => this.navigate("/login/login")}
+            >
+              Login
+            </div>
+          )}
+          {!this.props.userLoggedIn() && (
+            <div
+              className="mobile-nav-button"
+              onClick={() => this.navigate("/login/create")}
+            >
+              Create New User
             </div>
           )}
         </div>
