@@ -1,5 +1,6 @@
 body {
   font-family: "Catamaran" !important;
+  background-color: #00faff;
 }
 
 .App {
@@ -54,32 +55,68 @@ body {
 
 .desktop-nav {
   grid-area: nav;
+  background-color: #007498;
+  border-radius: 10px;
+  height: 40vh;
+  min-height: 220px;
+  max-height: 220px;
+  height: 40vh;
+  transition: min-height 0.5s ease;
+}
+
+#desktop-nav {
+  min-height: 350px;
+  max-height: 400pxpx;
+}
+
+.desktop-nav-inner-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: space-between;
-  height: 50vh;
+  min-height: 200px;
 }
 
-.desktop-nav a {
-  width: 100%;
+.desktop-nav-div {
+  width: 90%;
+  background-color: #002237;
+  padding: 10px 0;
+
+  border-radius: 10px;
   display: flex;
   justify-content: center;
-}
-
-.desktop-nav button {
-  border: none;
-  background-color: #002237;
-  padding: 10px;
-  border-radius: 10px;
-  width: 90%;
   color: #00faff;
   cursor: pointer;
 }
 
-.desktop-nav button:hover {
-  background-color: #00faff;
-  color: #002237;
+#desktop-sort-by {
+  position: relative;
+  margin-top: 15px;
+}
+
+.desktop-sort-by-menu {
+  position: absolute;
+  padding: 0;
+  width: 10vw;
+  bottom: -150px;
+  opacity: 0;
+  color: black;
+  transition: opacity 0.4s ease;
+}
+
+#desktop-sort-by-menu-open {
+  opacity: 1;
+}
+
+.desktop-nav-li {
+  list-style-type: none;
+  width: 100%;
+  text-align: center;
+  margin: 3px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 .forum-mobile-nav-div {
@@ -281,6 +318,7 @@ a {
   border-style: solid;
   border-width: 1px;
   border-radius: 15px;
+  cursor: pointer;
 }
 
 .blur-filter {
@@ -334,6 +372,7 @@ a {
   border-style: solid;
   border-width: 1px;
   border-radius: 15px;
+  cursor: pointer;
 }
 
 #li-selected {
