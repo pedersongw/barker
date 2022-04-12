@@ -39,7 +39,7 @@ class ForumDesktopNav extends React.Component {
           {this.props.user && this.props.user.isAdmin && (
             <div
               className="desktop-nav-div"
-              onClick={() => console.log(this.state)}
+              onClick={() => console.log(this.props)}
             >
               Admin
             </div>
@@ -90,12 +90,14 @@ class ForumDesktopNav extends React.Component {
               >
                 <li
                   className="desktop-nav-li"
+                  id={this.props.sort === "all" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("all")}
                 >
                   All
                 </li>
                 <li
                   className="desktop-nav-li"
+                  id={this.props.sort === "popular" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("popular")}
                 >
                   Popular
@@ -103,18 +105,21 @@ class ForumDesktopNav extends React.Component {
 
                 <li
                   className="desktop-nav-li"
+                  id={this.props.sort === "my" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("my")}
                 >
                   My Posts
                 </li>
                 <li
                   className="desktop-nav-li"
+                  id={this.props.sort === "new" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("new")}
                 >
                   New
                 </li>
                 <li
                   className="desktop-nav-li"
+                  id={this.props.sort === "old" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("old")}
                 >
                   Old

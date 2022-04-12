@@ -8,6 +8,7 @@ import TopMobileNavBar from "./TopMobileNavBar";
 import ForumMobileNav from "./ForumMobileNav";
 import Pagination from "./Pagination";
 import ForumDesktopNav from "./ForumDesktopNav";
+import logo from "../images/logo.png";
 
 class Forum extends React.Component {
   state = {
@@ -239,7 +240,7 @@ class Forum extends React.Component {
         ) : (
           <div className="spacer-for-mobile-header"></div>
         )}
-
+        <header></header>
         <PostModal
           closePostModal={this.closePostModal}
           isOpen={this.state.postModalOpen}
@@ -266,6 +267,7 @@ class Forum extends React.Component {
               sortMyPosts={this.displayMyPosts}
               sortPopular={this.displayPostsSortedByPopular}
               updateView={this.updateEntriesFromDatabase}
+              sort={this.props.sort}
             />
           )}
           <div className="please-login">

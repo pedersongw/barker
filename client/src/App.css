@@ -12,6 +12,10 @@ body {
   position: relative;
 }
 
+header {
+  height: 50px;
+}
+
 .forum-main {
   display: grid;
   grid-template-rows: 10vh 1fr 10vh;
@@ -55,13 +59,15 @@ body {
 
 .desktop-nav {
   grid-area: nav;
+  position: sticky;
+  top: 75px;
   background-color: #007498;
   border-radius: 10px;
   height: 40vh;
   min-height: 220px;
   max-height: 220px;
   height: 40vh;
-  transition: min-height 0.5s ease;
+  transition: min-height 0.3s ease;
 }
 
 #desktop-nav {
@@ -75,6 +81,7 @@ body {
   justify-content: space-around;
   align-items: center;
   min-height: 200px;
+  margin-top: 8px;
 }
 
 .desktop-nav-div {
@@ -97,14 +104,22 @@ body {
 .desktop-sort-by-menu {
   position: absolute;
   padding: 0;
-  width: 10vw;
-  bottom: -150px;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  width: 15vw;
+  bottom: -155px;
   opacity: 0;
   color: black;
-  transition: opacity 0.4s ease;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.1s;
 }
 
 #desktop-sort-by-menu-open {
+  transition-delay: 0.2s;
+  transition-duration: 0.2s;
   opacity: 1;
 }
 
@@ -179,7 +194,7 @@ body {
 }
 
 .spacer-for-desktop-header {
-  height: 100px;
+  height: 50px;
 }
 
 .spacer-for-mobile-header {
