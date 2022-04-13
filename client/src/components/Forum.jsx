@@ -229,6 +229,11 @@ class Forum extends React.Component {
     this.setState({ navOpen: !this.state.navOpen });
   };
 
+  year = () => {
+    let date = new Date();
+    return date.getFullYear().toString();
+  };
+
   render() {
     const { currentPage, pageSize } = this.state;
 
@@ -268,11 +273,14 @@ class Forum extends React.Component {
               sortPopular={this.displayPostsSortedByPopular}
               updateView={this.updateEntriesFromDatabase}
               sort={this.props.sort}
+              status={this.serverStatus}
             />
           )}
-          <div className="please-login">
-            <h1>{!this.state.user && this.serverStatus()}</h1>
-          </div>
+          {!this.userLoggedIn() && (
+            <div className="please-login">
+              <img alt="Barker-Field Logo" src={logo}></img>
+            </div>
+          )}
 
           {this.state.user && (
             <div className="posts-div">
@@ -311,6 +319,7 @@ class Forum extends React.Component {
             </div>
           )}
         </div>
+        <footer>© {this.year()} Barker Field Dog Park</footer>
       </div>
     );
   }

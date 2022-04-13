@@ -143,6 +143,7 @@ class ReportModal extends React.Component {
                       {this.state.selectedOption === "Other" && (
                         <input
                           type="text"
+                          id="other-input"
                           value={this.state.otherText}
                           onChange={(event) => this.otherTextChange(event)}
                           placeholder="Describe here"

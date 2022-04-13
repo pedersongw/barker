@@ -16,6 +16,14 @@ header {
   height: 50px;
 }
 
+footer {
+  padding: 0 10px;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 .forum-main {
   display: grid;
   grid-template-rows: 10vh 1fr 10vh;
@@ -38,6 +46,10 @@ header {
   justify-content: center;
   align-items: center;
   grid-area: post;
+}
+
+.server-status {
+  text-align: center;
 }
 
 .left-placeholder {
@@ -787,6 +799,12 @@ a {
 
 #report-modal-form input {
   margin: 0 10px 0 25px;
+}
+
+#other-input {
+  border: none;
+  border-radius: 5px;
+  padding: 1px 5px;
 }
 
 .modal-header {

@@ -10,6 +10,7 @@ import jwtDecode from "jwt-decode";
 import TopMobileNavBar from "./TopMobileNavBar";
 import { config } from "../URLs.jsx";
 import axios from "axios";
+import MobileReplyMenu from "./MobileReplyMenu";
 
 class SinglePost extends React.Component {
   state = {
@@ -18,8 +19,9 @@ class SinglePost extends React.Component {
     comments: null,
     replyModalOpen: false,
     reportModalOpen: false,
+    mobileReplyOpen: false,
     alreadyReported: false,
-    viewedComment: null,
+    clickedComment: null,
     isLiked: false,
     user: null,
     width: window.innerWidth,
@@ -92,6 +94,7 @@ class SinglePost extends React.Component {
           comment={comment}
           parentPost={comment.parentPost}
           width={this.state.width}
+          handleMenu={this.openMobileReplyMenu}
         />
       );
     });
@@ -156,9 +159,8 @@ class SinglePost extends React.Component {
     }
   };
 
-  openReplyModal = (comment) => {
-    console.log(comment);
-    if (comment) this.setState({ viewedComment: comment });
+  openReplyModal = () => {
+    this.setState({ mobileReplyOpen: false });
     this.setState({ replyModalOpen: true });
     setTimeout(
       () => window.addEventListener("click", this.handleClickOutsideReplyModal),
@@ -168,7 +170,7 @@ class SinglePost extends React.Component {
 
   closeReplyModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReplyModal);
-    this.setState({ viewedComment: false });
+    this.setState({ clickedComment: false });
     this.setState({ replyModalOpen: false });
   };
 
@@ -188,8 +190,10 @@ class SinglePost extends React.Component {
     }
   };
 
-  openReportModal = (comment) => {
-    let obj = comment;
+  openReportModal = () => {
+    this.setState({ mobileReplyOpen: false });
+
+    let obj = this.state.clickedComment;
     if (!obj) {
       obj = this.state.post;
     }
@@ -204,16 +208,15 @@ class SinglePost extends React.Component {
     } else {
       console.log("not yet reported");
     }
-    if (comment) this.setState({ viewedComment: comment });
+
     window.addEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: true });
-    this.setState({ viewedComment: comment });
   };
 
   closeReportModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: false });
-    this.setState({ viewedComment: null });
+    this.setState({ clickedComment: null });
     setTimeout(() => this.setState({ alreadyReported: false }), 250);
   };
 
@@ -222,7 +225,7 @@ class SinglePost extends React.Component {
     if (
       container !== event.target &&
       !container.contains(event.target) &&
-      event.target.className !== "comment-report-button" &&
+      event.target.id !== "comment-report-button" &&
       event.target.className !== "post-report"
     ) {
       console.log("clicked outside report modal");
@@ -232,6 +235,49 @@ class SinglePost extends React.Component {
     }
   };
 
+  openMobileReplyMenu = (comment) => {
+    if (!this.state.mobileReplyOpen) {
+      this.setState({ mobileReplyOpen: true });
+      this.setState({ clickedComment: comment });
+      window.addEventListener(
+        "mousedown",
+        this.handleClickOutsideMobileReplyMenu
+      );
+    }
+  };
+
+  closeMobileReplyMenu = () => {
+    if (this.state.mobileReplyOpen) {
+      this.setState({ mobileReplyOpen: false });
+      this.setState({ clickedComment: null });
+      window.removeEventListener(
+        "mousedown",
+        this.handleClickOutsideMobileReplyMenu
+      );
+    }
+  };
+
+  handleClickOutsideMobileReplyMenu = (event) => {
+    if (event.target.className !== "mobile-nav-button") {
+      this.closeMobileReplyMenu();
+    }
+  };
+
+  updateDeletedComment = async () => {
+    const comment = this.state.clickedComment;
+    let commentID = { _id: comment._id };
+    try {
+      const response = await axios.post(
+        config + "/api/comments/delete",
+        commentID
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    window.location.reload();
+  };
+
   render() {
     const { post } = this.state;
     return (
@@ -239,7 +285,7 @@ class SinglePost extends React.Component {
         <ReplyModal
           closeModal={this.closeReplyModal}
           isOpen={this.state.replyModalOpen}
-          comment={this.state.viewedComment}
+          comment={this.state.clickedComment}
           post={this.state.post}
           width={this.state.width}
           user={this.state.user}
@@ -247,7 +293,7 @@ class SinglePost extends React.Component {
         <ReportModal
           closeModal={this.closeReportModal}
           isOpen={this.state.reportModalOpen}
-          comment={this.state.viewedComment}
+          comment={this.state.clickedComment}
           reported={this.state.alreadyReported}
           post={this.state.post}
           width={this.state.width}
@@ -314,6 +360,12 @@ class SinglePost extends React.Component {
             </div>
           </div>
         </div>
+        <MobileReplyMenu
+          openReportModal={this.openReportModal}
+          openReplyModal={this.openReplyModal}
+          delete={this.updateDeletedComment}
+          open={this.state.mobileReplyOpen}
+        />
       </React.Fragment>
     );
   }

@@ -39,7 +39,7 @@ class ForumDesktopNav extends React.Component {
           {this.props.user && this.props.user.isAdmin && (
             <div
               className="desktop-nav-div"
-              onClick={() => console.log(this.props)}
+              onClick={() => (window.location.href = "/admin")}
             >
               Admin
             </div>
@@ -128,6 +128,11 @@ class ForumDesktopNav extends React.Component {
             </div>
           )}
         </div>
+        {!this.props.userLoggedIn() && (
+          <h2 className="server-status">
+            {!this.state.user && this.props.status()}
+          </h2>
+        )}
       </nav>
     );
   }

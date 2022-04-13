@@ -33,39 +33,6 @@ class Comment extends React.Component {
     }
   };
 
-  updateDeletedComment = async () => {
-    const { comment } = this.props;
-    let commentID = { _id: comment._id };
-    try {
-      const response = await axios.post(
-        config + "/api/comments/delete",
-        commentID
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  onEllipsisClick = () => {
-    console.log("just clicked");
-    if (this.state.isOpen) {
-      window.removeEventListener("click", this.handleClickOutsideCommentMenu);
-      this.setState({ isOpen: false });
-    } else {
-      window.addEventListener("click", this.handleClickOutsideCommentMenu);
-      this.setState({ isOpen: true });
-    }
-  };
-
-  handleClickOutsideCommentMenu = (event) => {
-    let container = document.getElementById(this.props.comment._id);
-    if (!container.contains(event.target)) {
-      console.log("clicked outside comment-menu");
-      window.removeEventListener("click", this.handleClickOutsideCommentMenu);
-      this.setState({ isOpen: false });
-    }
-  };
   isAlmostDeep = () => {
     if (this.props.width < 800) {
       return this.props.depth === 3 ? true : false;
@@ -135,6 +102,7 @@ class Comment extends React.Component {
             comment={comment}
             type="child"
             width={this.props.width}
+            handleMenu={this.props.handleMenu}
           />
         );
       }
@@ -169,38 +137,9 @@ class Comment extends React.Component {
               <div
                 className="ellipsis"
                 id={this.props.comment._id}
-                onClick={() => this.onEllipsisClick()}
+                onClick={() => this.props.handleMenu(this.props.comment)}
               >
                 <FaEllipsisH className="react-icon" />
-                <div
-                  className="comment-menu"
-                  id={this.state.isOpen ? "comment-menu-visible" : null}
-                >
-                  <button
-                    onClick={() =>
-                      this.props.openReportModal(this.props.comment)
-                    }
-                    className="comment-report-button"
-                  >
-                    Report
-                  </button>
-                  {this.isUserOrAdmin() && (
-                    <button
-                      className="comment-button"
-                      onClick={() => this.updateDeletedComment()}
-                    >
-                      Delete
-                    </button>
-                  )}
-                  <button
-                    className="comment-button"
-                    onClick={() =>
-                      this.props.openReplyModal(this.props.comment)
-                    }
-                  >
-                    Reply
-                  </button>
-                </div>
               </div>
             )}
           </div>
