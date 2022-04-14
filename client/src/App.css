@@ -8,8 +8,9 @@ body {
 }
 
 .page-wrapper {
-  margin: 0;
   position: relative;
+  min-height: 100vh;
+  margin: 0;
 }
 
 header {
@@ -18,10 +19,9 @@ header {
 
 footer {
   padding: 0 10px;
-  height: 50px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  height: 10px;
+  position: absolute;
+  bottom: 0;
 }
 
 .forum-main {
@@ -35,8 +35,74 @@ footer {
 
 .forum-main-large {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-areas: "nav post post post post";
+  grid-template-columns: 1fr 4fr;
+  grid-template-areas: "nav post";
+}
+
+#forum-login-landing {
+  grid-template-columns: 1.5fr 2.5fr;
+}
+
+.login-wrapper {
+  grid-area: nav;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-or-create {
+  display: relative;
+  height: 75%;
+  width: 75%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.login,
+.create {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background-color: #007498;
+  display: grid;
+  grid-template-rows: 1fr 8fr;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 5%;
+  grid-template-areas:
+    "tab-left tab-right"
+    "body body";
+}
+
+#login-tab,
+#create-tab {
+  z-index: 2;
+}
+
+.tab-left {
+  grid-area: tab-left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-right {
+  grid-area: tab-right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-body {
+  grid-area: body;
+  color: white;
+}
+
+.login-input {
+  width: 75%;
+  height: 1em;
+  border: none;
 }
 
 .please-login {
@@ -48,17 +114,12 @@ footer {
   grid-area: post;
 }
 
-.server-status {
-  text-align: center;
+.please-login img {
+  max-height: 400px;
 }
 
-.left-placeholder {
-  grid-area: nav;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 50vh;
+.server-status {
+  text-align: center;
 }
 
 .comment-holder {
@@ -419,7 +480,7 @@ a {
   grid-template-areas: "one two three four";
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 10;
   width: 100%;
   height: 50px;
 }

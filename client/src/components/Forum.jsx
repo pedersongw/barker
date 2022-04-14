@@ -8,6 +8,7 @@ import TopMobileNavBar from "./TopMobileNavBar";
 import ForumMobileNav from "./ForumMobileNav";
 import Pagination from "./Pagination";
 import ForumDesktopNav from "./ForumDesktopNav";
+import LogInOrCreate from "./LoginOrCreate";
 import logo from "../images/logo.png";
 
 class Forum extends React.Component {
@@ -238,7 +239,7 @@ class Forum extends React.Component {
     const { currentPage, pageSize } = this.state;
 
     return (
-      <div>
+      <div className="page-wrapper">
         <TopMobileNavBar page="forum" />
         {this.state.width > 800 ? (
           <div className="spacer-for-desktop-header"></div>
@@ -259,8 +260,9 @@ class Forum extends React.Component {
           className={
             this.state.width < 800 ? "formum-main" : "forum-main-large"
           }
+          id={this.userLoggedIn() ? null : "forum-login-landing"}
         >
-          {this.state.width > 800 && (
+          {this.state.width > 800 && this.userLoggedIn() && (
             <ForumDesktopNav
               openPostModal={this.openPostModal}
               openUserModal={this.openUserModal}
@@ -276,6 +278,7 @@ class Forum extends React.Component {
               status={this.serverStatus}
             />
           )}
+          {!this.userLoggedIn() && <LogInOrCreate />}
           {!this.userLoggedIn() && (
             <div className="please-login">
               <img alt="Barker-Field Logo" src={logo}></img>
@@ -319,7 +322,9 @@ class Forum extends React.Component {
             </div>
           )}
         </div>
-        <footer>© {this.year()} Barker Field Dog Park</footer>
+        <footer>
+          <small>© {this.year()} Barker Field Dog Park</small>
+        </footer>
       </div>
     );
   }
