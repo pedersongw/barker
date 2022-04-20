@@ -45,8 +45,8 @@ footer {
 
 .login-wrapper {
   grid-area: nav;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,14 +65,22 @@ footer {
   position: absolute;
   width: 300px;
   height: 300px;
-  background-color: #007498;
   display: grid;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
   grid-template-rows: 1fr 8fr;
   grid-template-columns: 1fr 1fr;
   border-radius: 5%;
   grid-template-areas:
     "tab-left tab-right"
     "body body";
+}
+
+.login {
+  background-color: #008baa;
+}
+
+.create {
+  background-color: #007498;
 }
 
 #login-tab,
@@ -85,13 +93,38 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  background-color: #008baa;
+  font-size: 1.5em;
+  color: #00faff;
+  border-style: solid;
+  border-width: 0 2px 0 0;
+  border-color: #004562;
+  border-radius: 15px 0 0 0;
 }
 
 .tab-right {
   grid-area: tab-right;
+  background-color: #007498;
   display: flex;
+  border-radius: 0 15px 0 0;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #00faff;
+}
+
+.login .tab-right {
+  background-color: #007498;
+  border-radius: 0 15px 0 0;
+}
+
+.create .tab-left {
+  border-radius: 15px 0 0 0;
+  border-style: solid;
+  border-width: 0 2px 0 0;
+  border-color: #004562;
 }
 
 .login-body {
@@ -99,10 +132,45 @@ footer {
   color: white;
 }
 
-.login-input {
+.login form,
+.create form {
+  margin: 20px;
+  grid-area: body;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login form div,
+.create form div {
   width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.login form button,
+.create form button {
+  border: none;
+  border-radius: 5px;
+  background-color: #002237;
+  width: 40%;
+  height: 15%;
+  color: #00faff;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.login-input {
+  margin-top: 5px;
+  width: 100%;
   height: 1em;
   border: none;
+  border-radius: 5px;
+  padding: 3px;
+  white-space: normal;
 }
 
 .please-login {

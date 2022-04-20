@@ -9,7 +9,20 @@ class LogInOrCreate extends React.Component {
     email: null,
     password: null,
     errorMessage: null,
+    width: window.innerWidth,
   };
+
+  componentDidMount() {
+    window.addEventListener("resize", this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleWindowSizeChange);
+  }
 
   tabClick = (event) => {
     event.target.className === "tab-left"
@@ -97,18 +110,26 @@ class LogInOrCreate extends React.Component {
               Sign Up
             </div>
             <form onSubmit={this.onLogin}>
-              <input
-                className="login-input"
-                type="text"
-                name="email"
-                onChange={(event) => this.onEmailChange(event)}
-              ></input>
-              <input
-                className="login-input"
-                type="password"
-                name="password"
-                onChange={(event) => this.onPasswordChange(event)}
-              ></input>
+              <div>
+                <label htmlFor="email">Email</label>
+                <input
+                  className="login-input"
+                  type="text"
+                  name="email"
+                  onChange={(event) => this.onEmailChange(event)}
+                ></input>
+              </div>
+
+              <div>
+                <label htmlFor="password">Password</label>
+                <input
+                  className="login-input"
+                  type="password"
+                  name="password"
+                  onChange={(event) => this.onPasswordChange(event)}
+                ></input>
+              </div>
+
               <button type="submit">Login</button>
             </form>
           </div>
@@ -126,24 +147,36 @@ class LogInOrCreate extends React.Component {
               Sign Up
             </div>
             <form onSubmit={this.onCreate}>
-              <input
-                className="login-input"
-                type="text"
-                name="username"
-                onChange={(event) => this.onUsernameChange(event)}
-              ></input>
-              <input
-                className="login-input"
-                type="text"
-                name="email"
-                onChange={(event) => this.onEmailChange(event)}
-              ></input>
-              <input
-                className="login-input"
-                type="password"
-                name="password"
-                onChange={(event) => this.onPasswordChange(event)}
-              ></input>
+              <div>
+                <label htmlFor="username">Username</label>
+                <input
+                  className="login-input"
+                  type="text"
+                  name="username"
+                  onChange={(event) => this.onUsernameChange(event)}
+                ></input>
+              </div>
+
+              <div>
+                <label htmlFor="email">Email</label>
+                <input
+                  className="login-input"
+                  type="text"
+                  name="email"
+                  onChange={(event) => this.onEmailChange(event)}
+                ></input>
+              </div>
+
+              <div>
+                <label htmlFor="password">Password</label>{" "}
+                <input
+                  className="login-input"
+                  type="password"
+                  name="password"
+                  onChange={(event) => this.onPasswordChange(event)}
+                ></input>
+              </div>
+
               <button type="submit">Create User</button>
             </form>
           </div>

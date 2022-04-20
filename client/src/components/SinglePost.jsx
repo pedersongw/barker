@@ -244,6 +244,7 @@ class SinglePost extends React.Component {
         this.handleClickOutsideMobileReplyMenu
       );
     }
+    document.body.style.overflow = "hidden";
   };
 
   closeMobileReplyMenu = () => {
@@ -255,6 +256,7 @@ class SinglePost extends React.Component {
         this.handleClickOutsideMobileReplyMenu
       );
     }
+    document.body.style.overflow = "scroll";
   };
 
   handleClickOutsideMobileReplyMenu = (event) => {

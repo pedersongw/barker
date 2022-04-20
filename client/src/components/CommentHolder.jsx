@@ -162,6 +162,7 @@ class CommentHolder extends React.Component {
         this.handleClickOutsideMobileReplyMenu
       );
     }
+    document.body.style.overflow = "hidden";
   };
 
   closeMobileReplyMenu = () => {
@@ -173,6 +174,7 @@ class CommentHolder extends React.Component {
         this.handleClickOutsideMobileReplyMenu
       );
     }
+    document.body.style.overflow = "scroll";
   };
 
   handleClickOutsideMobileReplyMenu = (event) => {

@@ -10,6 +10,7 @@ class ForumMobileNav extends React.Component {
     window.addEventListener("mousedown", this.handleClickOutsideMenu);
     this.props.navOpen();
     this.setState({ navOpen: true });
+    document.body.style.overflow = "hidden";
   };
 
   handleMenuClose = () => {
@@ -17,6 +18,7 @@ class ForumMobileNav extends React.Component {
     this.props.navOpen();
     this.setState({ navOpen: false });
     this.setState({ sortByClicked: false });
+    document.body.style.overflow = "scroll";
   };
 
   handleClickOutsideMenu = (event) => {

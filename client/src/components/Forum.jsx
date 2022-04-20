@@ -37,6 +37,7 @@ class Forum extends React.Component {
       this.setState({ user: user });
     } catch (ex) {
       this.setState({ user: null });
+      document.body.style.overflow = "hidden";
     }
     try {
       const { data: entries } = await axios.get(config + "/api/posts");
@@ -63,6 +64,10 @@ class Forum extends React.Component {
     } else if (sort === "old") {
       this.displayPostsSortedByOld();
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleWindowSizeChange);
   }
 
   isAdmin = () => {
@@ -128,10 +133,6 @@ class Forum extends React.Component {
     });
     this.chunkifyEntries(sortedEntries);
   };
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.handleWindowSizeChange);
-  }
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
@@ -279,7 +280,7 @@ class Forum extends React.Component {
             />
           )}
           {!this.userLoggedIn() && <LogInOrCreate />}
-          {!this.userLoggedIn() && (
+          {!this.userLoggedIn() && this.state.width > 800 && (
             <div className="please-login">
               <img alt="Barker-Field Logo" src={logo}></img>
             </div>
@@ -304,7 +305,7 @@ class Forum extends React.Component {
             </div>
           )}
 
-          {this.state.width < 800 && (
+          {this.userLoggedIn() && this.state.width < 800 && (
             <div className="forum-mobile-nav-div">
               <ForumMobileNav
                 openPostModal={this.openPostModal}
