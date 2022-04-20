@@ -171,11 +171,12 @@ footer {
 .login-input {
   margin-top: 5px;
   width: 100%;
-  height: 1em;
+  height: auto;
   border: none;
+  padding: 0 5px;
   border-radius: 5px;
-  padding: 3px;
   white-space: normal;
+  line-height: normal;
 }
 
 .please-login {
