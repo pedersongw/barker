@@ -94,7 +94,10 @@ class LogInOrCreate extends React.Component {
 
   render() {
     return (
-      <div className="login-wrapper">
+      <div
+        className="login-wrapper"
+        id={this.state.width < 800 ? "login-wrapper-mobile" : null}
+      >
         <div className="login-or-create">
           <div
             className="login"

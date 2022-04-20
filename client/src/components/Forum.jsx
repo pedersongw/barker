@@ -30,6 +30,7 @@ class Forum extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
+    setTimeout(() => console.log(this.state.user), 2000);
     const { sort } = this.props;
     try {
       const jwt = localStorage.getItem("token");
@@ -281,11 +282,12 @@ class Forum extends React.Component {
           )}
           {!this.userLoggedIn() && <LogInOrCreate />}
           {!this.userLoggedIn() && this.state.width > 800 && (
-            <div className="please-login">
-              <img alt="Barker-Field Logo" src={logo}></img>
-            </div>
+            <React.Fragment>
+              <div className="please-login">
+                <img alt="Barker-Field Logo" src={logo}></img>
+              </div>
+            </React.Fragment>
           )}
-
           {this.state.user && (
             <div className="posts-div">
               {this.state.entriesDisplayed &&
@@ -304,7 +306,6 @@ class Forum extends React.Component {
               )}
             </div>
           )}
-
           {this.userLoggedIn() && this.state.width < 800 && (
             <div className="forum-mobile-nav-div">
               <ForumMobileNav
