@@ -1,15 +1,16 @@
 import React from "react";
 import axios from "axios";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import jwtDecode from "jwt-decode";
-import Post from "./Post";
-import PostModal from "./PostModal";
-import TopMobileNavBar from "./TopMobileNavBar";
-import ForumMobileNav from "./ForumMobileNav";
-import Pagination from "./Pagination";
-import ForumDesktopNav from "./ForumDesktopNav";
-import LogInOrCreate from "./LoginOrCreate";
-import logo from "../images/logo.png";
+import Post from "../Post";
+import PostModal from "../PostModal";
+import TopMobileNavBar from "../Navs/TopMobileNavBar";
+import ForumMobileNav from "../Navs/MobileNav";
+import Pagination from "../Pagination";
+import ForumDesktopNav from "../Navs/DesktopNav";
+import LogInOrCreate from "../Login/LoginOrCreate";
+import logo from "../../images/logo.png";
+import styles from "./Forum.module.css";
 
 class Forum extends React.Component {
   state = {
@@ -30,7 +31,6 @@ class Forum extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    setTimeout(() => console.log(this.state.user), 2000);
     const { sort } = this.props;
     try {
       const jwt = localStorage.getItem("token");
@@ -241,12 +241,12 @@ class Forum extends React.Component {
     const { currentPage, pageSize } = this.state;
 
     return (
-      <div className="page-wrapper">
+      <div className={styles.wrapper}>
         <TopMobileNavBar page="forum" />
         {this.state.width > 800 ? (
-          <div className="spacer-for-desktop-header"></div>
+          <div className={styles.desktopHeaderSpacer}></div>
         ) : (
-          <div className="spacer-for-mobile-header"></div>
+          <div className={styles.MobileHeaderSpacer}></div>
         )}
         <header></header>
         <PostModal
@@ -259,10 +259,8 @@ class Forum extends React.Component {
         />
 
         <div
-          className={
-            this.state.width < 800 ? "formum-main" : "forum-main-large"
-          }
-          id={this.userLoggedIn() ? null : "forum-login-landing"}
+          className={this.state.width < 800 ? styles.main : styles.mainLarge}
+          id={this.userLoggedIn() ? null : styles.loginLanding}
         >
           {this.state.width > 800 && this.userLoggedIn() && (
             <ForumDesktopNav
@@ -283,13 +281,13 @@ class Forum extends React.Component {
           {!this.userLoggedIn() && <LogInOrCreate />}
           {!this.userLoggedIn() && this.state.width > 800 && (
             <React.Fragment>
-              <div className="please-login">
+              <div className={styles.pleaseLogin}>
                 <img alt="Barker-Field Logo" src={logo}></img>
               </div>
             </React.Fragment>
           )}
           {this.state.user && (
-            <div className="posts-div">
+            <div className={styles.postsDiv}>
               {this.state.entriesDisplayed &&
                 this.state.user &&
                 this.renderPostsInListGroup()}
@@ -307,7 +305,7 @@ class Forum extends React.Component {
             </div>
           )}
           {this.userLoggedIn() && this.state.width < 800 && (
-            <div className="forum-mobile-nav-div">
+            <div className={styles.mobileNav}>
               <ForumMobileNav
                 openPostModal={this.openPostModal}
                 openUserModal={this.openUserModal}

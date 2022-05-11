@@ -1,16 +1,17 @@
 import React from "react";
-import Comment from "./comment";
-import DateComponent from "./date";
-import ReportModal from "./ReportModal";
-import ReplyModal from "./ReplyModal";
+import styles from "./singlePost.module.css";
+import Comment from "../Comment/Comment";
+import DateComponent from "../date";
+import ReportModal from "../ReportModal";
+import ReplyModal from "../ReplyModal";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { FaEllipsisH } from "react-icons/fa";
 import jwtDecode from "jwt-decode";
-import TopMobileNavBar from "./TopMobileNavBar";
-import { config } from "../URLs.jsx";
+import TopMobileNavBar from "../Navs/TopMobileNavBar";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
-import MobileReplyMenu from "./MobileReplyMenu";
+import MobileReplyMenu from "../Navs/MobileReplyMenu";
 
 class SinglePost extends React.Component {
   state = {
@@ -170,7 +171,7 @@ class SinglePost extends React.Component {
 
   closeReplyModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReplyModal);
-    this.setState({ clickedComment: false });
+    this.setState({ clickedComment: null });
     this.setState({ replyModalOpen: false });
   };
 
@@ -192,7 +193,6 @@ class SinglePost extends React.Component {
 
   openReportModal = () => {
     this.setState({ mobileReplyOpen: false });
-
     let obj = this.state.clickedComment;
     if (!obj) {
       obj = this.state.post;
@@ -239,10 +239,7 @@ class SinglePost extends React.Component {
     if (!this.state.mobileReplyOpen) {
       this.setState({ mobileReplyOpen: true });
       this.setState({ clickedComment: comment });
-      window.addEventListener(
-        "mousedown",
-        this.handleClickOutsideMobileReplyMenu
-      );
+      setTimeout(() => console.log(this.state), 4000);
     }
     document.body.style.overflow = "hidden";
   };
@@ -250,19 +247,8 @@ class SinglePost extends React.Component {
   closeMobileReplyMenu = () => {
     if (this.state.mobileReplyOpen) {
       this.setState({ mobileReplyOpen: false });
-      this.setState({ clickedComment: null });
-      window.removeEventListener(
-        "mousedown",
-        this.handleClickOutsideMobileReplyMenu
-      );
     }
     document.body.style.overflow = "scroll";
-  };
-
-  handleClickOutsideMobileReplyMenu = (event) => {
-    if (event.target.className !== "mobile-nav-button") {
-      this.closeMobileReplyMenu();
-    }
   };
 
   updateDeletedComment = async () => {
@@ -302,50 +288,50 @@ class SinglePost extends React.Component {
           user={this.state.user}
         />
         <TopMobileNavBar />
-        <div className="posts-spacer">
+        <div className={styles.postsSpacer}>
           <div className="posts-div">
-            <div className="viewed-post-wrapper">
+            <div className={styles.viewedPostWrapper}>
               {this.state.comments && this.state.post && (
                 <React.Fragment>
-                  <div className="viewed-post">
-                    <h3 className="viewed-post-title">{post.title}</h3>
-                    <p className="viewed-post-user">
+                  <div className={styles.viewedPost}>
+                    <h3 className={styles.viewedPostTitle}>{post.title}</h3>
+                    <p className={styles.viewedPostUser}>
                       posted by {post.username[1]}
                     </p>
-                    <p className="viewed-post-body">{post.body}</p>
-                    <p className="viewed-post-likes">
+                    <p className={styles.viewedPostBody}>{post.body}</p>
+                    <p className={styles.viewedPostLikes}>
                       {post.likes.length.toString() +
                         (post.likes.length === 1
                           ? " person liked this"
                           : " people liked this")}
                     </p>
-                    <div className="viewed-post-time">
+                    <div className={styles.viewedPostTime}>
                       <DateComponent time={post.timePosted} />
                     </div>
-                    <div className="viewed-post-reply-div">
-                      <div className="likes-heart">
+                    <div className={styles.viewedPostReplyDiv}>
+                      <div className={styles.likesHeart}>
                         {this.isLiked() ? (
                           <FaHeart
-                            className="heart-icon"
+                            className={styles.heartIcon}
                             onClick={() => this.onLike()}
                           />
                         ) : (
                           <FaRegHeart
-                            className="heart-icon"
+                            className={styles.heartIcon}
                             onClick={() => this.onLike()}
                           />
                         )}
                       </div>
-                      <div className="post-reply-holder">
+                      <div className={styles.postReplyHolder}>
                         <button
                           type="submit"
-                          className="post-reply-button"
+                          className={styles.postReplyButton}
                           onClick={() => this.openReplyModal()}
                         >
                           Reply
                         </button>
                       </div>
-                      <div className="post-report-holder">
+                      <div className={styles.postReportHolder}>
                         <small
                           className="post-report"
                           onClick={() => this.openReportModal()}
@@ -367,6 +353,7 @@ class SinglePost extends React.Component {
           openReplyModal={this.openReplyModal}
           delete={this.updateDeletedComment}
           open={this.state.mobileReplyOpen}
+          close={this.closeMobileReplyMenu}
         />
       </React.Fragment>
     );

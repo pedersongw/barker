@@ -1,0 +1,60 @@
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.desktopHeaderSpacer {
+  height: 50px;
+}
+
+.MobileHeaderSpacer {
+  height: 25px;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: 10vh 1fr 10vh;
+  grid-template-areas:
+    "nav"
+    "post"
+    "bottom-nav";
+}
+
+.mainLarge {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-areas: "nav post";
+}
+
+#loginLanding {
+  grid-template-columns: 1.5fr 2.5fr;
+}
+
+.pleaseLogin {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: post;
+}
+
+.pleaseLogin img {
+  max-height: 400px;
+}
+
+.postsDiv {
+  grid-area: post;
+  overflow: auto;
+  margin: 0px 25px 35px;
+  background-color: #004562;
+  border-radius: 10px;
+}
+
+.mobileNav {
+  grid-area: bottom-nav;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

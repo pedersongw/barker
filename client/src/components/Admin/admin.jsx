@@ -1,9 +1,10 @@
 import React from "react";
 import jwtDecode from "jwt-decode";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
-import ReportedComment from "./ReportedComment";
-import ReportDetails from "./ReportDetails";
+import ReportedComment from "../ReportedComment";
+import ReportDetails from "../ReportDetails";
+import styles from "./admin.module.css";
 
 class Admin extends React.Component {
   state = {
@@ -140,26 +141,25 @@ class Admin extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="admin-holder">
-          <div className="report-descriptions-section">
-            <h1 className="admin-h1">Report Details</h1>
+        <div className={styles.wrapper}>
+          <div className={styles.descriptions}>
+            <h1 className={styles.h1}>Report Details</h1>
             {this.state.highlighted && this.mapReports()}
           </div>
-          <div className="reported-comments">
-            <h1 className="admin-h1">Reported Comments</h1>
+          <div className={styles["reported-comments"]}>
+            <h1 className={styles.h1}>Reported Comments</h1>
             {this.state.comments && this.mapComments()}
           </div>
-          <div className="reported-posts">
-            <h1 className="admin-h1">Reported Posts</h1>
+          <div className={styles["reported-posts"]}>
+            <h1 className={styles.h1}>Reported Posts</h1>
             {this.state.posts && this.mapPosts()}
           </div>
-          <div className="admin-buttons">
+          <div className={styles["admin-buttons"]}>
             {this.state.highlighted && (
               <button onClick={() => this.updateDeletedComment()}>
                 Mark Comment as Deleted
               </button>
             )}
-
             {this.state.selectedReport !== null && (
               <button onClick={() => this.unreport()}>
                 Remove Selected Report

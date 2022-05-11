@@ -1,10 +1,16 @@
 import React from "react";
+import styles from "./MobileNav.module.css";
 
 class ForumMobileNav extends React.Component {
   state = {
     navOpen: false,
     sortByClicked: false,
   };
+
+  constructor(props) {
+    super(props);
+    this.blurFilter = React.createRef();
+  }
 
   handleMenuOpen = () => {
     window.addEventListener("mousedown", this.handleClickOutsideMenu);
@@ -27,7 +33,7 @@ class ForumMobileNav extends React.Component {
     if (container === undefined) {
       window.removeEventListener("mousedown", this.handleClickOutsideMenu);
     } else if (
-      event.target.className === "blur-filter" ||
+      event.target === this.blurFilter.current ||
       event.target.id === "nav-mobile"
     ) {
       console.log("clicked outside mobile nav menu", event.target);
@@ -72,67 +78,72 @@ class ForumMobileNav extends React.Component {
     return (
       <div className="entire-menu">
         <div
-          className="blur-filter"
-          id={this.state.navOpen ? "blur-filter" : null}
+          ref={this.blurFilter}
+          className={styles.blurFilter}
+          id={this.state.navOpen ? styles.blurFilter : null}
         ></div>
         <div
-          className="forum-nav-icon"
+          className={styles.forumNavIcon}
           onClick={() => this.handleMenuOpen()}
-          id={this.state.navOpen ? "hide-icon" : null}
+          id={this.state.navOpen ? styles.hideIcon : null}
         >
           Menu
         </div>
         <div
           className={
-            this.state.navOpen === true ? "nav-mobile open" : "nav-mobile"
+            this.state.navOpen === true
+              ? `${styles.navMobile} ${styles.navMobileOpen}`
+              : styles.navMobile
           }
           id="nav-mobile"
         >
           {this.props.userLoggedIn() && (
             <div
-              className="sort-by mobile-nav-button"
+              className={`${styles.sortBy} ${styles.mobileNavButton}`}
               onClick={() => this.sortBy()}
             >
               Sort By
               <nav
                 onClick={(e) => e.stopPropagation()}
-                className="sort-by-nav"
+                className={styles.sortByNav}
                 id={
                   this.state.sortByClicked && this.state.navOpen
-                    ? "sort-by-open"
+                    ? styles.sortByOpen
                     : "sort-by-closed"
                 }
               >
-                <ul className="sort-by-ul">
+                <ul className={styles.sortByUl}>
                   <li
-                    id={this.props.sort === "all" ? "li-selected" : null}
+                    id={this.props.sort === "all" ? styles.liSelected : null}
                     onClick={() => this.sortByArgument("all")}
                   >
                     All
                   </li>
                   <li
-                    id={this.props.sort === "popular" ? "li-selected" : null}
+                    id={
+                      this.props.sort === "popular" ? styles.liSelected : null
+                    }
                     onClick={() => this.sortByArgument("popular")}
                   >
                     Popular
                   </li>
 
                   <li
-                    id={this.props.sort === "my" ? "li-selected" : null}
+                    id={this.props.sort === "my" ? styles.liSelected : null}
                     onClick={() => this.sortByArgument("my")}
                   >
                     My Posts
                   </li>
 
                   <li
-                    id={this.props.sort === "new" ? "li-selected" : null}
+                    id={this.props.sort === "new" ? styles.liSelected : null}
                     onClick={() => this.sortByArgument("new")}
                   >
                     New
                   </li>
 
                   <li
-                    id={this.props.sort === "old" ? "li-selected" : null}
+                    id={this.props.sort === "old" ? styles.liSelected : null}
                     onClick={() => this.sortByArgument("old")}
                   >
                     Old
@@ -144,7 +155,7 @@ class ForumMobileNav extends React.Component {
 
           {this.props.userLoggedIn() && (
             <div
-              className="mobile-nav-button"
+              className={styles.mobileNavButton}
               onClick={() => this.openPostModal()}
             >
               Create Post
@@ -153,7 +164,7 @@ class ForumMobileNav extends React.Component {
 
           {this.props.userLoggedIn() && (
             <div
-              className="mobile-nav-button"
+              className={styles.mobileNavButton}
               onClick={() => this.navigate("logout")}
             >
               Logout
@@ -161,7 +172,7 @@ class ForumMobileNav extends React.Component {
           )}
           {!this.props.userLoggedIn() && (
             <div
-              className="mobile-nav-button"
+              className={styles.mobileNavButton}
               onClick={() => this.navigate("/login/login")}
             >
               Login
@@ -169,7 +180,7 @@ class ForumMobileNav extends React.Component {
           )}
           {!this.props.userLoggedIn() && (
             <div
-              className="mobile-nav-button"
+              className={styles.mobileNavButton}
               onClick={() => this.navigate("/login/create")}
             >
               Create New User
@@ -177,7 +188,7 @@ class ForumMobileNav extends React.Component {
           )}
         </div>
         <div className={null}>
-          <nav id="nav-content"></nav>
+          <nav id={styles.navContent}></nav>
         </div>
       </div>
     );

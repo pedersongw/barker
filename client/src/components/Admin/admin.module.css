@@ -1,0 +1,54 @@
+.wrapper {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-rows: 5fr 1fr;
+  grid-template-columns: 2fr 3fr 3fr;
+  grid-template-areas:
+    "descriptions reported-comments reported-posts"
+    "buttons buttons buttons";
+}
+
+.descriptions {
+  grid-area: descriptions;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #004562;
+  overflow-y: scroll;
+}
+
+.reported-comments {
+  grid-area: reported-comments;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #004562;
+  overflow-y: scroll;
+}
+
+.reported-posts {
+  grid-area: reported-posts;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #004562;
+  overflow-y: scroll;
+}
+
+.admin-buttons {
+  grid-area: buttons;
+  width: 100%;
+  height: 100%;
+  background-color: #00b0d7;
+}
+
+.h1 {
+  color: #00faff;
+}

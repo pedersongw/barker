@@ -1,9 +1,10 @@
 import React from "react";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { FaEllipsisH } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import styles from "./Comment.module.css";
 
 class Comment extends React.Component {
   state = {
@@ -111,35 +112,28 @@ class Comment extends React.Component {
     let { comment } = this.props;
 
     return (
-      <div
-        className="comment-wrapper"
-        id={
-          this.props.comment.children.length !== 0
-            ? "comment-with-children"
-            : null
-        }
-      >
+      <div className={styles.wrapper}>
         <div
-          className="comment"
-          id={this.determineCommentId()}
+          className={styles.comment}
+          id={styles[this.determineCommentId()]}
           onClick={() =>
             console.log(this.props, this.isAlmostDeep(), this.isDeep())
           }
         >
-          <div className="comment-body">
-            <div className="comment-text">{this.displayBody()}</div>
-            <div className="comment-by">
+          <div className={styles.body}>
+            <div className={styles.text}>{this.displayBody()}</div>
+            <div className={styles.by}>
               {!comment.deleted && !this.isDeep() && (
                 <small>by {this.props.comment.username.name}</small>
               )}
             </div>
             {!comment.deleted && !this.isDeep() && (
               <div
-                className="ellipsis"
+                className={styles.ellipsis}
                 id={this.props.comment._id}
                 onClick={() => this.props.handleMenu(this.props.comment)}
               >
-                <FaEllipsisH className="react-icon" />
+                <FaEllipsisH />
               </div>
             )}
           </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import styles from "./DesktopNav.module.css";
 
 class ForumDesktopNav extends React.Component {
   state = {
@@ -17,9 +17,11 @@ class ForumDesktopNav extends React.Component {
   };
 
   handleClickOutsideSortBy = (event) => {
-    if (event.target.id === "desktop-sort-by") {
+    let id = event.target.id.split("_");
+    let className = event.target.id.split("_");
+    if (id[1] === "sortBy") {
       return;
-    } else if (event.target.className !== "desktop-nav-li") {
+    } else if (className[1] !== "navLi") {
       this.sortByClicked();
     }
   };
@@ -31,14 +33,11 @@ class ForumDesktopNav extends React.Component {
 
   render() {
     return (
-      <nav
-        className="desktop-nav"
-        id={this.state.navOpen ? "desktop-nav" : null}
-      >
-        <div className="desktop-nav-inner-wrapper">
+      <nav className={styles.nav} id={this.state.navOpen ? styles.nav : null}>
+        <div className={styles.innerWrapper}>
           {this.props.user && this.props.user.isAdmin && (
             <div
-              className="desktop-nav-div"
+              className={styles.navDiv}
               onClick={() => (window.location.href = "/admin")}
             >
               Admin
@@ -46,7 +45,7 @@ class ForumDesktopNav extends React.Component {
           )}
           {!this.props.userLoggedIn() && (
             <div
-              className="desktop-nav-div"
+              className={styles.navDiv}
               onClick={() => (window.location.href = "/login/create")}
             >
               Create New User
@@ -54,7 +53,7 @@ class ForumDesktopNav extends React.Component {
           )}
           {!this.props.userLoggedIn() && (
             <div
-              className="desktop-nav-div"
+              className={styles.navDiv}
               onClick={() => (window.location.href = "/login/login")}
             >
               Login
@@ -62,41 +61,38 @@ class ForumDesktopNav extends React.Component {
           )}
           {this.props.userLoggedIn() && (
             <div
-              className="desktop-nav-div"
+              className={styles.navDiv}
               onClick={() => this.props.openPostModal()}
             >
               Create Post
             </div>
           )}
           {this.props.userLoggedIn() && (
-            <div
-              className="desktop-nav-div"
-              onClick={() => this.props.logOut()}
-            >
+            <div className={styles.navDiv} onClick={() => this.props.logOut()}>
               Logout
             </div>
           )}
 
           {this.props.userLoggedIn() && (
             <div
-              className="desktop-nav-div"
-              id="desktop-sort-by"
+              className={styles.navDiv}
+              id={styles.sortBy}
               onClick={() => this.sortByClicked()}
             >
               Sort By
               <ul
-                className="desktop-sort-by-menu"
-                id={this.state.navOpen ? "desktop-sort-by-menu-open" : null}
+                className={styles.sortMenu}
+                id={this.state.navOpen ? styles.sortMenuOpen : null}
               >
                 <li
-                  className="desktop-nav-li"
+                  className={styles.navLi}
                   id={this.props.sort === "all" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("all")}
                 >
                   All
                 </li>
                 <li
-                  className="desktop-nav-li"
+                  className={styles.navLi}
                   id={this.props.sort === "popular" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("popular")}
                 >
@@ -104,21 +100,21 @@ class ForumDesktopNav extends React.Component {
                 </li>
 
                 <li
-                  className="desktop-nav-li"
+                  className={styles.navLi}
                   id={this.props.sort === "my" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("my")}
                 >
                   My Posts
                 </li>
                 <li
-                  className="desktop-nav-li"
+                  className={styles.navLi}
                   id={this.props.sort === "new" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("new")}
                 >
                   New
                 </li>
                 <li
-                  className="desktop-nav-li"
+                  className={styles.navLi}
                   id={this.props.sort === "old" ? "li-selected" : null}
                   onClick={() => this.sortByArgument("old")}
                 >
@@ -129,7 +125,7 @@ class ForumDesktopNav extends React.Component {
           )}
         </div>
         {!this.props.userLoggedIn() && (
-          <h2 className="server-status">
+          <h2 className={styles.serverStatus}>
             {!this.state.user && this.props.status()}
           </h2>
         )}

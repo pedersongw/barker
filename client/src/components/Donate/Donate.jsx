@@ -1,5 +1,6 @@
 import React from "react";
-import TopMobileNavBar from "./TopMobileNavBar";
+import TopMobileNavBar from "../Navs/TopMobileNavBar";
+import styles from "./Donate.module.css";
 
 class Donate extends React.Component {
   state = {
@@ -37,6 +38,12 @@ class Donate extends React.Component {
   render() {
     return (
       <div>
+        <h1>Donate</h1>
+        <h1>Donate</h1>
+        <h1>Donate</h1>
+        <h1>Donate</h1>
+        <h1>Donate</h1>
+        <h1>Donate</h1>
         <h1>Donate</h1>
 
         <TopMobileNavBar page="donate" />

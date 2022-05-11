@@ -1,0 +1,102 @@
+.postsSpacer {
+  margin-top: 75px;
+}
+
+.viewedPostWrapper {
+  padding: 10px;
+}
+
+.viewedPost {
+  display: grid;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: #007498;
+  grid-template-rows: 2fr auto 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "title user"
+    "body body"
+    "time likes"
+    "reply reply";
+}
+
+.viewedPostTitle {
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.viewedPostUser {
+  grid-area: user;
+  padding-right: 25px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.viewedPostBody {
+  grid-area: body;
+  padding-left: 25px;
+}
+
+.viewedPostLikes {
+  grid-area: likes;
+  padding-right: 25px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.viewedPostTime {
+  grid-area: time;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.viewedPostReplyDiv {
+  grid-area: reply;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "likes reply report";
+  text-align: center;
+}
+
+.likesHeart {
+  color: lightpink;
+  font-size: 1.5em;
+  grid-area: likes;
+}
+
+.heartIcon {
+  cursor: pointer;
+}
+
+.postReplyHolder {
+  width: 100%;
+  height: 100%;
+  grid-area: reply;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.postReplyButton {
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: #00b0d7;
+}
+
+.postReplyButton:hover {
+  background-color: #00faff;
+}
+
+.postReportHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

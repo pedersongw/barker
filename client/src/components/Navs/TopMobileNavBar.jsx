@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./TopMobileNavBar.module.css";
+
 class TopMobileNavBar extends React.Component {
   render() {
     return (
-      <div className="top-nav">
-        <div className="top-nav-link" id="top-nav-1">
+      <div className={styles.wrapper}>
+        <div className={styles.link} id={styles.nav1}>
           {this.props.page === "home" ? (
             <Link to="/" onClick={() => console.log("already on that page")}>
               Home
@@ -13,7 +15,7 @@ class TopMobileNavBar extends React.Component {
             <Link to="/">Home</Link>
           )}
         </div>
-        <div className="top-nav-link" id="top-nav-2">
+        <div className={styles.link} id={styles.nav2}>
           {this.props.page === "donate" ? (
             <Link
               to="/donate"
@@ -25,7 +27,7 @@ class TopMobileNavBar extends React.Component {
             <Link to="/donate">Donate</Link>
           )}
         </div>
-        <div className="top-nav-link" id="top-nav-3">
+        <div className={styles.link} id={styles.nav3}>
           {this.props.page === "contact" ? (
             <Link
               to="/contact"
@@ -37,7 +39,7 @@ class TopMobileNavBar extends React.Component {
             <Link to="/contact">Contact</Link>
           )}
         </div>
-        <div className="top-nav-link" id="top-nav-4">
+        <div className={styles.link} id={styles.nav4}>
           <Link to="/forum/1/all">Forum</Link>
         </div>
       </div>

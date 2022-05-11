@@ -1,0 +1,83 @@
+.wrapper {
+  margin-left: 25px;
+}
+
+.comment {
+  border-style: solid;
+  border-color: #007498;
+  border-width: 1px 1px 1px 3px;
+  color: #00d0d3;
+  max-width: 500px;
+  padding: 3px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+#deleted-comment {
+  border-width: 1px;
+  border-color: red;
+  opacity: 0.6;
+  color: #00faff;
+}
+
+#comment-depth-0 {
+  border-left-color: orange;
+}
+
+#comment-depth-1 {
+  border-left-color: green;
+}
+
+#comment-depth-2 {
+  border-left-color: blue;
+}
+
+#comment-depth-3 {
+  border-left-color: yellow;
+}
+
+#comment-depth-4 {
+  border-left-color: purple;
+}
+
+#comment-depth-5 {
+  border-left-color: red;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "body body body body body body"
+    "by by by time time ellipsis";
+}
+
+.text {
+  padding: 5px;
+  grid-area: body;
+  border-bottom: solid;
+  border-color: #004562;
+  border-width: 1px;
+}
+
+.by {
+  grid-area: by;
+  padding-left: 5px;
+}
+
+.ellipsis {
+  grid-area: ellipsis;
+  position: relative;
+  display: flex;
+  padding-right: 5px;
+  justify-content: flex-end;
+  align-items: center;
+  color: #002237;
+  cursor: pointer;
+}
+
+.ellipsis:hover {
+  color: #00b0d7;
+}

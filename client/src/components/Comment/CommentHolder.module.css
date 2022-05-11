@@ -1,0 +1,7 @@
+.wrapper {
+  overflow: auto;
+  margin: 80px 35px 50px;
+  padding: 10px 10px;
+  background-color: #004562;
+  border-radius: 10px;
+}

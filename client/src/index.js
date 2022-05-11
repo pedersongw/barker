@@ -5,14 +5,13 @@ import "normalize.css";
 import "./fonts/Catamaran/Catamaran-VariableFont_wght.ttf";
 import "./index.css";
 import App from "./App";
-import Donate from "./components/Donate";
-import Admin from "./components/admin.jsx";
-import Contact from "./components/Contact";
-import DisplayComment from "./components/DisplayComment";
-import SinglePostHolder from "./components/SinglePostHolder";
+import Donate from "./components/Donate/Donate";
+import Admin from "./components/Admin/admin.jsx";
+import Contact from "./components/Contact/Contact";
+import DisplayComment from "./components/Comment/DisplayComment";
+import SinglePostHolder from "./components/SinglePost/singlePostHolder";
 import reportWebVitals from "./reportWebVitals";
-import ForumHolder from "./components/ForumHolder";
-import LoginPage from "./components/LoginOrCreate";
+import ForumHolder from "./components/Forum/ForumHolder";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -25,7 +24,6 @@ ReactDOM.render(
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
         <Route path="post/:id" element={<SinglePostHolder />} />
         <Route path="admin" element={<Admin />} />
-        <Route path="login/:loginOrCreate" element={<LoginPage />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

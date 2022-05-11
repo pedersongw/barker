@@ -1,11 +1,12 @@
 import React from "react";
-import Comment from "./comment";
-import ReplyModal from "./ReplyModal";
-import ReportModal from "./ReportModal";
-import MobileReplyMenu from "./MobileReplyMenu";
+import Comment from "./Comment";
+import ReplyModal from "../ReplyModal";
+import ReportModal from "../ReportModal";
+import MobileReplyMenu from "../Navs/MobileReplyMenu";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
+import styles from "./CommentHolder.module.css";
 
 class CommentHolder extends React.Component {
   state = {
@@ -28,6 +29,7 @@ class CommentHolder extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
+    window.addEventListener("keydown", () => console.log(this.state));
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
@@ -79,6 +81,8 @@ class CommentHolder extends React.Component {
   };
 
   openReplyModal = () => {
+    console.log("reply modal open called");
+
     this.setState({ mobileReplyOpen: false });
     this.setState({ replyModalOpen: true });
     setTimeout(
@@ -109,6 +113,7 @@ class CommentHolder extends React.Component {
   };
 
   openReportModal = () => {
+    console.log("report modal open called");
     this.setState({ mobileReplyOpen: false });
 
     let obj = this.state.clickedComment;
@@ -153,14 +158,9 @@ class CommentHolder extends React.Component {
   };
 
   openMobileReplyMenu = (comment) => {
-    console.log("open mobile reply");
     if (!this.state.mobileReplyOpen) {
       this.setState({ mobileReplyOpen: true });
       this.setState({ clickedComment: comment });
-      window.addEventListener(
-        "mousedown",
-        this.handleClickOutsideMobileReplyMenu
-      );
     }
     document.body.style.overflow = "hidden";
   };
@@ -168,19 +168,8 @@ class CommentHolder extends React.Component {
   closeMobileReplyMenu = () => {
     if (this.state.mobileReplyOpen) {
       this.setState({ mobileReplyOpen: false });
-      this.setState({ clickedComment: null });
-      window.removeEventListener(
-        "mousedown",
-        this.handleClickOutsideMobileReplyMenu
-      );
     }
     document.body.style.overflow = "scroll";
-  };
-
-  handleClickOutsideMobileReplyMenu = (event) => {
-    if (event.target.className !== "mobile-nav-button") {
-      this.closeMobileReplyMenu();
-    }
   };
 
   updateDeletedComment = async () => {
@@ -201,7 +190,7 @@ class CommentHolder extends React.Component {
   render() {
     const { result: comment } = this.state;
     return (
-      <div className="comment-holder">
+      <div className={styles.wrapper}>
         {this.state.result && (
           <Comment
             depth={0}
@@ -219,7 +208,7 @@ class CommentHolder extends React.Component {
         <ReplyModal
           closeModal={this.closeReplyModal}
           isOpen={this.state.replyModalOpen}
-          comment={this.state.viewedComment}
+          comment={this.state.clickedComment}
           post={this.state.viewedEntry}
           width={this.state.width}
           user={this.state.user}
@@ -238,6 +227,7 @@ class CommentHolder extends React.Component {
           openReplyModal={this.openReplyModal}
           delete={this.updateDeletedComment}
           open={this.state.mobileReplyOpen}
+          close={this.closeMobileReplyMenu}
         />
       </div>
     );

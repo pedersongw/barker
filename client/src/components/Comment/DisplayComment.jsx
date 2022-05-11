@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import TopMobileNavBar from "./TopMobileNavBar";
+import TopMobileNavBar from "../Navs/TopMobileNavBar";
 import CommentHolder from "./CommentHolder";
 
 const DisplayComment = () => {

@@ -15,6 +15,10 @@ class ReplyModal extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener("keydown", () => console.log(this.props.comment));
+  }
+
   saveCommentInDatabase = async () => {
     let commentObj = {
       body: this.state.replyText,

@@ -1,6 +1,7 @@
 import React from "react";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
+import styles from "./LoginOrCreate.module.css";
 
 class LogInOrCreate extends React.Component {
   state = {
@@ -11,6 +12,11 @@ class LogInOrCreate extends React.Component {
     errorMessage: null,
     width: window.innerWidth,
   };
+
+  constructor(props) {
+    super(props);
+    this.tabLeft = React.createRef();
+  }
 
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
@@ -25,9 +31,14 @@ class LogInOrCreate extends React.Component {
   }
 
   tabClick = (event) => {
-    event.target.className === "tab-left"
-      ? this.setState({ tab: "login" })
-      : this.setState({ tab: "create" });
+    if (event.target === this.tabLeft.current) {
+      this.setState({ tab: "login" });
+      console.log("login");
+      setTimeout(console.log(this.state), 2000);
+    } else {
+      this.setState({ tab: "create" });
+      console.log("create");
+    }
     this.setState({ username: null });
     this.setState({ email: null });
     this.setState({ password: null });
@@ -95,19 +106,18 @@ class LogInOrCreate extends React.Component {
   render() {
     return (
       <div
-        className="login-wrapper"
-        id={this.state.width < 800 ? "login-wrapper-mobile" : null}
+        className={styles.wrapper}
+        id={this.state.width < 800 ? styles.wrapperMobile : null}
       >
-        <div className="login-or-create">
+        <div className={styles.loginOrCreate}>
           <div
-            className="login"
-            id={this.state.tab === "login" ? "login-tab" : null}
+            className={styles.login}
+            id={this.state.tab === "login" ? styles.loginTab : null}
           >
-            <div className="tab-left" onClick={(event) => this.tabClick(event)}>
-              Login
-            </div>
+            <div className={styles.tabLeft}>Login</div>
             <div
-              className="tab-right"
+              className={styles.tabRight}
+              id={this.state.tab === "login" ? styles.activeTab : null}
               onClick={(event) => this.tabClick(event)}
             >
               Sign Up
@@ -116,7 +126,7 @@ class LogInOrCreate extends React.Component {
               <div>
                 <label htmlFor="email">Email</label>
                 <input
-                  className="login-input"
+                  className={styles.loginInput}
                   type="text"
                   name="email"
                   onChange={(event) => this.onEmailChange(event)}
@@ -126,7 +136,7 @@ class LogInOrCreate extends React.Component {
               <div>
                 <label htmlFor="password">Password</label>
                 <input
-                  className="login-input"
+                  className={styles.loginInput}
                   type="password"
                   name="password"
                   onChange={(event) => this.onPasswordChange(event)}
@@ -137,23 +147,23 @@ class LogInOrCreate extends React.Component {
             </form>
           </div>
           <div
-            className="create"
+            className={styles.create}
             id={this.state.tab === "create" ? "create-tab" : null}
           >
-            <div className="tab-left" onClick={(event) => this.tabClick(event)}>
-              Login
-            </div>
             <div
-              className="tab-right"
+              ref={this.tabLeft}
+              className={styles.tabLeft}
+              id={this.state.tab === "create" ? styles.activeTab : null}
               onClick={(event) => this.tabClick(event)}
             >
-              Sign Up
+              Login
             </div>
+            <div className={styles.tabRight}>Sign Up</div>
             <form onSubmit={this.onCreate}>
               <div>
                 <label htmlFor="username">Username</label>
                 <input
-                  className="login-input"
+                  className={styles.loginInput}
                   type="text"
                   name="username"
                   onChange={(event) => this.onUsernameChange(event)}
@@ -163,7 +173,7 @@ class LogInOrCreate extends React.Component {
               <div>
                 <label htmlFor="email">Email</label>
                 <input
-                  className="login-input"
+                  className={styles.loginInput}
                   type="text"
                   name="email"
                   onChange={(event) => this.onEmailChange(event)}
@@ -173,7 +183,7 @@ class LogInOrCreate extends React.Component {
               <div>
                 <label htmlFor="password">Password</label>{" "}
                 <input
-                  className="login-input"
+                  className={styles.loginInput}
                   type="password"
                   name="password"
                   onChange={(event) => this.onPasswordChange(event)}

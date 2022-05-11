@@ -1,0 +1,81 @@
+.nav {
+  grid-area: nav;
+  position: sticky;
+  top: 75px;
+  background-color: #007498;
+  border-radius: 10px;
+  height: 40vh;
+  min-height: 220px;
+  max-height: 220px;
+  height: 40vh;
+  transition: min-height 0.3s ease;
+}
+
+#nav {
+  min-height: 350px;
+  max-height: 400pxpx;
+}
+
+.innerWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 200px;
+  margin-top: 8px;
+}
+
+.navDiv {
+  width: 90%;
+  background-color: #002237;
+  padding: 10px 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  color: #00faff;
+  cursor: pointer;
+}
+
+#sortBy {
+  position: relative;
+  margin-top: 15px;
+}
+
+.sortMenu {
+  position: absolute;
+  padding: 0;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  width: 15vw;
+  bottom: -155px;
+  opacity: 0;
+  color: black;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.1s;
+}
+
+#sortMenuOpen {
+  visibility: visible;
+  transition-delay: 0.2s;
+  transition-duration: 0.2s;
+  opacity: 1;
+}
+
+.navLi {
+  list-style-type: none;
+  width: 100%;
+  text-align: center;
+  margin: 3px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.serverStatus {
+  text-align: center;
+}

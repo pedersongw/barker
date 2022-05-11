@@ -1,0 +1,139 @@
+.blurFilter {
+  backdrop-filter: blur(2px);
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+#blurFilter {
+  display: block;
+}
+
+.navMobile {
+  height: 40vh;
+  width: 100%;
+  z-index: 5;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: -webkit-transform 0.4s ease;
+  transition: transform 0.4s ease;
+  -webkit-transform: translateY(100vh);
+  -ms-transform: translateY(100vh);
+  transform: translateY(100vh);
+}
+
+.navMobileOpen {
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.forumNavIcon {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 30px;
+  right: 30px;
+  background-color: #00faff;
+  color: #002237;
+  opacity: 0.75;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#hideIcon {
+  display: none;
+}
+
+.sortBy {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.mobileNavButton {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: #00b0d7;
+  font-size: 1.5em;
+  height: 8vh;
+  width: 60vw;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.sortByNav {
+  height: 0px;
+  position: absolute;
+  bottom: 42vh;
+  display: flex;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#sortByOpen {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sortByUl {
+  list-style-type: none;
+  padding: 0;
+  color: #00faff;
+  width: 50vw;
+}
+
+.sortByUl li {
+  width: 100%;
+  text-align: center;
+  margin: 3px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+#liSelected {
+  background-color: #00faff;
+  border-style: none;
+  color: #002237;
+}
+
+#navContent div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#navContent {
+  display: flex;
+  font-family: "Itim";
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+}
+#navContent a {
+  text-decoration: none;
+  color: rgb(26, 87, 87);
+  cursor: pointer;
+  width: 100%;
+}
