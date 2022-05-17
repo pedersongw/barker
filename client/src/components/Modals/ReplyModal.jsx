@@ -1,7 +1,8 @@
 import React from "react";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
 import { FaReply } from "react-icons/fa";
+import styles from "./ReplyModal.module.css";
 
 class ReplyModal extends React.Component {
   state = {
@@ -66,34 +67,37 @@ class ReplyModal extends React.Component {
       <div
         className={
           this.props.width < 800
-            ? "md-modal modal-mobile"
-            : "md-modal modal-desktop"
+            ? `${styles.modal} ${styles.mobile}`
+            : `${styles.modal} ${styles.desktop}`
         }
-        id={this.props.isOpen ? "md-show" : null}
+        id={this.props.isOpen ? styles.show : null}
       >
-        <div className="md-content" id="reply-modal-content">
-          <div className="modal-header">
-            <h2 className="modal-header-text">Reply</h2>
+        <div className={styles.content} id="reply-modal-content">
+          <div className={styles.modalHeader}>
+            <h2 className={styles.modalHeaderText}>Reply</h2>
             {this.state.errorMessage ? (
-              <div className="modal-error">{this.state.errorMessage}</div>
+              <div className={styles.modalError}>{this.state.errorMessage}</div>
             ) : null}
-            <span className="close" onClick={() => this.props.closeModal()}>
+            <span
+              className={styles.close}
+              onClick={() => this.props.closeModal()}
+            >
               &times;
             </span>
           </div>
           <div
-            className="modal-body"
+            className={styles.modalBody}
             id={
               this.props.width < 800
-                ? "modal-body-mobile"
-                : "modal-body-desktop"
+                ? styles.modalBodyMobile
+                : styles.modalBodyDesktop
             }
           >
-            <form className="form">
+            <form className={styles.form}>
               <label htmlFor="body" className="label"></label>
               <textarea
                 type="text"
-                className="reply-form-input"
+                className={styles.replyFormInput}
                 id="body"
                 name="body"
                 value={this.state.replyText}
@@ -105,7 +109,7 @@ class ReplyModal extends React.Component {
 
             <div className="submit-reply-div">
               <button
-                className="submit-reply-btn"
+                className={styles.submitReplyBtn}
                 type="submit"
                 onClick={() => this.onSubmit()}
               >
@@ -113,11 +117,11 @@ class ReplyModal extends React.Component {
               </button>
             </div>
           </div>
-          <div className="modal-footer">
-            <div className="footer-text">
+          <div className={styles.modalFooter}>
+            <div className={styles.footerText}>
               {this.props.comment ? this.returnFooterText() : null}
             </div>
-            <div className="footer-icon">
+            <div className={styles.footerIcon}>
               <FaReply />
             </div>
           </div>

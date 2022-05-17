@@ -1,0 +1,38 @@
+.pageButton {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  padding: 0;
+  text-align: center;
+  border-radius: 50%;
+  border: none;
+  background-color: #00faff;
+  cursor: pointer;
+  opacity: 0.5;
+  color: black;
+}
+
+.pageButton:hover {
+  opacity: 1;
+}
+
+.elipsis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.elipsis:hover {
+  opacity: 0.5;
+}
+.currentPageButton {
+  opacity: 1;
+  background-color: #002237;
+  color: #00faff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}

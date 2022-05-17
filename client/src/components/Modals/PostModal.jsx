@@ -1,6 +1,7 @@
 import React from "react";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
+import styles from "./PostModal.module.css";
 
 export default class PostModal extends React.Component {
   state = {
@@ -58,39 +59,39 @@ export default class PostModal extends React.Component {
       <div
         className={
           this.props.width < 800
-            ? "md-modal modal-mobile"
-            : "md-modal modal-desktop"
+            ? `${styles.modal} ${styles.mobile}`
+            : `${styles.modal} ${styles.desktop}`
         }
-        id={this.props.isOpen ? "md-show" : null}
+        id={this.props.isOpen ? styles.show : null}
       >
-        <div className="md-content" id="post-modal-content">
-          <div className="modal-header">
+        <div className={styles.content} id="post-modal-content">
+          <div className={styles.modalHeader}>
             {!this.state.errorMessage && (
-              <h2 className="modal-header-text">Create New Post</h2>
+              <h2 className={styles.modalHeaderText}>Create New Post</h2>
             )}
 
             {this.state.errorMessage ? (
-              <div className="modal-error">{this.state.errorMessage}</div>
+              <div className={styles.modalError}>{this.state.errorMessage}</div>
             ) : null}
             <span className="close" onClick={() => this.props.closePostModal()}>
               &times;
             </span>
           </div>
           <div
-            className="modal-body"
+            className={styles.modalBody}
             id={
               this.props.width < 800
-                ? "modal-body-mobile"
-                : "modal-body-desktop"
+                ? styles.modalBodyMobile
+                : styles.modalBodyDesktop
             }
           >
-            <form className="form">
+            <form className={styles.form}>
               <label htmlFor="title" className="label">
                 title
               </label>
               <input
                 type="text"
-                className="form-input"
+                className={styles.formInput}
                 id="title"
                 name="title"
                 placeholder="Title"
@@ -103,7 +104,7 @@ export default class PostModal extends React.Component {
               </label>
               <textarea
                 type="text"
-                className="form-input"
+                className={styles.formInput}
                 id="body"
                 name="body"
                 value={this.state.body}
@@ -113,14 +114,14 @@ export default class PostModal extends React.Component {
               ></textarea>
             </form>
             <button
-              className="submit-reply-btn"
+              className={styles.submitReplyBtn}
               type="submit"
               onClick={() => this.onSubmit()}
             >
               Submit
             </button>
           </div>
-          <div className="modal-footer"></div>
+          <div className={styles.modalFooter}></div>
         </div>
       </div>
     );

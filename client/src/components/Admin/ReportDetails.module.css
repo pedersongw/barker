@@ -1,0 +1,35 @@
+.reportDetails {
+  height: auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "username reason"
+    "descriptor explanation";
+  width: 90%;
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #007498;
+  cursor: pointer;
+}
+
+#selectedReport {
+  background-color: #00faff;
+}
+
+.reportUser {
+  grid-area: username;
+}
+
+.reportSelectedOption {
+  grid-area: reason;
+}
+
+.reportDescription {
+  grid-area: descriptor;
+}
+
+.reportExplanation {
+  grid-area: explanation;
+}

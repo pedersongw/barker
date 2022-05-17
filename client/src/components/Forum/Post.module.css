@@ -1,0 +1,45 @@
+.container {
+  margin: 20px;
+  cursor: pointer;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
+  grid-template-areas:
+    "header-left header header header-right"
+    "body body body body"
+    "footer-left footer footer footer-right";
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 10px;
+  margin: 30px 20px 20px;
+  padding: 20px;
+  background-color: #007498;
+}
+
+.username {
+  grid-area: header-right;
+}
+
+.title {
+  grid-area: header-left;
+}
+
+.body {
+  grid-area: body;
+}
+
+.time {
+  grid-area: footer-right;
+  display: flex;
+  align-items: flex-end;
+}
+
+.likes {
+  grid-area: footer-left;
+  display: flex;
+  align-items: flex-end;
+}

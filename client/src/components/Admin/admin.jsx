@@ -2,8 +2,8 @@ import React from "react";
 import jwtDecode from "jwt-decode";
 import { config } from "../../URLs.jsx";
 import axios from "axios";
-import ReportedComment from "../ReportedComment";
-import ReportDetails from "../ReportDetails";
+import ReportedComment from "./ReportedComment";
+import ReportDetails from "./ReportDetails";
 import styles from "./admin.module.css";
 
 class Admin extends React.Component {

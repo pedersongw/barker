@@ -1,6 +1,6 @@
 import React from "react";
-import DateComponent from "./date";
-import { Link } from "react-router-dom";
+import DateComponent from "../Utilities/date";
+import styles from "./Post.module.css";
 
 class Post extends React.Component {
   onClick = () => {
@@ -10,18 +10,18 @@ class Post extends React.Component {
   render() {
     const { body, likes, timePosted, username, title } = this.props;
     return (
-      <div className="post-container">
-        <div className="post-card" onClick={() => this.onClick()}>
-          <h4 className="post-username">
+      <div className={styles.container}>
+        <div className={styles.card} onClick={() => this.onClick()}>
+          <h4 className={styles.username}>
             <b>{username[1]}</b>
           </h4>
-          <h3 className="post-title">{title}</h3>
-          <p className="post-body">{body}</p>
-          <div className="post-time">
+          <h3 className={styles.title}>{title}</h3>
+          <p className={styles.body}>{body}</p>
+          <div className={styles.time}>
             <DateComponent time={timePosted} />
           </div>
 
-          <small className="post-likes">
+          <small className={styles.likes}>
             {likes.length.toString() +
               (likes.length === 1
                 ? " person liked this"

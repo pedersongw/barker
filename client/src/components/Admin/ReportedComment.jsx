@@ -1,5 +1,6 @@
 import React from "react";
-import DateComponent from "./date";
+import DateComponent from "../Utilities/date";
+import styles from "./ReportedComment.module.css";
 
 class ReportedComment extends React.Component {
   highlighted = () => {
@@ -27,20 +28,20 @@ class ReportedComment extends React.Component {
             ? () => this.props.highlightFunc(comment)
             : () => this.props.highlightFunc(post)
         }
-        className="reported-comment"
-        id={this.highlighted() ? "highlighted-comment" : null}
+        className={styles.reportedComment}
+        id={this.highlighted() ? styles.highlightedComment : null}
       >
-        {post && <div className="reported-title">{post.title}</div>}
+        {post && <div className={styles.reportedTitle}>{post.title}</div>}
 
         <div className="reported-username">
           {comment ? comment.username.name : post.username[1]}
         </div>
-        <div className="reported-time">
+        <div className={styles.reportedTime}>
           <DateComponent
             time={comment ? comment.timeCommented : post.timePosted}
           />
         </div>
-        <div className="reported-body">
+        <div className={styles.reportedBody}>
           {comment ? comment.body : post.body}
         </div>
       </div>

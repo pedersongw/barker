@@ -1,6 +1,7 @@
 import React from "react";
-import { config } from "../URLs.jsx";
+import { config } from "../../URLs.jsx";
 import axios from "axios";
+import styles from "./ReportModal.module.css";
 
 class ReportModal extends React.Component {
   state = {
@@ -69,35 +70,40 @@ class ReportModal extends React.Component {
       <div
         className={
           this.props.width < 800
-            ? "md-modal modal-mobile"
-            : "md-modal modal-desktop"
+            ? `${styles.modal} ${styles.mobile}`
+            : `${styles.modal} ${styles.desktop}`
         }
-        id={this.props.isOpen ? "md-show" : null}
+        id={this.props.isOpen ? styles.show : null}
       >
-        <div className="md-content" id="report-modal-content">
-          <div className="modal-header">
-            <h2 className="modal-header-text">Report</h2>
+        <div className={styles.content} id="report-modal-content">
+          <div className={styles.modalHeader}>
+            <h2 className={styles.modalHeaderText}>Report</h2>
             {this.state.errorMessage ? (
-              <div className="modal-error">{this.state.errorMessage}</div>
+              <div className={styles.modalError}>{this.state.errorMessage}</div>
             ) : null}
             {this.props.reported ? (
-              <div className="modal-error">You've already reported this</div>
+              <div className={styles.modalError}>
+                You've already reported this
+              </div>
             ) : null}
-            <span className="close" onClick={() => this.props.closeModal()}>
+            <span
+              className={styles.close}
+              onClick={() => this.props.closeModal()}
+            >
               &times;
             </span>
           </div>
           <div
-            className="modal-body"
+            className={styles.modalBody}
             id={
               this.props.width < 800
-                ? "modal-body-mobile"
-                : "modal-body-desktop"
+                ? styles.modalBodyMobile
+                : styles.modalBodyDesktop
             }
           >
             {!this.props.reported && (
               <React.Fragment>
-                <form id="report-modal-form">
+                <form id={styles.reportModalForm}>
                   <div className="radio">
                     <label>
                       <input
@@ -154,7 +160,7 @@ class ReportModal extends React.Component {
                 </form>
                 <div className="submit-reply-div">
                   <button
-                    className="submit-reply-btn"
+                    className={styles.submitReplyBtn}
                     type="submit"
                     onClick={() => this.onSubmit()}
                   >
@@ -164,8 +170,8 @@ class ReportModal extends React.Component {
               </React.Fragment>
             )}
           </div>
-          <div className="modal-footer">
-            <div className="footer-icon"></div>
+          <div className={styles.modalFooter}>
+            <div className={styles.footerIcon}></div>
           </div>
         </div>
       </div>

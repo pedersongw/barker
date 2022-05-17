@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { FaEllipsisH } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import styles from "./Pagination.module.css";
 
 class Pagination extends React.Component {
   determineHowManyButtons = () => {
@@ -66,7 +67,7 @@ class Pagination extends React.Component {
           <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
             <button
               id={arrayIndex}
-              className="page-button elipsis"
+              className={`${styles.pageButton} ${styles.elipsis}`}
               onClick={() => console.log(arrayIndex)}
             >
               <FaEllipsisH />
@@ -76,13 +77,16 @@ class Pagination extends React.Component {
       } else {
         return currentPage === arrayIndex ? (
           <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
-            <button className="page-button current-page-button" id={arrayIndex}>
+            <button
+              className={`${styles.pageButton} ${styles.currentPageButton}`}
+              id={arrayIndex}
+            >
               {arrayIndex}
             </button>
           </Link>
         ) : (
           <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
-            <button className="page-button" id={arrayIndex}>
+            <button className={styles.pageButton} id={arrayIndex}>
               {arrayIndex}
             </button>
           </Link>
@@ -93,7 +97,7 @@ class Pagination extends React.Component {
 
   render() {
     return (
-      <div className="pagination-div">
+      <div className={styles.pagination}>
         {this.mapFromDetermineFunctionToButtons(this.determineHowManyButtons())}
       </div>
     );

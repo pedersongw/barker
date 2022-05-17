@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./singlePost.module.css";
 import Comment from "../Comment/Comment";
-import DateComponent from "../date";
-import ReportModal from "../ReportModal";
-import ReplyModal from "../ReplyModal";
+import DateComponent from "../Utilities/date";
+import ReportModal from "../Modals/ReportModal";
+import ReplyModal from "../Modals/ReplyModal";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { FaEllipsisH } from "react-icons/fa";
