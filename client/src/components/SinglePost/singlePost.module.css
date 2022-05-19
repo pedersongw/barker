@@ -3,13 +3,12 @@
 }
 
 .viewedPostWrapper {
-  padding: 10px;
+  padding: 0 10px;
 }
 
 .viewedPost {
   display: grid;
-  margin: 20px;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   background-color: #007498;
   grid-template-rows: 2fr auto 2fr 1fr;
   grid-template-columns: 1fr 1fr;
@@ -99,4 +98,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.commentWrapper {
+  overflow: auto;
+  padding: 10px 10px;
+  background-color: #004562;
+  border-radius: 0 0 10px 10px;
 }

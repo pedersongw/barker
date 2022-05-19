@@ -342,7 +342,9 @@ class SinglePost extends React.Component {
                     </div>
                   </div>
 
-                  <div>{this.renderCommentsInListGroup()}</div>
+                  <div className={styles.commentWrapper}>
+                    {this.renderCommentsInListGroup()}
+                  </div>
                 </React.Fragment>
               )}
             </div>
