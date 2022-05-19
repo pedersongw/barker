@@ -76,6 +76,11 @@
   cursor: pointer;
 }
 
+#selected {
+  border-color: #00faff;
+  color: #00faff;
+}
+
 .serverStatus {
   text-align: center;
 }

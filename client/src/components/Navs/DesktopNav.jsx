@@ -86,14 +86,14 @@ class ForumDesktopNav extends React.Component {
               >
                 <li
                   className={styles.navLi}
-                  id={this.props.sort === "all" ? "li-selected" : null}
+                  id={this.props.sort === "all" ? styles.selected : null}
                   onClick={() => this.sortByArgument("all")}
                 >
                   All
                 </li>
                 <li
                   className={styles.navLi}
-                  id={this.props.sort === "popular" ? "li-selected" : null}
+                  id={this.props.sort === "popular" ? styles.selected : null}
                   onClick={() => this.sortByArgument("popular")}
                 >
                   Popular
@@ -101,21 +101,21 @@ class ForumDesktopNav extends React.Component {
 
                 <li
                   className={styles.navLi}
-                  id={this.props.sort === "my" ? "li-selected" : null}
+                  id={this.props.sort === "my" ? styles.selected : null}
                   onClick={() => this.sortByArgument("my")}
                 >
                   My Posts
                 </li>
                 <li
                   className={styles.navLi}
-                  id={this.props.sort === "new" ? "li-selected" : null}
+                  id={this.props.sort === "new" ? styles.selected : null}
                   onClick={() => this.sortByArgument("new")}
                 >
                   New
                 </li>
                 <li
                   className={styles.navLi}
-                  id={this.props.sort === "old" ? "li-selected" : null}
+                  id={this.props.sort === "old" ? styles.selected : null}
                   onClick={() => this.sortByArgument("old")}
                 >
                   Old

@@ -14,7 +14,7 @@
 
 .main {
   display: grid;
-  grid-template-rows: 10vh 1fr 10vh;
+  grid-template-rows: 0vh 1fr 10vh;
   grid-template-areas:
     "nav"
     "post"
