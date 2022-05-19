@@ -43,7 +43,6 @@
 .viewedPostLikes {
   grid-area: likes;
   padding-right: 25px;
-
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -99,6 +98,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.report {
+  cursor: pointer;
 }
 
 .commentWrapper {

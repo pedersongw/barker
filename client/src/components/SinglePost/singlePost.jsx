@@ -296,7 +296,8 @@ class SinglePost extends React.Component {
                   <div className={styles.viewedPost}>
                     <h3 className={styles.viewedPostTitle}>{post.title}</h3>
                     <p className={styles.viewedPostUser}>
-                      posted by {post.username[1]}
+                      posted by {this.state.width < 800 && <br />}
+                      {post.username[1]}
                     </p>
                     <p className={styles.viewedPostBody}>{post.body}</p>
                     <p className={styles.viewedPostLikes}>
@@ -333,7 +334,7 @@ class SinglePost extends React.Component {
                       </div>
                       <div className={styles.postReportHolder}>
                         <small
-                          className="post-report"
+                          className={styles.report}
                           onClick={() => this.openReportModal()}
                         >
                           report
