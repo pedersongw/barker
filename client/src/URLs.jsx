@@ -1,4 +1,4 @@
-const prod = `http://barkerfield-test.herokuapp.com`;
+const prod = `http://barkerfielddogpark.org`;
 
 const dev = `http://localhost:3000`;
 
