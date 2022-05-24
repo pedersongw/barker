@@ -6,9 +6,9 @@ import styles from "./LoginOrCreate.module.css";
 class LogInOrCreate extends React.Component {
   state = {
     tab: "login",
-    username: null,
-    email: null,
-    password: null,
+    username: "",
+    email: "",
+    password: "",
     errorMessage: null,
     width: window.innerWidth,
   };
@@ -20,6 +20,7 @@ class LogInOrCreate extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
+    window.addEventListener("click", () => console.log("clicked"));
   }
 
   handleWindowSizeChange = () => {
@@ -39,9 +40,9 @@ class LogInOrCreate extends React.Component {
       this.setState({ tab: "create" });
       console.log("create");
     }
-    this.setState({ username: null });
-    this.setState({ email: null });
-    this.setState({ password: null });
+    this.setState({ username: "" });
+    this.setState({ email: "" });
+    this.setState({ password: "" });
   };
 
   onUsernameChange = (event) => {
@@ -130,6 +131,7 @@ class LogInOrCreate extends React.Component {
                   type="text"
                   name="email"
                   onChange={(event) => this.onEmailChange(event)}
+                  value={this.state.email}
                 ></input>
               </div>
 
@@ -140,6 +142,7 @@ class LogInOrCreate extends React.Component {
                   type="password"
                   name="password"
                   onChange={(event) => this.onPasswordChange(event)}
+                  value={this.state.password}
                 ></input>
               </div>
 
@@ -167,6 +170,7 @@ class LogInOrCreate extends React.Component {
                   type="text"
                   name="username"
                   onChange={(event) => this.onUsernameChange(event)}
+                  value={this.state.username}
                 ></input>
               </div>
 
@@ -177,6 +181,7 @@ class LogInOrCreate extends React.Component {
                   type="text"
                   name="email"
                   onChange={(event) => this.onEmailChange(event)}
+                  value={this.state.email}
                 ></input>
               </div>
 
@@ -187,6 +192,7 @@ class LogInOrCreate extends React.Component {
                   type="password"
                   name="password"
                   onChange={(event) => this.onPasswordChange(event)}
+                  value={this.state.password}
                 ></input>
               </div>
 

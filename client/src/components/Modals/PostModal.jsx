@@ -73,7 +73,10 @@ export default class PostModal extends React.Component {
             {this.state.errorMessage ? (
               <div className={styles.modalError}>{this.state.errorMessage}</div>
             ) : null}
-            <span className="close" onClick={() => this.props.closePostModal()}>
+            <span
+              className={styles.close}
+              onClick={() => this.props.closePostModal()}
+            >
               &times;
             </span>
           </div>

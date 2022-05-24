@@ -323,7 +323,9 @@ class Forum extends React.Component {
           )}
         </div>
         <footer>
-          <small>© {this.year()} Barker Field Dog Park</small>
+          <small className={styles.small}>
+            © {this.year()} Barker Field Dog Park
+          </small>
         </footer>
       </div>
     );

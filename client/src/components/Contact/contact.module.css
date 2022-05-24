@@ -1,4 +1,18 @@
 .h1 {
-  color: yellow;
+  color: gray;
   display: block;
+}
+
+.desktopHeaderSpacer {
+  height: 50px;
+}
+
+.MobileHeaderSpacer {
+  height: 25px;
+}
+
+.messageWrapper {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }

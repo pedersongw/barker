@@ -31,6 +31,7 @@ class SinglePost extends React.Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
+
     const jwt = localStorage.getItem("token");
     const user = jwtDecode(jwt);
     this.setState({ user: user });
@@ -226,7 +227,7 @@ class SinglePost extends React.Component {
       container !== event.target &&
       !container.contains(event.target) &&
       event.target.id !== "comment-report-button" &&
-      event.target.className !== "post-report"
+      event.target.id !== "post-report"
     ) {
       console.log("clicked outside report modal");
       this.closeReportModal();
@@ -335,6 +336,7 @@ class SinglePost extends React.Component {
                       <div className={styles.postReportHolder}>
                         <small
                           className={styles.report}
+                          id="post-report"
                           onClick={() => this.openReportModal()}
                         >
                           report

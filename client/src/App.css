@@ -12,10 +12,13 @@ header {
 }
 
 footer {
-  padding: 0 10px;
   height: 10px;
   position: absolute;
   bottom: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 a {
