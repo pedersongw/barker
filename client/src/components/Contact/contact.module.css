@@ -1,6 +1,5 @@
-.h1 {
-  color: gray;
-  display: block;
+body {
+  overflow: hidden;
 }
 
 .desktopHeaderSpacer {
@@ -8,11 +7,96 @@
 }
 
 .MobileHeaderSpacer {
-  height: 25px;
+  height: 10vh;
 }
 
-.messageWrapper {
-  width: 100vw;
+.grid {
+  display: grid;
+  width: 100%;
+  height: 120vh;
+  position: absolute;
+  grid-template-columns: 10vw 1fr 10vw;
+  grid-template-areas: "one two three";
+  overflow: hidden;
+  z-index: 2;
+}
+
+.gridMobile {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  bottom: 0;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 8vh 1fr 20vh;
+  grid-template-areas:
+    "nothing nothing"
+    "two two"
+    "one three";
+  overflow: hidden;
+  z-index: 2;
+}
+
+#one {
+  grid-area: one;
+  background-color: lightblue;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+#two {
+  grid-area: two;
+  background-color: red;
+}
+#three {
+  grid-area: three;
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boxOne {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  transition: transform 1s;
+}
+#boxOneMovedLeft {
+  transform: translateX(-550%);
+}
+#boxOneMovedRight {
+  transform: translateX(-1100%);
+}
+.boxTwo {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  transform: translateX(-550%);
+  transition: transform 1s;
+}
+#boxTwoMovedRight {
+  transform: translateX(0);
+}
+#boxTwoMovedLeft {
+  transform: translateX(-1100%);
+}
+.boxThree {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  transform: translateX(-1100%);
+  transition: transform 1s;
+}
+#boxThreeMovedRight {
+  transform: translateX(-550%);
+}
+#boxThreeMovedLeft {
+  transform: translateX(0);
 }
