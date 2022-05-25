@@ -20,7 +20,6 @@ class LogInOrCreate extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    window.addEventListener("click", () => console.log("clicked"));
   }
 
   handleWindowSizeChange = () => {
@@ -83,7 +82,6 @@ class LogInOrCreate extends React.Component {
 
   onLogin = async (event) => {
     event.preventDefault();
-    console.log(this.state);
     const { email, password } = this.state;
     const postObj = {
       email: email,
