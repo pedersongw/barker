@@ -46,7 +46,6 @@ class Forum extends React.Component {
         this.chunkifyEntries(entries);
         this.setState({ entries });
         this.setState({ dbWasContacted: true });
-        console.log("state populated from objects in the database");
       } else if (entries.length === 0) {
         this.setState({ dbWasContacted: "empty" });
         console.log("Database empty");
@@ -101,7 +100,6 @@ class Forum extends React.Component {
       res.push(chunk);
     }
     let arrLength = res.reduce((acc, val) => acc.concat(val), []);
-    console.log(res);
     this.setState({ numberOfPages: arrLength.length });
     this.setState({ entriesDisplayed: res });
   };
