@@ -76,7 +76,7 @@ class SinglePost extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.post !== this.state.post) {
-      console.log("pokemons state has changed.");
+      console.log("state has changed.");
     }
   }
 

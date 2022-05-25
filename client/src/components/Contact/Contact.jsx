@@ -29,7 +29,7 @@ class Contact extends React.Component {
           <div className={styles.MobileHeaderSpacer}></div>
         )}
         <div className={styles.messageWrapper}>
-          <h1 className={styles.h1}>This page intentionally left blank</h1>
+          <h1 className={styles.h1}>This page intentionally left skank</h1>
         </div>
       </div>
     );
