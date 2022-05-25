@@ -1,4 +1,4 @@
-const prod = `http://barkerfielddogpark.org`;
+const prod = `https://barkerfielddogpark.org`;
 
 const dev = `http://localhost:3000`;
 
