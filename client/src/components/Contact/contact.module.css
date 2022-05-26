@@ -13,7 +13,7 @@ body {
 .grid {
   display: grid;
   width: 100%;
-  height: 120vh;
+  height: 100%;
   position: absolute;
   grid-template-columns: 10vw 1fr 10vw;
   grid-template-areas: "one two three";
@@ -43,10 +43,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 #two {
   grid-area: two;
-  background-color: red;
+  background-color: rgb(61, 209, 219);
+  position: relative;
 }
 #three {
   grid-area: three;
@@ -54,49 +56,67 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
-.boxOne {
-  width: 100px;
-  height: 100px;
+.image {
+  display: block;
+  margin: auto;
+  width: 100%;
+  height: auto;
+}
+.imgHide {
+  display: none;
+}
+
+.imgTwo {
   position: absolute;
+  bottom: 0;
   right: 0;
-  top: 100%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transform: translateX(0);
   transition: transform 1s;
 }
-#boxOneMovedLeft {
-  transform: translateX(-550%);
+
+#twoToOne {
+  transform: translateX(-100%);
 }
-#boxOneMovedRight {
-  transform: translateX(-1100%);
+
+#twoToThree {
+  transform: translateX(100%);
 }
-.boxTwo {
-  width: 100px;
-  height: 100px;
+
+.imgOne {
   position: absolute;
+  bottom: 0;
   right: 0;
-  top: 100%;
-  transform: translateX(-550%);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transform: translateX(-100%);
   transition: transform 1s;
 }
-#boxTwoMovedRight {
+
+#oneToTwo {
   transform: translateX(0);
 }
-#boxTwoMovedLeft {
-  transform: translateX(-1100%);
-}
-.boxThree {
-  width: 100px;
-  height: 100px;
+
+.imgThree {
   position: absolute;
+  bottom: 0;
   right: 0;
-  top: 100%;
-  transform: translateX(-1100%);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transform: translateX(100%);
   transition: transform 1s;
 }
-#boxThreeMovedRight {
-  transform: translateX(-550%);
-}
-#boxThreeMovedLeft {
+
+#threeToTwo {
   transform: translateX(0);
 }
