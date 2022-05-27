@@ -27,6 +27,10 @@ class Contact extends React.Component {
     noClick: false,
   };
 
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
     window.addEventListener("keydown", () => console.log(this.state));
@@ -40,11 +44,7 @@ class Contact extends React.Component {
     this.setState({ width: window.innerWidth });
   };
 
-  leftClicked = () => {
-    if (this.state.noClick) {
-      return;
-    }
-    console.log("clicked");
+  changeStaging = (direction) => {
     const {
       staging,
       oneClass,
@@ -55,86 +55,154 @@ class Contact extends React.Component {
       twoId,
       threeId,
       fourId,
+      noClick,
     } = this.state;
+    if (noClick) {
+      return;
+    }
     this.setState({ noClick: true });
     setTimeout(() => {
       this.setState({ noClick: false });
-    }, 1000);
+    }, 1100);
     if (staging === 1) {
-      this.setState({ twoId: styles.twoToOne });
-      this.setState({ oneClass: styles.imgHide });
-      this.setState({ threeId: styles.threeToTwo });
-      setTimeout(() => {
-        this.setState({ twoClass: styles.imgOne });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ twoId: null });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ threeClass: styles.imgTwo });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ threeId: null });
-      }, 1000);
-      this.setState({ staging: 4 });
-    } else if (staging === 2) {
-      this.setState({ oneId: styles.twoToOne });
-      this.setState({ fourClass: styles.imgHide });
-      this.setState({ twoId: styles.threeToTwo });
-      setTimeout(() => {
-        this.setState({ oneClass: styles.imgOne });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ oneId: null });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ twoClass: styles.imgTwo });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ twoId: null });
-      }, 1000);
-      this.setState({ staging: 1 });
-    }
-  };
+      if (direction === "left") {
+        this.setState({
+          oneClass: styles.imgHide,
+          twoId: styles.twoToOne,
+          threeId: styles.threeToTwo,
+          fourClass: styles.imgThree,
+          staging: 4,
+        });
+        setTimeout(
+          () =>
+            this.setState({
+              twoClass: styles.imgOne,
+              twoId: null,
+              threeClass: styles.imgTwo,
+              threeId: null,
+            }),
 
-  rightClicked = () => {
-    if (this.state.noClick) {
-      return;
-    }
-    console.log("clicked");
-    const {
-      staging,
-      oneClass,
-      twoClass,
-      threeClass,
-      fourClass,
-      oneId,
-      twoId,
-      threeId,
-      fourId,
-    } = this.state;
-    if (staging === 1) {
-      this.setState({ noClick: true });
-      setTimeout(() => {
-        this.setState({ noClick: false });
-      }, 1000);
-      this.setState({ twoId: styles.twoToThree });
-      this.setState({ threeClass: styles.imgHide });
-      this.setState({ oneId: styles.oneToTwo });
-      this.setState({ fourClass: styles.imgOne });
-      setTimeout(() => {
-        this.setState({ twoClass: styles.imgThree });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ twoId: null });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ oneClass: styles.imgTwo });
-      }, 1000);
-      setTimeout(() => {
-        this.setState({ threeId: null });
-      }, 1000);
-      this.setState({ staging: 2 });
+          1000
+        );
+      } else {
+        this.setState({
+          twoId: styles.twoToThree,
+          threeClass: styles.imgHide,
+          oneId: styles.oneToTwo,
+          fourClass: styles.imgOne,
+          staging: 2,
+        });
+        setTimeout(() => {
+          this.setState({
+            twoClass: styles.imgThree,
+            twoId: null,
+            oneClass: styles.imgTwo,
+            threeId: null,
+          });
+        }, 1000);
+      }
+    } else if (staging === 2) {
+      if (direction === "left") {
+        this.setState({
+          oneId: styles.twoToOne,
+          twoId: styles.threeToTwo,
+          threeClass: styles.imgThree,
+          fourClass: styles.imgHide,
+          staging: 1,
+        });
+        setTimeout(() => {
+          this.setState({
+            oneClass: styles.imgOne,
+            oneId: null,
+            twoClass: styles.imgTwo,
+            twoId: null,
+          });
+        }, 1000);
+      } else {
+        this.setState({
+          oneId: styles.twoToThree,
+          twoClass: styles.imgHide,
+          threeClass: styles.imgOne,
+          fourId: styles.oneToTwo,
+          staging: 3,
+        });
+        setTimeout(() => {
+          this.setState({
+            oneClass: styles.imgThree,
+            oneId: null,
+            fourClass: styles.imgTwo,
+            fourId: null,
+          });
+        }, 1000);
+      }
+    } else if (staging === 3) {
+      if (direction === "left") {
+        this.setState({
+          oneId: styles.threeToTwo,
+          twoClass: styles.imgThree,
+          threeClass: styles.imgHide,
+          fourId: styles.twoToOne,
+          staging: 2,
+        });
+        setTimeout(() => {
+          this.setState({
+            oneClass: styles.imgTwo,
+            oneId: null,
+            fourClass: styles.imgOne,
+            fourId: null,
+          });
+        }, 1000);
+      } else {
+        this.setState({
+          oneClass: styles.imgHide,
+          twoClass: styles.imgOne,
+          threeId: styles.oneToTwo,
+          fourId: styles.twoToThree,
+          staging: 4,
+        });
+        setTimeout(() => {
+          this.setState({
+            threeClass: styles.imgTwo,
+            threeId: null,
+            fourClass: styles.imgThree,
+            fourId: null,
+          });
+        }, 1000);
+      }
+    } else {
+      if (direction === "left") {
+        this.setState({
+          oneClass: styles.imgThree,
+          twoClass: styles.imgHide,
+          threeId: styles.twoToOne,
+          fourId: styles.threeToTwo,
+          staging: 3,
+        });
+        setTimeout(() => {
+          this.setState({
+            threeClass: styles.imgOne,
+            threeId: null,
+            fourClass: styles.imgTwo,
+            fourId: null,
+          });
+        }, 1000);
+      } else {
+        this.setState({
+          oneClass: styles.imgOne,
+          twoId: styles.oneToTwo,
+          threeId: styles.twoToThree,
+          fourClass: styles.imgHide,
+          staging: 1,
+        });
+        setTimeout(() => {
+          this.setState({
+            twoClass: styles.imgTwo,
+            twoId: null,
+            threeClass: styles.imgThree,
+            threeId: null,
+          });
+        }, 1000);
+      }
     }
   };
 
@@ -160,7 +228,7 @@ class Contact extends React.Component {
         <div
           className={this.state.width < 800 ? styles.gridMobile : styles.grid}
         >
-          <div id={styles.one} onClick={() => this.leftClicked()}>
+          <div id={styles.one} onClick={() => this.changeStaging("left")}>
             Left
           </div>
           <div id={styles.two}>
@@ -177,7 +245,7 @@ class Contact extends React.Component {
               <img alt="text" src={image4} className={styles.image} />
             </div>
           </div>
-          <div id={styles.three} onClick={() => this.rightClicked()}>
+          <div id={styles.three} onClick={() => this.changeStaging("right")}>
             Right
           </div>
         </div>
