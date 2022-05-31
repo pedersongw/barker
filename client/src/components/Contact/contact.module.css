@@ -1,9 +1,5 @@
-body {
-  overflow: hidden;
-}
-
 .desktopHeaderSpacer {
-  height: 50px;
+  height: 10vh;
 }
 
 .MobileHeaderSpacer {
@@ -13,7 +9,7 @@ body {
 .grid {
   display: grid;
   width: 100%;
-  height: 100%;
+  height: 90vh;
   position: absolute;
   grid-template-columns: 10vw 1fr 10vw;
   grid-template-areas: "one two three";
@@ -24,11 +20,11 @@ body {
 .gridMobile {
   display: grid;
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   position: absolute;
   bottom: 0;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 8vh 1fr 20vh;
+  grid-template-rows: 8vh 1fr 10vh;
   grid-template-areas:
     "nothing nothing"
     "two two"
@@ -40,30 +36,74 @@ body {
 #one {
   grid-area: one;
   background-color: lightblue;
+  font-size: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   z-index: 2;
 }
 #two {
   grid-area: two;
   background-color: rgb(61, 209, 219);
+  height: inherit;
+  width: 100%;
   position: relative;
 }
 #three {
   grid-area: three;
   background-color: lightblue;
+  font-size: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   z-index: 2;
 }
 
-.image {
-  display: block;
-  margin: auto;
+.card {
+  grid-area: center;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
   width: 100%;
-  height: auto;
+}
+
+#cardOne {
+  grid-area: center;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+#cardTwo {
+  grid-area: center;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.imageWrapper {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+.img {
+  object-fit: contain;
+  max-height: 200px;
+  width: 100%;
+}
+
+.description {
+  text-align: center;
 }
 .imgHide {
   display: none;
@@ -73,10 +113,8 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 100%;
+  height: inherit;
   width: 100%;
-  display: flex;
-  align-items: center;
   transform: translateX(0);
   transition: transform 1s;
 }
@@ -93,10 +131,8 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 100%;
+  height: inherit;
   width: 100%;
-  display: flex;
-  align-items: center;
   transform: translateX(-100%);
   transition: transform 1s;
 }
@@ -109,10 +145,8 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 100%;
+  height: inherit;
   width: 100%;
-  display: flex;
-  align-items: center;
   transform: translateX(100%);
   transition: transform 1s;
 }

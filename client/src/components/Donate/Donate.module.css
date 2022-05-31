@@ -13,6 +13,39 @@
 
 .messageWrapper {
   width: 100vw;
+  height: 90vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  height: 500px;
+  width: 500px;
+  background-color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "top top top"
+    "left center right"
+    "bottom bottom bottom";
+}
+
+.imgDiv {
+  grid-area: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.imgWrapper {
+  height: inherit;
+  width: 100%;
+}
+
+.img {
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
 }

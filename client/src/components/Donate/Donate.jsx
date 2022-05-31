@@ -2,6 +2,8 @@ import React from "react";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
 import styles from "./Donate.module.css";
 
+import image1 from "../../FundraisingImages/goal1images/image1.jpg";
+
 class Donate extends React.Component {
   state = {
     width: window.innerWidth,
@@ -29,6 +31,11 @@ class Donate extends React.Component {
           <div className={styles.MobileHeaderSpacer}></div>
         )}
         <div className={styles.messageWrapper}>
+          <div className={styles.grid}>
+            <div className={styles.imgDiv}>
+              <img alt="image" src={image1} className={styles.img}></img>
+            </div>
+          </div>
           <h1 className={styles.h1}>This page intentionally left blank</h1>
         </div>
       </div>
