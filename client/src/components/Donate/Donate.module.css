@@ -1,51 +1,179 @@
-.h1 {
-  color: gray;
-  display: block;
-}
-
 .desktopHeaderSpacer {
-  height: 50px;
+  height: 10vh;
 }
 
 .MobileHeaderSpacer {
-  height: 25px;
-}
-
-.messageWrapper {
-  width: 100vw;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 10vh;
 }
 
 .grid {
-  height: 500px;
-  width: 500px;
-  background-color: black;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    "top top top"
-    "left center right"
-    "bottom bottom bottom";
+  width: 100%;
+  height: 90vh;
+  position: absolute;
+  grid-template-columns: 10vw 1fr 10vw;
+  grid-template-areas: "one two three";
+  overflow: hidden;
+  z-index: 2;
 }
 
-.imgDiv {
-  grid-area: center;
+.gridMobile {
+  display: grid;
+  width: 100%;
+  height: 90vh;
+  position: absolute;
+  bottom: 0;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 10vh;
+  grid-template-areas:
+    "two two"
+    "one three";
+  overflow: hidden;
+  z-index: 2;
+}
+
+#one {
+  grid-area: one;
+  background-color: lightblue;
+  font-size: 3em;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+}
+#twoMobile {
+  grid-area: two;
+  background-color: rgb(61, 209, 219);
+  height: 80vh;
+  width: 100%;
+  position: relative;
+}
+
+#twoDesktop {
+  grid-area: two;
+  background-color: rgb(61, 209, 219);
+  height: 90vh;
+  width: 100%;
+  position: relative;
+}
+
+#three {
+  grid-area: three;
+  background-color: lightblue;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.card {
+  grid-area: center;
+  background-color: rgb(106, 105, 153);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "pic title"
+    "desc desc";
   height: 100%;
   width: 100%;
 }
 
-.imgWrapper {
+.cardMobile {
+  grid-area: center;
+  background-color: rgb(106, 105, 153);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "pic"
+    "desc";
+  height: 100%;
+  width: 100%;
+}
+
+.imageWrapper {
+  height: 100%;
+  max-height: 45vh;
+  width: 100%;
+  display: flex;
+}
+
+.image {
+  display: none;
+  width: 100%;
+  object-fit: contain;
+  max-height: 100%;
+  padding: 10px;
+  background-color: rgb(106, 105, 153);
+  box-sizing: border-box;
+}
+
+#image-two,
+#image-th {
+  display: none;
+}
+
+.title {
+  grid-area: title;
+}
+
+.description {
+  text-align: center;
+  grid-area: desc;
+  padding: 0 10px;
+  overflow: scroll;
+}
+.imgHide {
+  display: none;
+}
+
+.imgTwo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   height: inherit;
   width: 100%;
+  transform: translateX(0);
+  transition: transform 1s;
 }
 
-.img {
-  object-fit: contain;
-  height: 100%;
+#twoToOne {
+  transform: translateX(-100%);
+}
+
+#twoToThree {
+  transform: translateX(100%);
+}
+
+.imgOne {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: inherit;
   width: 100%;
+  transform: translateX(-100%);
+  transition: transform 1s;
+}
+
+#oneToTwo {
+  transform: translateX(0);
+}
+
+.imgThree {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: inherit;
+  width: 100%;
+  transform: translateX(100%);
+  transition: transform 1s;
+}
+
+#threeToTwo {
+  transform: translateX(0);
 }
