@@ -1,6 +1,6 @@
 import React from "react";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
-import styles from "./Contact.module.css";
+import styles from "./HerokuContact.module.css";
 
 import image1 from "../../FundraisingImages/goal1images/image1.jpg";
 
