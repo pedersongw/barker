@@ -142,6 +142,7 @@ button {
   font-size: 1.3em;
   cursor: pointer;
   width: 75%;
+  color: black;
 }
 
 button:hover {
