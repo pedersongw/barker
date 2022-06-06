@@ -84,6 +84,7 @@ class Contact extends React.Component {
                 <React.Fragment>
                   <input
                     className={styles.nameInput}
+                    id={styles.nameInputMobile}
                     name="first-name"
                     placeholder="First Name"
                     value={this.state.firstName}
@@ -93,6 +94,7 @@ class Contact extends React.Component {
                   ></input>
                   <input
                     className={styles.nameInput}
+                    id={styles.nameInputMobile}
                     name="last-name"
                     placeholder="Last Name"
                     value={this.state.lastName}

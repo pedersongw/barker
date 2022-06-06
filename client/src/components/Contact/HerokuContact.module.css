@@ -27,6 +27,7 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   width: 50%;
   height: 50%;
 }
@@ -35,10 +36,11 @@ input {
   border: none;
   line-height: 2em;
   border-radius: 5px;
+  width: 100%;
 }
 
 .nameDiv {
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
@@ -47,6 +49,10 @@ input {
   border: none;
   line-height: 2em;
   border-radius: 5px;
+  width: 45%;
+}
+#nameInputMobile {
+  width: 100%;
 }
 
 textarea {
@@ -54,6 +60,7 @@ textarea {
   line-height: 2em;
   border-radius: 5px;
   resize: none;
+  width: 100%;
 }
 
 form button {
@@ -63,6 +70,7 @@ form button {
   background-color: rgb(31, 141, 184);
   font-size: 1.3em;
   cursor: pointer;
+  color: #00faff;
 }
 
 form button:hover {
