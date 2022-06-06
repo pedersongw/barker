@@ -1,0 +1,13 @@
+.wrapper {
+  background-color: #004562;
+}
+
+.spacer {
+  height: 10vh;
+}
+
+section {
+  margin: 20px;
+  background-color: #00faff;
+  border-radius: 10px;
+}

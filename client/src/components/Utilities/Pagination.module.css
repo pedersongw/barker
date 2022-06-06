@@ -29,6 +29,9 @@
   opacity: 1;
   background-color: #002237;
   color: #00faff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination {
