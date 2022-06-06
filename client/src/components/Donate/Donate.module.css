@@ -6,6 +6,13 @@
   height: 10vh;
 }
 
+h3,
+h4,
+h5 {
+  padding: 10px;
+  margin: 0;
+}
+
 .grid {
   display: grid;
   width: 100%;
@@ -119,15 +126,41 @@
 }
 
 .title {
+  height: 100%;
   grid-area: title;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  border: none;
+  line-height: 2em;
+  border-radius: 5px;
+  background-color: rgb(31, 141, 184);
+  font-size: 1.3em;
+  cursor: pointer;
+  width: 75%;
+}
+
+button:hover {
+  background-color: rgb(187, 181, 255);
 }
 
 .description {
   text-align: center;
   grid-area: desc;
   padding: 0 10px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
+
+.descriptionDesktop {
+  text-align: center;
+  grid-area: desc;
+  padding: 0 10px;
+}
+
 .imgHide {
   display: none;
 }
