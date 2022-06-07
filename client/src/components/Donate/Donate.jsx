@@ -25,7 +25,7 @@ class Donate extends React.Component {
     twoId: null,
     threeId: null,
     fourId: null,
-    oneImages: ["image-one", "image-two", "image-three", "image-four"],
+    oneImages: [],
     twoImages: ["image-one", "image-two", "image-three", "image-four"],
     threeImages: ["image-two-one", "image-two-two", "image-two-three"],
     fourImages: ["image-three-one", "image-three-two"],
@@ -240,8 +240,7 @@ class Donate extends React.Component {
       arr = [...twoImages];
       stateVar = "twoImages";
     } else if (staging === 2) {
-      arr = [...oneImages];
-      stateVar = "oneImages";
+      return;
     } else if (staging === 3) {
       arr = [...fourImages];
       stateVar = "fourImages";
@@ -266,7 +265,7 @@ class Donate extends React.Component {
   };
 
   keyPressed = () => {
-    console.log("key pressed");
+    console.log(this.state);
   };
 
   rotateImages = () => {
