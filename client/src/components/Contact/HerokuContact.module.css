@@ -7,8 +7,9 @@
   align-items: center;
 }
 .h1 {
-  color: gray;
+  color: #00b0d7;
   display: block;
+  text-align: center;
 }
 
 .h3 {

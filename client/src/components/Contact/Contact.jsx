@@ -157,7 +157,9 @@ class Contact extends React.Component {
             </form>
           </React.Fragment>
         )}
-        {this.state.sent && <h1>Contact Form Submitted Successfully</h1>}
+        {this.state.sent && (
+          <h1 className={styles["h1"]}>Contact Form Submitted Successfully</h1>
+        )}
       </div>
     );
   }
