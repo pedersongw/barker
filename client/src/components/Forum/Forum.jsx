@@ -10,6 +10,7 @@ import Pagination from "../Utilities/Pagination";
 import ForumDesktopNav from "../Navs/DesktopNav";
 import LogInOrCreate from "../Login/LoginOrCreate";
 import logo from "../../images/logo.png";
+import { FaSpinner } from "react-icons/fa";
 import styles from "./Forum.module.css";
 
 class Forum extends React.Component {
@@ -68,6 +69,7 @@ class Forum extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener("mousedown", this.handleClickOutsidePostModal);
   }
 
   isAdmin = () => {
@@ -284,22 +286,24 @@ class Forum extends React.Component {
               </div>
             </React.Fragment>
           )}
-          {this.state.user && (
+          {!this.state.entriesDisplayed && this.state.user && (
+            <div className={styles.spinnerDiv}>
+              <FaSpinner className={styles.spinner} />
+            </div>
+          )}
+          {this.state.entriesDisplayed && this.state.user && (
             <div className={styles.postsDiv}>
-              {this.state.entriesDisplayed &&
-                this.state.user &&
-                this.renderPostsInListGroup()}
-              {this.state.user && (
-                <Pagination
-                  currentPage={Number(currentPage)}
-                  totalCount={Number(this.state.numberOfPages)}
-                  siblingCount={1}
-                  pageSize={pageSize}
-                  updateCurrentPage={this.updateCurrentPage}
-                  incrementPage={this.incrementPage}
-                  sort={this.state.sort}
-                />
-              )}
+              {this.renderPostsInListGroup()}
+              <Pagination
+                currentPage={Number(currentPage)}
+                totalCount={Number(this.state.numberOfPages)}
+                siblingCount={1}
+                pageSize={pageSize}
+                updateCurrentPage={this.updateCurrentPage}
+                incrementPage={this.incrementPage}
+                sort={this.state.sort}
+              />
+              )
             </div>
           )}
           {this.userLoggedIn() && this.state.width < 800 && (

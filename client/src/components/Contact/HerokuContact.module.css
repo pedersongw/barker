@@ -11,7 +11,7 @@
   display: block;
 }
 
-h3 {
+.h3 {
   margin: 0;
 }
 
@@ -23,7 +23,7 @@ h3 {
   height: 25px;
 }
 
-form {
+.form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -32,7 +32,7 @@ form {
   height: 50%;
 }
 
-input {
+.input {
   border: none;
   line-height: 2em;
   border-radius: 5px;
@@ -62,19 +62,19 @@ textarea {
   resize: none;
   width: 100%;
 }
-
-form button {
+.button {
   border: none;
+  width: 75%;
   line-height: 2em;
   border-radius: 5px;
-  background-color: rgb(31, 141, 184);
+  background-color: #002237;
   font-size: 1.3em;
   cursor: pointer;
   color: #00faff;
 }
-
-form button:hover {
-  background-color: rgb(187, 181, 255);
+.button:hover {
+  background-color: #00faff;
+  color: #002237;
 }
 
 .spinner {

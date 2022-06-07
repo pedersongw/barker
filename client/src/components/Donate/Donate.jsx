@@ -361,8 +361,11 @@ class Donate extends React.Component {
                       </b>
                     </h4>
                     <h5>Cost: $6,625</h5>
-                    <button onClick={() => this.donateClicked()}>
-                      Donate!
+                    <button
+                      className={styles.button}
+                      onClick={() => this.donateClicked()}
+                    >
+                      Donate
                     </button>
                   </div>
                 )}
@@ -383,8 +386,11 @@ class Donate extends React.Component {
                         </b>
                       </h4>
                       <h5>Cost: $6,625</h5>
-                      <button onClick={() => this.donateClicked()}>
-                        Donate!
+                      <button
+                        className={styles.button}
+                        onClick={() => this.donateClicked()}
+                      >
+                        Donate
                       </button>
                     </div>
                   )}
@@ -446,8 +452,11 @@ class Donate extends React.Component {
                       <b>Fill ditches and holes prior to mulch donation.</b>
                     </h4>
                     <h5>Cost: Free, unless unable to find a donor.</h5>
-                    <button onClick={() => this.donateClicked()}>
-                      Donate!
+                    <button
+                      className={styles.button}
+                      onClick={() => this.donateClicked()}
+                    >
+                      Donate
                     </button>
                   </div>
                 )}
@@ -468,8 +477,11 @@ class Donate extends React.Component {
                         </b>
                       </h4>
                       <h5>Cost: Free, unless unable to find a donor.</h5>
-                      <button onClick={() => this.donateClicked()}>
-                        Donate!
+                      <button
+                        className={styles.button}
+                        onClick={() => this.donateClicked()}
+                      >
+                        Donate
                       </button>
                     </div>
                   )}
@@ -527,8 +539,11 @@ class Donate extends React.Component {
                       </b>
                     </h4>
                     <h5>Cost: $400</h5>
-                    <button onClick={() => this.donateClicked()}>
-                      Donate!
+                    <button
+                      className={styles.button}
+                      onClick={() => this.donateClicked()}
+                    >
+                      Donate
                     </button>
                   </div>
                 )}
@@ -550,8 +565,11 @@ class Donate extends React.Component {
                         </b>
                       </h4>
                       <h5>Cost: $400</h5>
-                      <button onClick={() => this.donateClicked()}>
-                        Donate!
+                      <button
+                        className={styles.button}
+                        onClick={() => this.donateClicked()}
+                      >
+                        Donate
                       </button>
                     </div>
                   )}

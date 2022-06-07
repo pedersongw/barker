@@ -72,6 +72,8 @@ class SinglePost extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener("click", this.handleClickOutsideReplyModal);
+    window.removeEventListener("click", this.handleClickOutsideReportModal);
   }
 
   componentDidUpdate(prevProps, prevState) {

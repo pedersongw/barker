@@ -10,7 +10,7 @@
 .viewedPost {
   display: grid;
   border-radius: 10px 10px 0 0;
-  background-color: #007498;
+  background-color: #00b0d7;
   grid-template-rows: 2fr auto 2fr 1fr;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
@@ -87,7 +87,7 @@
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  background-color: #00b0d7;
+  background-color: #007498;
 }
 
 .postReplyButton:hover {

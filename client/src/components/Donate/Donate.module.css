@@ -41,7 +41,7 @@ h5 {
 
 #one {
   grid-area: one;
-  background-color: lightblue;
+  background-color: #00b0d7;
   font-size: 3em;
   display: flex;
   justify-content: center;
@@ -67,7 +67,7 @@ h5 {
 
 #three {
   grid-area: three;
-  background-color: lightblue;
+  background-color: #00b0d7;
   font-size: 3em;
   display: flex;
   justify-content: center;
@@ -78,7 +78,7 @@ h5 {
 
 .card {
   grid-area: center;
-  background-color: rgb(106, 105, 153);
+  background-color: #007498;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -116,7 +116,6 @@ h5 {
   object-fit: contain;
   max-height: 100%;
   padding: 10px;
-  background-color: rgb(106, 105, 153);
   box-sizing: border-box;
 }
 
@@ -134,19 +133,20 @@ h5 {
   align-items: center;
 }
 
-button {
+.button {
   border: none;
   line-height: 2em;
   border-radius: 5px;
-  background-color: rgb(31, 141, 184);
+  background-color: #004562;
   font-size: 1.3em;
   cursor: pointer;
   width: 75%;
-  color: black;
+  color: #00faff;
 }
 
-button:hover {
-  background-color: rgb(187, 181, 255);
+.button:hover {
+  background-color: #00faff;
+  color: black;
 }
 
 .description {

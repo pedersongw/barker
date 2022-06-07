@@ -28,6 +28,7 @@ class CommentHolder extends React.Component {
   }
 
   async componentDidMount() {
+    window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
     window.addEventListener("keydown", () => console.log(this.state));
     try {

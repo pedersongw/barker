@@ -67,9 +67,12 @@ class Contact extends React.Component {
         )}
         {!this.state.sent && (
           <React.Fragment>
-            <h3 className="spinner">Contact Form</h3>
+            <h3 className={styles["h3"]}>Contact Form</h3>
             <h5>Complete all fields and we'll respond by email shortly</h5>
-            <form onSubmit={(event) => this.handleFormSubmission(event)}>
+            <form
+              className={styles.form}
+              onSubmit={(event) => this.handleFormSubmission(event)}
+            >
               <input
                 className={styles.input}
                 name="email"
@@ -144,7 +147,7 @@ class Contact extends React.Component {
                   this.setState({ message: event.target.value })
                 }
               ></textarea>
-              <button type="submit">
+              <button type="submit" className={styles.button}>
                 {this.state.isSending ? (
                   <FaSpinner className={styles.spinner} />
                 ) : (

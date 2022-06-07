@@ -2,7 +2,7 @@
   grid-area: nav;
   position: sticky;
   top: 75px;
-  background-color: #007498;
+  background-color: #004562;
   border-radius: 10px;
   height: 40vh;
   min-height: 220px;
@@ -74,11 +74,14 @@
   border-width: 1px;
   border-radius: 15px;
   cursor: pointer;
+  border-color: #00b0d7;
+  color: #00b0d7;
 }
 
 #selected {
   border-color: #00faff;
-  color: #00faff;
+  background-color: #00faff;
+  color: #002237;
 }
 
 .serverStatus {
