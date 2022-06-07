@@ -97,7 +97,7 @@
 
 .cardMobile {
   grid-area: center;
-  background-color: rgb(106, 105, 153);
+  background-color: #007498;
   overflow: hidden;
   display: grid;
   grid-template-rows: 1fr 1fr;
