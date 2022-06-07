@@ -6,9 +6,14 @@
   height: 10vh;
 }
 
-h3,
-h4,
-h5 {
+.h2,
+.h3,
+.h4 {
+  text-align: center;
+}
+
+.h4,
+.h5 {
   padding: 10px;
   margin: 0;
 }
@@ -103,6 +108,15 @@ h5 {
   width: 100%;
 }
 
+.logoWrapper {
+  display: flex;
+  background-color: #00b0d7;
+  width: 90%;
+  height: 90%;
+  border-radius: 10px;
+  margin: auto;
+}
+
 .imageWrapper {
   height: 100%;
   max-height: 45vh;
@@ -131,6 +145,10 @@ h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#mobileTitleOne {
+  grid-area: pic;
 }
 
 .button {

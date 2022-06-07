@@ -1,5 +1,6 @@
 import React from "react";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
+import logo from "../../images/logo.png";
 import styles from "./Donate.module.css";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
@@ -315,7 +316,33 @@ class Donate extends React.Component {
                 className={
                   this.state.width < 800 ? styles.cardMobile : styles.card
                 }
-              ></div>
+              >
+                {this.state.width > 800 && (
+                  <div className={styles.logoWrapper}>
+                    <img alt="Barker Field Logo" src={logo}></img>
+                  </div>
+                )}
+
+                <div
+                  className={styles.title}
+                  id={this.state.width < 800 ? styles.mobileTitleOne : null}
+                >
+                  <h2 className={styles["h2"]}>
+                    Help us keep Barker Field safe, clean, and available to the
+                    community!
+                  </h2>
+                  <h3 className={styles["h3"]}>
+                    100% of your donation goes directly to the betterment of the
+                    park.
+                  </h3>
+                  <button
+                    className={styles.button}
+                    onClick={() => this.donateClicked()}
+                  >
+                    Donate
+                  </button>
+                </div>
+              </div>
             </div>
             <div className={twoClass} id={twoId} ref={this.slideTwo}>
               <div
@@ -352,14 +379,12 @@ class Donate extends React.Component {
 
                 {this.state.width > 800 && (
                   <div className={styles.title}>
-                    <h3>Goal # 1</h3>
-                    <h4>
-                      <b>
-                        Provide a 4” mulch base for upper and middle parts of
-                        the large dog park.
-                      </b>
+                    <h3 className={styles["h3"]}>Goal # 1</h3>
+                    <h4 className={styles["h4"]}>
+                      Provide a 4” mulch base for upper and middle parts of the
+                      large dog park.
                     </h4>
-                    <h5>Cost: $6,625</h5>
+                    <h5 className={styles["h5"]}>Cost: $6,625</h5>
                     <button
                       className={styles.button}
                       onClick={() => this.donateClicked()}
@@ -378,13 +403,11 @@ class Donate extends React.Component {
                 >
                   {this.state.width < 800 && (
                     <div className={styles.title}>
-                      <h4>
-                        <b>
-                          Goal # 1: Provide a 4” mulch base for upper and middle
-                          parts of the large dog park.
-                        </b>
+                      <h4 className={styles["h4"]}>
+                        Goal # 1: Provide a 4” mulch base for upper and middle
+                        parts of the large dog park.
                       </h4>
-                      <h5>Cost: $6,625</h5>
+                      <h5 className={styles["h5"]}>Cost: $6,625</h5>
                       <button
                         className={styles.button}
                         onClick={() => this.donateClicked()}
@@ -446,11 +469,13 @@ class Donate extends React.Component {
                 </div>
                 {this.state.width > 800 && (
                   <div className={styles.title}>
-                    <h3>Goal # 2</h3>
-                    <h4>
-                      <b>Fill ditches and holes prior to mulch donation.</b>
+                    <h3 className={styles["h3"]}>Goal # 2</h3>
+                    <h4 className={styles["h4"]}>
+                      Fill ditches and holes prior to mulch donation.
                     </h4>
-                    <h5>Cost: Free, unless unable to find a donor.</h5>
+                    <h5 className={styles["h5"]}>
+                      Cost: Free, unless unable to find a donor.
+                    </h5>
                     <button
                       className={styles.button}
                       onClick={() => this.donateClicked()}
@@ -469,13 +494,13 @@ class Donate extends React.Component {
                 >
                   {this.state.width < 800 && (
                     <div className={styles.title}>
-                      <h4>
-                        <b>
-                          Goal # 2: Fill ditches and holes prior to mulch
-                          donation.
-                        </b>
+                      <h4 className={styles["h4"]}>
+                        Goal # 2: Fill ditches and holes prior to mulch
+                        donation.
                       </h4>
-                      <h5>Cost: Free, unless unable to find a donor.</h5>
+                      <h5 className={styles["h5"]}>
+                        Cost: Free, unless unable to find a donor.
+                      </h5>
                       <button
                         className={styles.button}
                         onClick={() => this.donateClicked()}
@@ -529,15 +554,12 @@ class Donate extends React.Component {
                 </div>
                 {this.state.width > 800 && (
                   <div className={styles.title}>
-                    <h3>Goal # 3</h3>
-                    <h4>
-                      <b>
-                        Remediate the erosion build up that is, in effect,
-                        “lowering” the fence at the bottom of the large dog
-                        park.
-                      </b>
+                    <h3 className={styles["h3"]}>Goal # 3</h3>
+                    <h4 className={styles["h4"]}>
+                      Remediate the erosion build up that is, in effect,
+                      “lowering” the fence at the bottom of the large dog park.
                     </h4>
-                    <h5>Cost: $400</h5>
+                    <h5 className={styles["h5"]}>Cost: $400</h5>
                     <button
                       className={styles.button}
                       onClick={() => this.donateClicked()}
@@ -556,14 +578,12 @@ class Donate extends React.Component {
                 >
                   {this.state.width < 800 && (
                     <div className={styles.title}>
-                      <h4>
-                        <b>
-                          Goal # 3: Remediate the erosion build up that is, in
-                          effect, “lowering” the fence at the bottom of the
-                          large dog park.
-                        </b>
+                      <h4 className={styles["h4"]}>
+                        Goal # 3: Remediate the erosion build up that is, in
+                        effect, “lowering” the fence at the bottom of the large
+                        dog park.
                       </h4>
-                      <h5>Cost: $400</h5>
+                      <h5 className={styles["h5"]}>Cost: $400</h5>
                       <button
                         className={styles.button}
                         onClick={() => this.donateClicked()}
