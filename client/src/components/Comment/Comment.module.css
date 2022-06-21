@@ -4,7 +4,7 @@
 
 .comment {
   border-style: solid;
-  border-color: var(--two);
+  border-color: var(--three);
   border-width: 1px 1px 1px 3px;
   color: var(--two);
   max-width: 500px;
@@ -61,7 +61,7 @@
   padding: 5px;
   grid-area: body;
   border-bottom: solid;
-  border-color: var(--two);
+  border-color: var(--three);
   border-width: 1px;
 }
 

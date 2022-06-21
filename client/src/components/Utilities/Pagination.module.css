@@ -6,10 +6,10 @@
   text-align: center;
   border-radius: 50%;
   border: none;
-  background-color: #00faff;
+  background-color: var(--four);
   cursor: pointer;
   opacity: 0.5;
-  color: black;
+  color: var(--one);
 }
 
 .pageButton:hover {
@@ -27,8 +27,8 @@
 }
 .currentPageButton {
   opacity: 1;
-  background-color: #002237;
-  color: #00faff;
+  background-color: var(--two);
+  color: var(--five);
   display: flex;
   justify-content: center;
   align-items: center;

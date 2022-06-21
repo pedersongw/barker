@@ -12,6 +12,14 @@ class ForumMobileNav extends React.Component {
     this.blurFilter = React.createRef();
   }
 
+  componentDidMount() {
+    window.addEventListener("keydown", () => console.log(this.state));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", () => console.log(this.state));
+  }
+
   handleMenuOpen = () => {
     window.addEventListener("mousedown", this.handleClickOutsideMenu);
     this.props.navOpen();
@@ -20,6 +28,7 @@ class ForumMobileNav extends React.Component {
   };
 
   handleMenuClose = () => {
+    console.log("menu closed");
     window.removeEventListener("mousedown", this.handleClickOutsideMenu);
     this.props.navOpen();
     this.setState({ navOpen: false });

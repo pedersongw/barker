@@ -42,7 +42,8 @@
   margin-bottom: 10px;
   justify-content: center;
   align-items: center;
-  background-color: #00b0d7;
+  background-color: var(--three);
+  color: var(--two);
   font-size: 1.5em;
   height: 8vh;
   width: 60vw;

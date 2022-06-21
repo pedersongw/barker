@@ -18,7 +18,7 @@
 }
 
 .content {
-  color: #00faff;
+  color: var(--two);
   height: 100%;
   width: 100%;
   background: #004562;
@@ -69,8 +69,8 @@
   top: 0;
   height: 25%;
   width: 100%;
-  background: #002237;
-  color: #92aee6;
+  background-color: var(--five);
+  color: var(--two);
 }
 
 .modalHeaderText {
@@ -95,14 +95,14 @@
 
 .close {
   padding: 0 25px 0;
-  color: white;
+  color: var(--two);
   font-size: 3em;
   font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: #92aee6;
+  color: var(--one);
   text-decoration: none;
   cursor: pointer;
 }
@@ -113,7 +113,6 @@
   display: grid;
   position: absolute;
   top: 25%;
-  background-color: 000000;
 }
 
 #modalBodyMobile {
@@ -144,12 +143,14 @@
   width: 100%;
   font-size: 1.5em;
   border: none;
-  background-color: #007498;
+  background-color: var(--four);
+  color: var(--one);
   cursor: pointer;
 }
 
 .submitReplyBtn:hover {
-  background-color: #00b0d7;
+  background-color: var(--two);
+  color: var(--five);
 }
 
 .modalFooter {
@@ -157,8 +158,8 @@
   grid-template-columns: 4fr 1fr;
   grid-template-areas: "text icon";
   height: 25%;
-  background-color: #002237;
-  color: #92aee6;
+  background-color: var(--five);
+  color: var(--two);
   position: absolute;
   bottom: 0;
   width: 100%;

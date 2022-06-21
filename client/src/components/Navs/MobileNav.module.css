@@ -44,8 +44,8 @@
   align-items: center;
   bottom: 30px;
   right: 30px;
-  background-color: #00faff;
-  color: #002237;
+  background-color: var(--two);
+  color: var(--five);
   opacity: 0.75;
   height: 40px;
   width: 40px;
@@ -67,7 +67,7 @@
   margin-bottom: 10px;
   justify-content: center;
   align-items: center;
-  background-color: #00b0d7;
+  background-color: var(--two);
   font-size: 1.5em;
   height: 8vh;
   width: 60vw;
@@ -111,9 +111,9 @@
 }
 
 #liSelected {
-  background-color: #00faff;
+  background-color: var(--two);
   border-style: none;
-  color: #002237;
+  color: var(--five);
 }
 
 #navContent div {
