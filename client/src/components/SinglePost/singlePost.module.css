@@ -9,6 +9,7 @@
 
 .viewedPost {
   display: grid;
+  color: white;
   border-radius: 10px 10px 0 0;
   background-color: var(--three);
   grid-template-rows: 2fr auto 2fr 1fr;
