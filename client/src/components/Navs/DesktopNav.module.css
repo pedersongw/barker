@@ -2,7 +2,7 @@
   grid-area: nav;
   position: sticky;
   top: 75px;
-  background-color: #004562;
+  background-color: var(--three);
   border-radius: 10px;
   height: 40vh;
   min-height: 220px;
@@ -27,12 +27,12 @@
 
 .navDiv {
   width: 90%;
-  background-color: #002237;
+  background-color: var(--five);
   padding: 10px 0;
   border-radius: 10px;
   display: flex;
   justify-content: center;
-  color: #00faff;
+  color: var(--two);
   cursor: pointer;
 }
 
@@ -52,7 +52,7 @@
   width: 15vw;
   bottom: -155px;
   opacity: 0;
-  color: black;
+  color: var(--five);
   transition-property: opacity;
   transition-timing-function: ease-in-out;
   transition-duration: 0.1s;
@@ -74,14 +74,13 @@
   border-width: 1px;
   border-radius: 15px;
   cursor: pointer;
-  border-color: #00b0d7;
-  color: #00b0d7;
+  border-color: var(--two);
 }
 
 #selected {
-  border-color: #00faff;
-  background-color: #00faff;
-  color: #002237;
+  border-color: var(--two);
+  background-color: var(--two);
+  color: var(-one);
 }
 
 .serverStatus {

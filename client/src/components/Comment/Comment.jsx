@@ -58,7 +58,7 @@ class Comment extends React.Component {
             to={`/comment/${this.props.comment.parentComment}/${this.props.comment.parentPost}`}
             state={{ comment: this.props.comment }}
           >
-            <div>Click to continue thread</div>
+            <div className={styles.deletedDiv}>Click to continue thread</div>
           </Link>
         </React.Fragment>
       );
@@ -121,7 +121,12 @@ class Comment extends React.Component {
           }
         >
           <div className={styles.body}>
-            <div className={styles.text}>{this.displayBody()}</div>
+            {this.isDeep() && (
+              <div className={styles.deepText}>{this.displayBody()}</div>
+            )}
+            {!this.isDeep() && (
+              <div className={styles.text}>{this.displayBody()}</div>
+            )}
             <div className={styles.by}>
               {!comment.deleted && !this.isDeep() && (
                 <small>by {this.props.comment.username.name}</small>

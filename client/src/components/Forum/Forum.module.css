@@ -2,6 +2,7 @@
   position: relative;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 .desktopHeaderSpacer {
@@ -36,7 +37,7 @@
   height: 100%;
   display: flex;
   padding-right: 10px;
-  background-color: #00b0d7;
+  background-color: var(--two);
   justify-content: center;
   align-items: center;
   grid-area: post;
@@ -51,7 +52,7 @@
   grid-area: post;
   overflow: hidden;
   margin: 0px 10px 35px;
-  background-color: #004562;
+  background-color: var(--three);
   border-radius: 10px;
 }
 
@@ -62,13 +63,13 @@
   justify-content: center;
   align-items: center;
   margin: 0px 10px 35px;
-  background-color: #004562;
+  background-color: var(--three);
   border-radius: 10px;
 }
 
 .spinner {
   font-size: 4em;
-  color: #00faff;
+  color: var(--two);
   animation: spin infinite 2s linear;
 }
 

@@ -2,6 +2,6 @@
   overflow: auto;
   margin: 75px 10px 50px;
   padding: 10px 10px;
-  background-color: #004562;
+  background-color: var(--five);
   border-radius: 10px;
 }

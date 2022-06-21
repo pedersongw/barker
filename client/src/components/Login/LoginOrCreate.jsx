@@ -123,7 +123,9 @@ class LogInOrCreate extends React.Component {
             </div>
             <form onSubmit={this.onLogin}>
               <div>
-                <label htmlFor="email">Email</label>
+                <label className={styles.label} htmlFor="email">
+                  Email
+                </label>
                 <input
                   className={styles.loginInput}
                   type="text"
@@ -134,7 +136,9 @@ class LogInOrCreate extends React.Component {
               </div>
 
               <div>
-                <label htmlFor="password">Password</label>
+                <label className={styles.label} htmlFor="password">
+                  Password
+                </label>
                 <input
                   className={styles.loginInput}
                   type="password"
@@ -144,7 +148,13 @@ class LogInOrCreate extends React.Component {
                 ></input>
               </div>
 
-              <button type="submit">Login</button>
+              <button
+                className={styles.button}
+                id={styles.loginButton}
+                type="submit"
+              >
+                Login
+              </button>
             </form>
           </div>
           <div
@@ -162,7 +172,9 @@ class LogInOrCreate extends React.Component {
             <div className={styles.tabRight}>Sign Up</div>
             <form onSubmit={this.onCreate}>
               <div>
-                <label htmlFor="username">Username</label>
+                <label className={styles.label} htmlFor="username">
+                  Username
+                </label>
                 <input
                   className={styles.loginInput}
                   type="text"
@@ -173,7 +185,9 @@ class LogInOrCreate extends React.Component {
               </div>
 
               <div>
-                <label htmlFor="email">Email</label>
+                <label className={styles.label} htmlFor="email">
+                  Email
+                </label>
                 <input
                   className={styles.loginInput}
                   type="text"
@@ -184,7 +198,9 @@ class LogInOrCreate extends React.Component {
               </div>
 
               <div>
-                <label htmlFor="password">Password</label>{" "}
+                <label className={styles.label} htmlFor="password">
+                  Password
+                </label>{" "}
                 <input
                   className={styles.loginInput}
                   type="password"
@@ -194,7 +210,13 @@ class LogInOrCreate extends React.Component {
                 ></input>
               </div>
 
-              <button type="submit">Create User</button>
+              <button
+                className={styles.button}
+                id={styles.createButton}
+                type="submit"
+              >
+                Create User
+              </button>
             </form>
           </div>
         </div>

@@ -36,11 +36,11 @@
 }
 
 .login {
-  background-color: #008baa;
+  background-color: var(--three);
 }
 
 .create {
-  background-color: #007498;
+  background-color: var(--five);
 }
 
 #loginTab,
@@ -54,29 +54,25 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: #008baa;
+  background-color: var(--three);
   font-size: 1.5em;
-  color: #00faff;
+  color: var(--two);
   border-style: solid;
   border-width: 0 2px 0 0;
-  border-color: #004562;
+  border-color: var(--one);
   border-radius: 15px 0 0 0;
 }
 
 .tabRight {
   grid-area: tab-right;
-  background-color: #007498;
+  background-color: var(--five);
   display: flex;
   border-radius: 0 15px 0 0;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   font-size: 1.5em;
-  color: #00faff;
-}
-
-#activeTab {
-  color: black;
+  color: var(--two);
 }
 
 .loginInput {
@@ -91,7 +87,8 @@
 }
 
 .login .tabRight {
-  background-color: #007498;
+  background-color: var(--five);
+  color: var(--two);
   border-radius: 0 15px 0 0;
 }
 
@@ -99,7 +96,7 @@
   border-radius: 15px 0 0 0;
   border-style: solid;
   border-width: 0 2px 0 0;
-  border-color: #004562;
+  border-color: var(--one);
 }
 
 .login form,
@@ -121,14 +118,25 @@
   align-items: flex-start;
 }
 
-.login form button,
-.create form button {
+.button {
   border: none;
   border-radius: 5px;
-  background-color: #002237;
   width: 50%;
   height: 15%;
-  color: #00faff;
   white-space: nowrap;
   cursor: pointer;
+}
+
+#createButton {
+  background-color: var(--two);
+  color: var(--five);
+}
+
+#loginButton {
+  background-color: var(--two);
+  color: var(--five);
+}
+
+.label {
+  color: var(--two);
 }
