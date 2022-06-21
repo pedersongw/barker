@@ -90,3 +90,39 @@ section {
     "image desc"
     "image desc";
 }
+
+.rulesSection {
+  padding: 0 0 50px 0;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "desc image-one"
+    "desc image-two";
+}
+
+#mobileRulesSection {
+  display: block;
+}
+
+.rulesImageDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rulesImage {
+  width: 65%;
+  height: auto;
+  border-radius: 10px;
+}
+
+#imageDivOne {
+  grid-area: image-one;
+}
+#imageDivTwo {
+  grid-area: image-two;
+}

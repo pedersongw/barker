@@ -4,4 +4,5 @@
   padding: 10px 10px;
   background-color: var(--five);
   border-radius: 10px;
+  min-height: 75vh;
 }
