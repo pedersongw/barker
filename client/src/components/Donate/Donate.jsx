@@ -408,29 +408,31 @@ class Donate extends React.Component {
                         parts of the large dog park.
                       </h4>
                       <h5 className={styles["h5"]}>Cost: $6,625</h5>
-                      <button
-                        className={styles.button}
-                        onClick={() => this.donateClicked()}
-                      >
-                        Donate
-                      </button>
+                      {this.state.width > 800 && (
+                        <button
+                          className={styles.button}
+                          onClick={() => this.donateClicked()}
+                        >
+                          Donate
+                        </button>
+                      )}
                     </div>
                   )}
 
-                  <p>
+                  <p className={styles.p}>
                     A large area of the dog park is completely exposed, making
                     it dusty in the summer months and muddy in wet weather. We
                     know this is a nuisance for pet goers, and under the right
                     conditions makes the dog park unusable.
                   </p>
-                  <p>
+                  <p className={styles.p}>
                     The investment in a large order of playground grade mulch
                     will vastly improve this area of the park. This base will
                     slow-- but not eradicate-- erosion. This will also cover the
                     exposed bases of the shelters at the park. Mulch will be an
                     on-going investment for the park.
                   </p>
-                  <p>
+                  <p className={styles.p}>
                     Chris Schwartz, City of Richmond Parks and Rec, estimates
                     that the top half of Barker Field is 21,500 square feet. At
                     a four inch depth, this comes to 265 cubic yards of mulch.
@@ -438,6 +440,14 @@ class Donate extends React.Component {
                     mulch for $25/cubic yard. The total investment required will
                     be $6,625.
                   </p>
+                  {this.state.width < 800 && (
+                    <button
+                      className={styles.button}
+                      onClick={() => this.donateClicked()}
+                    >
+                      Donate
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -509,13 +519,13 @@ class Donate extends React.Component {
                       </button>
                     </div>
                   )}
-                  <p>
+                  <p className={styles.p}>
                     These holes and ditches pose a huge safety hazard for dogs
                     and owners. If we do not make an effort to fill them prior
                     to the mulch delivery, it could make them invisible and make
                     them even more dangerous.
                   </p>
-                  <p>
+                  <p className={styles.p}>
                     The large holes can be filled by moving dirt already in the
                     park (see Goal #3). The ditches have naturally formed, so
                     filling them with dirt will not resolve the issue. Instead,
@@ -523,7 +533,7 @@ class Donate extends React.Component {
                     erosion to other areas of the park, as well as creating a
                     safer surface for the park.
                   </p>
-                  <p>
+                  <p className={styles.p}>
                     We are currently seeking in-kind donations for the gravel in
                     order to keep down costs. Please contact
                     friendsofbarkerfieldrva@gmail.com if you are interested in
@@ -592,20 +602,20 @@ class Donate extends React.Component {
                       </button>
                     </div>
                   )}
-                  <p>
+                  <p className={styles.p}>
                     A large area of the dog park is completely exposed, making
                     it dusty in the summer months and muddy in wet weather. We
                     know this is a nuisance for pet goers, and under the right
                     conditions makes the dog park unusable.
                   </p>
-                  <p>
+                  <p className={styles.p}>
                     The investment in a large order of playground grade mulch
                     will vastly improve this area of the park. This base will
                     slow-- but not eradicate-- erosion. This will also cover the
                     exposed bases of the shelters at the park. Mulch will be an
                     on-going investment for the park.
                   </p>
-                  <p>
+                  <p className={styles.p}>
                     Chris Schwartz, City of Richmond Parks and Rec, estimates
                     that the top half of Barker Field is 21,500 square feet. At
                     a four inch depth, this comes to 265 cubic yards of mulch.

@@ -6,14 +6,19 @@
   justify-content: center;
   align-items: center;
 }
-.h1 {
-  color: #00b0d7;
+.h1,
+.h5 {
+  color: var(--two);
   display: block;
   text-align: center;
+  font-family: "Cantarell" !important;
 }
 
+.h2,
 .h3 {
-  margin: 0;
+  color: var(--two);
+  font-family: "Amatic" !important;
+  font-size: 3em;
 }
 
 .desktopHeaderSpacer {
@@ -31,6 +36,7 @@
   align-items: center;
   width: 50%;
   height: 50%;
+  min-height: 250px;
 }
 
 .input {
@@ -68,14 +74,14 @@ textarea {
   width: 75%;
   line-height: 2em;
   border-radius: 5px;
-  background-color: #002237;
+  background-color: var(--five);
   font-size: 1.3em;
   cursor: pointer;
-  color: #00faff;
+  color: var(--one);
 }
 .button:hover {
-  background-color: #00faff;
-  color: #002237;
+  background-color: var(--one);
+  color: var(--five);
 }
 
 .spinner {

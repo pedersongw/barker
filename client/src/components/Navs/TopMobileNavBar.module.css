@@ -10,7 +10,7 @@
 }
 
 .link {
-  background-color: #002237;
+  background-color: var(--five);
   cursor: pointer;
   font-size: 1.5em;
 }
@@ -19,15 +19,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #00faff;
+  color: var(--two);
   text-decoration: none;
   height: 100%;
   width: 100%;
 }
 
 .link a:hover {
-  background-color: #00faff;
-  color: #002237;
+  background-color: #b1f8f2;
+  color: #282b28;
 }
 
 .link:hover {

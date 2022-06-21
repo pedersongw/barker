@@ -21,7 +21,6 @@ class Contact extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    window.addEventListener("click", () => console.log(this.state));
   }
 
   componentWillUnmount() {
@@ -67,8 +66,10 @@ class Contact extends React.Component {
         )}
         {!this.state.sent && (
           <React.Fragment>
-            <h3 className={styles["h3"]}>Contact Form</h3>
-            <h5>Complete all fields and we'll respond by email shortly</h5>
+            <h2 className={styles["h2"]}>Contact Form</h2>
+            <h5 className={styles["h5"]}>
+              Complete all fields and we'll respond by email shortly
+            </h5>
             <form
               className={styles.form}
               onSubmit={(event) => this.handleFormSubmission(event)}

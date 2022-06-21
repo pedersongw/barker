@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "normalize.css";
 import "./fonts/Catamaran/Catamaran-VariableFont_wght.ttf";
+import "./fonts/Cantarell/Cantarell-Regular.ttf";
 import "./index.css";
 import App from "./App";
 import Donate from "./components/Donate/Donate";

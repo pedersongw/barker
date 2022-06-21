@@ -10,12 +10,19 @@
 .h3,
 .h4 {
   text-align: center;
+  color: var(--two);
 }
 
 .h4,
 .h5 {
+  color: var(--two);
+
   padding: 10px;
   margin: 0;
+}
+
+.p {
+  color: var(--two);
 }
 
 .grid {
@@ -46,7 +53,8 @@
 
 #one {
   grid-area: one;
-  background-color: #00b0d7;
+  background-color: var(--three);
+  color: var(--one);
   font-size: 3em;
   display: flex;
   justify-content: center;
@@ -56,7 +64,7 @@
 }
 #twoMobile {
   grid-area: two;
-  background-color: rgb(61, 209, 219);
+  background-color: var(--five);
   height: 80vh;
   width: 100%;
   position: relative;
@@ -64,7 +72,7 @@
 
 #twoDesktop {
   grid-area: two;
-  background-color: rgb(61, 209, 219);
+  background-color: var(--five);
   height: 90vh;
   width: 100%;
   position: relative;
@@ -72,7 +80,9 @@
 
 #three {
   grid-area: three;
-  background-color: #00b0d7;
+  background-color: var(--three);
+  color: var(--one);
+
   font-size: 3em;
   display: flex;
   justify-content: center;
@@ -83,7 +93,7 @@
 
 .card {
   grid-area: center;
-  background-color: #007498;
+  background-color: var(--four);
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -97,7 +107,7 @@
 
 .cardMobile {
   grid-area: center;
-  background-color: #007498;
+  background-color: var(--four);
   overflow: hidden;
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -110,7 +120,7 @@
 
 .logoWrapper {
   display: flex;
-  background-color: #00b0d7;
+  background-color: var(--two);
   width: 90%;
   height: 90%;
   border-radius: 10px;
@@ -131,6 +141,7 @@
   max-height: 100%;
   padding: 10px;
   box-sizing: border-box;
+  border-radius: 10px;
 }
 
 #image-two,
@@ -139,7 +150,6 @@
 }
 
 .title {
-  height: 100%;
   grid-area: title;
   display: flex;
   flex-direction: column;
@@ -155,16 +165,16 @@
   border: none;
   line-height: 2em;
   border-radius: 5px;
-  background-color: #004562;
+  background-color: var(--five);
   font-size: 1.3em;
   cursor: pointer;
   width: 75%;
-  color: #00faff;
+  color: var(--one);
 }
 
 .button:hover {
-  background-color: #00faff;
-  color: black;
+  background-color: var(--one);
+  color: var(--five);
 }
 
 .description {
