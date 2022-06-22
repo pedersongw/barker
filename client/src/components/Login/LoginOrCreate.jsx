@@ -10,6 +10,7 @@ class LogInOrCreate extends React.Component {
     email: "",
     password: "",
     errorMessage: null,
+    message: "word words words",
     width: window.innerWidth,
   };
 
@@ -20,6 +21,9 @@ class LogInOrCreate extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
+    window.addEventListener("keydown", () =>
+      console.log(this.state.errorMessage)
+    );
   }
 
   handleWindowSizeChange = () => {
@@ -28,6 +32,7 @@ class LogInOrCreate extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener("keydown", () => console.log(this.state));
   }
 
   tabClick = (event) => {
@@ -58,7 +63,6 @@ class LogInOrCreate extends React.Component {
 
   onCreate = async (event) => {
     event.preventDefault();
-    console.log(this.state);
     const { email, password, username } = this.state;
     if (!email || !password || !username) {
       this.setState({ errorMessage: "All fields must be filled" });
@@ -72,8 +76,8 @@ class LogInOrCreate extends React.Component {
     };
     try {
       const response = await axios.post(config + "/api/users", postObj);
-      localStorage.setItem("token", response.headers["x-auth-token"]);
-      window.location = "/forum/1/all";
+      this.setState({ message: response.data });
+      this.setState({ username: "", password: "", email: "" });
     } catch (error) {
       console.log(error.response.status, error.response.data);
       this.setState({ errorMessage: error.response.data });
@@ -110,7 +114,11 @@ class LogInOrCreate extends React.Component {
       >
         <div className={styles.loginOrCreate}>
           <div
-            className={styles.login}
+            className={
+              this.state.message
+                ? `${styles.login} ${styles.loginMessage}`
+                : styles.login
+            }
             id={this.state.tab === "login" ? styles.loginTab : null}
           >
             <div className={styles.tabLeft}>Login</div>
@@ -158,7 +166,11 @@ class LogInOrCreate extends React.Component {
             </form>
           </div>
           <div
-            className={styles.create}
+            className={
+              this.state.message
+                ? `${styles.create} ${styles.createMessage}`
+                : styles.create
+            }
             id={this.state.tab === "create" ? "create-tab" : null}
           >
             <div
@@ -209,7 +221,6 @@ class LogInOrCreate extends React.Component {
                   value={this.state.password}
                 ></input>
               </div>
-
               <button
                 className={styles.button}
                 id={styles.createButton}
@@ -218,6 +229,16 @@ class LogInOrCreate extends React.Component {
                 Create User
               </button>
             </form>
+            {this.state.message && (
+              <div className={styles.successDiv}>
+                <div>{this.state.message}</div>
+              </div>
+            )}
+            {this.state.errorMessage && (
+              <div className={styles.successDiv}>
+                <div>{this.state.errorMessage}</div>
+              </div>
+            )}
           </div>
         </div>
       </div>

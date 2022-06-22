@@ -180,8 +180,12 @@
 }
 
 .close {
-  font-size: 40px;
+  font-size: 3em;
   font-weight: bold;
   padding-right: 20px;
   cursor: pointer;
+  color: var(--two);
+}
+.close:hover {
+  color: var(--one);
 }

@@ -137,6 +137,19 @@
   margin: 0 10px 0 25px;
 }
 
+.radio {
+  box-sizing: border-box;
+  background-color: var(--two);
+  margin: 0;
+  font: inherit;
+  color: var(--five);
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid var(--five);
+  border-radius: 50%;
+  transform: translateY(0.275em);
+}
+
 .submitReplyBtn {
   grid-area: submit;
   height: 100%;

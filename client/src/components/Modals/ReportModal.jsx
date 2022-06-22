@@ -104,9 +104,10 @@ class ReportModal extends React.Component {
             {!this.props.reported && (
               <React.Fragment>
                 <form id={styles.reportModalForm}>
-                  <div className="radio">
+                  <div className={styles.radioDiv}>
                     <label>
                       <input
+                        className={styles.radio}
                         type="radio"
                         value="Hate"
                         checked={this.state.selectedOption === "Hate"}
@@ -115,9 +116,10 @@ class ReportModal extends React.Component {
                       Hate
                     </label>
                   </div>
-                  <div className="radio">
+                  <div className={styles.radioDiv}>
                     <label>
                       <input
+                        className={styles.radio}
                         type="radio"
                         value="Spam"
                         checked={this.state.selectedOption === "Spam"}
@@ -126,9 +128,10 @@ class ReportModal extends React.Component {
                       Spam
                     </label>
                   </div>
-                  <div className="radio">
+                  <div className={styles.radioDiv}>
                     <label>
                       <input
+                        className={styles.radio}
                         type="radio"
                         value="Advertising"
                         checked={this.state.selectedOption === "Advertising"}
@@ -137,9 +140,10 @@ class ReportModal extends React.Component {
                       Advertising
                     </label>
                   </div>
-                  <div className="radio">
+                  <div className={styles.radioDiv}>
                     <label>
                       <input
+                        className={styles.radio}
                         type="radio"
                         value="Other"
                         checked={this.state.selectedOption === "Other"}

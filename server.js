@@ -9,6 +9,7 @@ const posts = require("./routes/posts.js");
 const auth = require("./routes/auth.js");
 const comments = require("./routes/comments.js");
 const contact = require("./routes/contact.js");
+const verify = require("./routes/verify.js");
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -37,6 +38,7 @@ app.use("/api/posts", posts);
 app.use("/api/auth", auth);
 app.use("/api/comments", comments);
 app.use("/api/contact", contact);
+app.use("/api/verify", verify);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));

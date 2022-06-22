@@ -13,6 +13,7 @@ import DisplayComment from "./components/Comment/DisplayComment";
 import SinglePostHolder from "./components/SinglePost/singlePostHolder";
 import reportWebVitals from "./reportWebVitals";
 import ForumHolder from "./components/Forum/ForumHolder";
+import VerifyHolder from "./components/Verify/VerifyHolder";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -25,6 +26,7 @@ ReactDOM.render(
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
         <Route path="post/:id" element={<SinglePostHolder />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="verify/:confirmationCode" element={<VerifyHolder />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

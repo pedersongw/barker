@@ -5,6 +5,25 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: process.env.EMAIL,
+    pass: process.env.WORD,
+    clientId: process.env.OAUTH_CLIENTID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+  },
+});
+
+transporter.verify((err, success) => {
+  err
+    ? console.log(err, "error yeah")
+    : console.log(`=== Server is ready to take messages: ${success} ===`);
+});
 
 router.get("/me", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
@@ -21,21 +40,40 @@ router.post("/", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   let name = await User.findOne({ name: req.body.name });
   if (user) return res.status(400).send("User already registered");
-  if (name) return res.status(400).send("Username already taken");
+  if (name) return res.status(400).send("name already taken");
+
+  const confToken = jwt.sign(
+    { email: req.body.email },
+    process.env.JWT_PRIVATE_KEY
+  );
 
   user = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    isAdmin: false,
+    confirmationCode: confToken,
   });
 
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
-  const token = user.generateAuthToken();
-  res.header("x-auth-token", token).send(user);
+  transporter
+    .sendMail({
+      from: process.env.EMAIL,
+      to: req.body.email,
+      subject: "Please confirm your account",
+      html: `<h1>Email Confirmation</h1>
+          <h2>Hello ${req.body.name}</h2>
+          <p>Thanks for signing up for Barker Field's Forum. Please confirm your email by clicking on the following link</p>
+          <a href=https://barkerfielddogpark.org/verify/${confToken}> Click here</a>
+          </div>`,
+    })
+    .catch((err) => console.log(err));
+
+  res
+    .status(200)
+    .send("User registered successfully. A confirmation email has been sent.");
 });
 
 module.exports = router;

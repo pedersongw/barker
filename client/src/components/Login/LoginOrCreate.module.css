@@ -33,6 +33,15 @@
   grid-template-areas:
     "tab-left tab-right"
     "body body";
+  transition: height 1s ease;
+}
+
+.createMessage {
+  height: 400px;
+}
+
+.loginMessage {
+  height: 400px;
 }
 
 .login {
@@ -103,6 +112,7 @@
 .create form {
   margin: 20px;
   grid-area: body;
+  max-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -135,6 +145,19 @@
 #loginButton {
   background-color: var(--two);
   color: var(--five);
+}
+
+.successDiv {
+  background-color: var(--three);
+  display: flex;
+  grid-area: body;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  opacity: 0.9;
+  color: var(--two);
+  text-align: center;
 }
 
 .label {
