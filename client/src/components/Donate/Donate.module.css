@@ -111,6 +111,15 @@
   width: 100%;
 }
 
+.cardMobileOne {
+  grid-area: center;
+  background-color: var(--four);
+  overflow: hidden;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
 .cardMobile {
   grid-area: center;
   background-color: var(--four);

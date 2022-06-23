@@ -314,7 +314,7 @@ class Donate extends React.Component {
             <div className={oneClass} id={oneId} ref={this.slideOne}>
               <div
                 className={
-                  this.state.width < 800 ? styles.cardMobile : styles.card
+                  this.state.width < 800 ? styles.cardMobileOne : styles.card
                 }
               >
                 {this.state.width > 800 && (
@@ -327,10 +327,10 @@ class Donate extends React.Component {
                   className={styles.title}
                   id={this.state.width < 800 ? styles.mobileTitleOne : null}
                 >
-                  <h3 className={styles["h3"]}>
+                  <h2 className={styles["h2"]}>
                     Help us keep Barker Field safe, clean, and available to the
                     community!
-                  </h3>
+                  </h2>
                   <h3 className={styles["h3"]}>
                     100% of your donation goes directly to the betterment of the
                     park.
