@@ -70,10 +70,19 @@ router.post("/", async (req, res) => {
           </div>`,
     })
     .catch((err) => console.log(err));
+  transporter
+    .sendMail({
+      from: process.env.EMAIL,
+      to: process.env.EMAIL,
+      subject: "New User Registered",
+      html: `<h1>New User Registered</h1>
+          <h2>Name: ${req.body.name}</h2>
+          <h3>Email: ${req.body.email}</h3>
+          </div>`,
+    })
+    .catch((err) => console.log(err));
 
-  res
-    .status(200)
-    .send("User registered successfully. A confirmation email has been sent.");
+  res.status(200).send("Success! Check your email");
 });
 
 module.exports = router;

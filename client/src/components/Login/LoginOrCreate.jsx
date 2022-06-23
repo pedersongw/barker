@@ -9,8 +9,7 @@ class LogInOrCreate extends React.Component {
     username: "",
     email: "",
     password: "",
-    errorMessage: null,
-    message: "word words words",
+    message: null,
     width: window.innerWidth,
   };
 
@@ -21,9 +20,6 @@ class LogInOrCreate extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    window.addEventListener("keydown", () =>
-      console.log(this.state.errorMessage)
-    );
   }
 
   handleWindowSizeChange = () => {
@@ -32,7 +28,6 @@ class LogInOrCreate extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
-    window.removeEventListener("keydown", () => console.log(this.state));
   }
 
   tabClick = (event) => {
@@ -44,9 +39,7 @@ class LogInOrCreate extends React.Component {
       this.setState({ tab: "create" });
       console.log("create");
     }
-    this.setState({ username: "" });
-    this.setState({ email: "" });
-    this.setState({ password: "" });
+    this.setState({ username: "", email: "", password: "", message: null });
   };
 
   onUsernameChange = (event) => {
@@ -65,7 +58,7 @@ class LogInOrCreate extends React.Component {
     event.preventDefault();
     const { email, password, username } = this.state;
     if (!email || !password || !username) {
-      this.setState({ errorMessage: "All fields must be filled" });
+      this.setState({ message: "All fields must be filled" });
       return;
     }
     const postObj = {
@@ -80,7 +73,7 @@ class LogInOrCreate extends React.Component {
       this.setState({ username: "", password: "", email: "" });
     } catch (error) {
       console.log(error.response.status, error.response.data);
-      this.setState({ errorMessage: error.response.data });
+      this.setState({ message: error.response.data });
     }
   };
 
@@ -92,7 +85,7 @@ class LogInOrCreate extends React.Component {
       password: password,
     };
     if (!email || !password) {
-      this.setState({ errorMessage: "All fields must be filled" });
+      this.setState({ message: "All fields must be filled" });
       return;
     }
     try {
@@ -102,7 +95,7 @@ class LogInOrCreate extends React.Component {
       window.location = "/forum/1/all";
     } catch (error) {
       console.log(error.response.status, error.response.data);
-      this.setState({ errorMessage: error.response.data });
+      this.setState({ message: error.response.data.message });
     }
   };
 
@@ -114,11 +107,7 @@ class LogInOrCreate extends React.Component {
       >
         <div className={styles.loginOrCreate}>
           <div
-            className={
-              this.state.message
-                ? `${styles.login} ${styles.loginMessage}`
-                : styles.login
-            }
+            className={styles.login}
             id={this.state.tab === "login" ? styles.loginTab : null}
           >
             <div className={styles.tabLeft}>Login</div>
@@ -164,13 +153,19 @@ class LogInOrCreate extends React.Component {
                 Login
               </button>
             </form>
+            {this.state.message && (
+              <div className={`${styles.successDiv} ${styles.successLogin}`}>
+                <div>{this.state.message}</div>
+              </div>
+            )}
+            {this.state.message && (
+              <div className={`${styles.successDiv} ${styles.successLogin}`}>
+                <div>{this.state.message}</div>
+              </div>
+            )}
           </div>
           <div
-            className={
-              this.state.message
-                ? `${styles.create} ${styles.createMessage}`
-                : styles.create
-            }
+            className={styles.create}
             id={this.state.tab === "create" ? "create-tab" : null}
           >
             <div
@@ -195,7 +190,6 @@ class LogInOrCreate extends React.Component {
                   value={this.state.username}
                 ></input>
               </div>
-
               <div>
                 <label className={styles.label} htmlFor="email">
                   Email
@@ -208,7 +202,6 @@ class LogInOrCreate extends React.Component {
                   value={this.state.email}
                 ></input>
               </div>
-
               <div>
                 <label className={styles.label} htmlFor="password">
                   Password
@@ -230,13 +223,13 @@ class LogInOrCreate extends React.Component {
               </button>
             </form>
             {this.state.message && (
-              <div className={styles.successDiv}>
+              <div className={`${styles.successDiv} ${styles.successCreate}`}>
                 <div>{this.state.message}</div>
               </div>
             )}
-            {this.state.errorMessage && (
-              <div className={styles.successDiv}>
-                <div>{this.state.errorMessage}</div>
+            {this.state.message && (
+              <div className={`${styles.successDiv} ${styles.successCreate}`}>
+                <div>{this.state.message}</div>
               </div>
             )}
           </div>
