@@ -16,7 +16,6 @@ router.get("/all", async (req, res) => {
 });
 
 router.post("/get", async (req, res) => {
-  console.log(req.body);
   let searchParam = req.body;
   Comment.find(searchParam)
     .then((data) => {
@@ -44,7 +43,6 @@ router.post("/report", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the report.",
@@ -63,7 +61,6 @@ router.post("/unreport", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the report.",
@@ -72,7 +69,6 @@ router.post("/unreport", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const { body } = req;
   const message = new Comment({
     body: body.body,
@@ -87,7 +83,6 @@ router.post("/", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Message.",
@@ -97,15 +92,11 @@ router.post("/", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
   let searchParam = req.body;
-  console.log(req.body);
   Comment.findOneAndUpdate(searchParam, { deleted: true })
     .then((data) => {
       res.send(data);
-      console.log(data);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => {});
 });
 
 module.exports = router;

@@ -19,7 +19,6 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/single", async (req, res) => {
-  console.log(req.query);
   Post.findById(req.query)
     .then((data) => {
       res.send(data);
@@ -34,7 +33,6 @@ router.get("/single", async (req, res) => {
 router.put("/like", async (req, res) => {
   const filter = { _id: req.body._id };
   const user = { ...req.body.user };
-  console.log(filter, user);
   const update = { $push: { likes: user } };
   Post.findOneAndUpdate(filter, update, {
     new: true,
@@ -48,26 +46,21 @@ router.put("/like", async (req, res) => {
 });
 
 router.put("/unlike", async (req, res) => {
-  console.log(req.body);
   const filter = { _id: req.body._id };
   const user = { ...req.body.user };
-  console.log(filter, user);
   const update = { $pull: { likes: { _id: user._id } } };
   Post.findOneAndUpdate(filter, update, {
     new: true,
   })
     .then((data) => {
       res.send(data);
-      console.log(data);
     })
     .catch((err) => {
       res.send(err);
-      console.log(err);
     });
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const { body } = req;
   const message = new Post({
     title: body.title,
@@ -82,7 +75,6 @@ router.post("/", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Message.",
@@ -91,9 +83,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/delete", async (req, res) => {
-  console.log(req.body._id);
   Post.deleteOne({ _id: req.body["_id"] }, function (err) {
-    if (err) console.log(err);
     console.log("Successful deletion");
   })
     .then((data) => {
@@ -118,7 +108,6 @@ router.post("/report", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the report.",
@@ -137,7 +126,6 @@ router.post("/unreport", async (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the report.",

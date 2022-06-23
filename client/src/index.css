@@ -11,31 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-@font-face {
-  font-family: "Catamaran";
-  src: local("Catamaran"),
-    url("./fonts/Catamaran/Catamaran-VariableFont_wght.ttf") format("truetype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "Cantarell";
-  src: local("Cantarell"),
-    url("./fonts/Cantarell/Cantarell-Regular.ttf") format("truetype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "Amatic";
-  src: local("Amatic"),
-    url("./fonts/Amatic_SC/AmaticSC-Regular.ttf") format("truetype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "Amatic Bold";
-  src: local("Amatic Bold"),
-    url("./fonts/Amatic_SC/AmaticSC-Bold.ttf") format("truetype");
-  font-weight: normal;
-}
