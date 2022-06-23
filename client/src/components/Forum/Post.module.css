@@ -19,6 +19,9 @@
   padding: 20px;
   background-color: var(--three);
   color: white;
+  border-color: var(--one);
+  border-style: solid;
+  border-width: 2px;
 }
 
 .username {
@@ -31,6 +34,11 @@
 
 .body {
   grid-area: body;
+  background-color: var(--four);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
 }
 
 .time {

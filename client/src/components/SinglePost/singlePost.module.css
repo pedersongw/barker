@@ -12,6 +12,9 @@
   color: white;
   border-radius: 10px 10px 0 0;
   background-color: var(--three);
+  border-color: var(--one);
+  border-style: solid;
+  border-width: 2px 2px 0;
   grid-template-rows: 2fr auto 2fr 1fr;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
@@ -38,7 +41,14 @@
 
 .viewedPostBody {
   grid-area: body;
-  padding-left: 25px;
+  padding: 0 25px;
+  background-color: var(--four);
+  height: auto;
+  min-height: 50px;
+  margin: 0 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .viewedPostLikes {
@@ -110,4 +120,7 @@
   padding: 10px 10px;
   background-color: var(--five);
   border-radius: 0 0 10px 10px;
+  border-color: var(--one);
+  border-style: solid;
+  border-width: 2px;
 }
