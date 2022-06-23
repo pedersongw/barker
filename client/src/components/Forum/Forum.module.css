@@ -29,6 +29,7 @@
 }
 
 #loginLanding {
+  height: 80vh;
   grid-template-columns: 1.5fr 2.5fr 20px;
 }
 
