@@ -6,6 +6,12 @@
   height: 10vh;
 }
 
+.h3 {
+  font-family: "Amatic SC" !important;
+  font-weight: 700;
+  font-size: 2em;
+}
+
 .h2,
 .h3,
 .h4 {

@@ -18,6 +18,8 @@
 .link a {
   display: flex;
   justify-content: center;
+  font-family: "Amatic SC" !important;
+  font-size: 1.75em;
   align-items: center;
   color: var(--two);
   text-decoration: none;
