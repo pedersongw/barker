@@ -327,10 +327,10 @@ class Donate extends React.Component {
                   className={styles.title}
                   id={this.state.width < 800 ? styles.mobileTitleOne : null}
                 >
-                  <h2 className={styles["h2"]}>
+                  <h3 className={styles["h3"]}>
                     Help us keep Barker Field safe, clean, and available to the
                     community!
-                  </h2>
+                  </h3>
                   <h3 className={styles["h3"]}>
                     100% of your donation goes directly to the betterment of the
                     park.
@@ -408,14 +408,13 @@ class Donate extends React.Component {
                         parts of the large dog park.
                       </h4>
                       <h5 className={styles["h5"]}>Cost: $6,625</h5>
-                      {this.state.width > 800 && (
-                        <button
-                          className={styles.button}
-                          onClick={() => this.donateClicked()}
-                        >
-                          Donate
-                        </button>
-                      )}
+
+                      <button
+                        className={styles.button}
+                        onClick={() => this.donateClicked()}
+                      >
+                        Donate
+                      </button>
                     </div>
                   )}
 
@@ -440,14 +439,6 @@ class Donate extends React.Component {
                     mulch for $25/cubic yard. The total investment required will
                     be $6,625.
                   </p>
-                  {this.state.width < 800 && (
-                    <button
-                      className={styles.button}
-                      onClick={() => this.donateClicked()}
-                    >
-                      Donate
-                    </button>
-                  )}
                 </div>
               </div>
             </div>
