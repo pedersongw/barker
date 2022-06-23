@@ -73,7 +73,7 @@ class LogInOrCreate extends React.Component {
       this.setState({ username: "", password: "", email: "" });
     } catch (error) {
       console.log(error.response.status, error.response.data);
-      this.setState({ message: error.response.data });
+      this.setState({ message: error.response.data.message });
     }
   };
 
@@ -180,7 +180,7 @@ class LogInOrCreate extends React.Component {
             <form onSubmit={this.onCreate}>
               <div>
                 <label className={styles.label} htmlFor="username">
-                  Username
+                  Name
                 </label>
                 <input
                   className={styles.loginInput}

@@ -27,6 +27,7 @@ ReactDOM.render(
         <Route path="post/:id" element={<SinglePostHolder />} />
         <Route path="admin" element={<Admin />} />
         <Route path="verify/:confirmationCode" element={<VerifyHolder />} />
+        <Route path="verify/" element={<VerifyHolder />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

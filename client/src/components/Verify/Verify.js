@@ -1,10 +1,12 @@
 import React from "react";
 import { config } from "../../URLs.jsx";
 import axios from "axios";
+import styles from "./Verify.module.css";
+import logo from "../../images/logo.png";
 
 class Verify extends React.Component {
   state = {
-    message: null,
+    message: "Confirming Email...",
     status: null,
   };
 
@@ -16,11 +18,10 @@ class Verify extends React.Component {
         config + "/api/verify",
         confirmationCode
       );
-      console.log(response);
       this.setState({ message: response.data, status: response.status });
-      setTimeout(() => (window.location = "/forum/1/all"), 3000);
+      setTimeout(() => (window.location = "/forum/1/all"), 4000);
     } catch (error) {
-      console.log(error);
+      this.setState({ message: error.response.data.message });
     }
   }
 
@@ -30,8 +31,11 @@ class Verify extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.state.message}</h1>
+      <div className={styles.wrapper}>
+        <div className={styles.centerDiv}>
+          <h1 className={styles["h1"]}>{this.state.message}</h1>
+          <img className={styles.logo} alt="Barker Field logo" src={logo}></img>
+        </div>
       </div>
     );
   }
