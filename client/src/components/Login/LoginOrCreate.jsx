@@ -73,7 +73,7 @@ class LogInOrCreate extends React.Component {
       this.setState({ username: "", password: "", email: "" });
     } catch (error) {
       console.log(error.response.status, error.response.data);
-      this.setState({ message: error.response.data.message });
+      this.setState({ message: error.response.data });
     }
   };
 
