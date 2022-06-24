@@ -62,7 +62,7 @@
   width: 100%;
 }
 
-textarea {
+.textarea {
   border: none;
   line-height: 2em;
   border-radius: 5px;

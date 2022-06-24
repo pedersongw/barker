@@ -141,6 +141,7 @@ class Contact extends React.Component {
                 }
               ></input>
               <textarea
+                className={styles.textarea}
                 name="message"
                 placeholder="Message"
                 value={this.state.message}

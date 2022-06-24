@@ -1,8 +1,11 @@
 .wrapper {
+  display: -ms-grid;
   display: grid;
   height: 100vh;
   width: 100vw;
+  -ms-grid-rows: 5fr 1fr;
   grid-template-rows: 5fr 1fr;
+  -ms-grid-columns: 2fr 3fr 3fr;
   grid-template-columns: 2fr 3fr 3fr;
   grid-template-areas:
     "descriptions reported-comments reported-posts"
@@ -11,8 +14,15 @@
 
 .descriptions {
   grid-area: descriptions;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -22,8 +32,15 @@
 
 .reported-comments {
   grid-area: reported-comments;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -33,8 +50,15 @@
 
 .reported-posts {
   grid-area: reported-posts;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -43,6 +67,7 @@
 }
 
 .admin-buttons {
+  -ms-grid-column-span: 3;
   grid-area: buttons;
   width: 100%;
   height: 100%;

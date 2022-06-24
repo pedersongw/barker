@@ -1,0 +1,83 @@
+.blurFilter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  transform: translateY(100%);
+  transition: transform 0.1s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+}
+
+#blurOpen {
+  transform: translateY(0);
+}
+
+.formDiv {
+  width: 50%;
+  height: 75%;
+}
+
+.form {
+  display: grid;
+  grid-template-rows: 2fr 1fr 6fr 2fr;
+  grid-template-areas:
+    "header"
+    "title"
+    "body"
+    "submit";
+  width: 100%;
+  height: 100%;
+}
+
+.form .input,
+.form .textarea {
+  border-radius: 10px;
+  border-style: none;
+  background-color: var(--two);
+  text-indent: 10px;
+  color: var(--five);
+}
+
+.form::placeholder {
+  color: var(--five);
+}
+
+.form input {
+  grid-area: title;
+}
+
+.form textarea {
+  grid-area: body;
+  height: 75%;
+  resize: none;
+  align-self: center;
+}
+
+.h2 {
+  font-family: "Amatic SC" !important;
+  font-size: 3em;
+  text-align: center;
+  grid-area: header;
+  color: var(--one);
+}
+
+.button {
+  grid-area: submit;
+  font-size: 1em;
+  width: 50%;
+  height: 50%;
+  background-color: var(--five);
+  border-style: none;
+  border-radius: 10px;
+  color: var(--two);
+  justify-self: center;
+  cursor: pointer;
+}
+.button:hover {
+  color: var(--one);
+}

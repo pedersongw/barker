@@ -4,6 +4,7 @@ import { config } from "../../URLs.jsx";
 import jwtDecode from "jwt-decode";
 import Post from "./Post";
 import PostModal from "../Modals/PostModal";
+import TestModal from "../Modals/TestModal";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
 import ForumMobileNav from "../Navs/MobileNav";
 import Pagination from "../Utilities/Pagination";
@@ -21,6 +22,7 @@ class Forum extends React.Component {
     width: window.innerWidth,
     dbWasContacted: false,
     postModalOpen: false,
+    testModalOpen: false,
     user: null,
     createModalError: "",
     currentPage: this.props.page,
@@ -177,6 +179,14 @@ class Forum extends React.Component {
     }
   };
 
+  openTestModal = () => {
+    this.setState({ testModalOpen: true });
+  };
+
+  closeTestModal = () => {
+    this.setState({ testModalOpen: false });
+  };
+
   serverStatus = () => {
     const { dbWasContacted, user } = this.state;
     const firstPart = user === null ? "Please log in" : `Welcome ${user.name}`;
@@ -257,6 +267,12 @@ class Forum extends React.Component {
           width={this.state.width}
           user={this.state.user}
         />
+        <TestModal
+          closeModal={this.closeTestModal}
+          isOpen={this.state.testModalOpen}
+          width={this.state.width}
+          user={this.state.user}
+        />
 
         <div
           className={this.state.width < 800 ? styles.main : styles.mainLarge}
@@ -264,7 +280,7 @@ class Forum extends React.Component {
         >
           {this.state.width > 800 && this.userLoggedIn() && (
             <ForumDesktopNav
-              openPostModal={this.openPostModal}
+              openPostModal={this.openTestModal}
               openUserModal={this.openUserModal}
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
