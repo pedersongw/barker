@@ -20,7 +20,7 @@
   top: 10vh;
   left: 0;
   transform: translateY(100%);
-  transition: transform 0.1s linear;
+  transition: transform 0.2s linear;
   display: flex;
   justify-content: center;
   align-items: center;
