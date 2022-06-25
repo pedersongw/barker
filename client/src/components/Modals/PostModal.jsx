@@ -63,6 +63,7 @@ export default class PostModal extends React.Component {
       this.props.closeModal();
     }
   };
+
   render() {
     return (
       <React.Fragment>

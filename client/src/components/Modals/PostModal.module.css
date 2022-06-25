@@ -30,6 +30,7 @@
 }
 
 #formDivOpen {
+  transition-delay: 0.2s;
   transform: translateY(0);
 }
 
@@ -96,11 +97,11 @@
 
 .errButton {
   background-color: pink;
-  color: var(--five);
+  color: var(--four);
   border-radius: 10px;
   border-style: none;
   justify-self: center;
   pointer-events: none;
-  width: 50%;
+  width: 75%;
   height: 50%;
 }

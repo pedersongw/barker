@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./MobileNav.module.css";
+import { FaPlus } from "react-icons/fa";
 
 class ForumMobileNav extends React.Component {
   state = {
@@ -99,7 +100,7 @@ class ForumMobileNav extends React.Component {
           onClick={() => this.handleMenuOpen()}
           id={this.state.navOpen ? styles.hideIcon : null}
         >
-          Menu
+          <FaPlus className={styles.icon} />
         </div>
         <div
           className={
