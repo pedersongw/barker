@@ -30,6 +30,10 @@
 }
 
 #formDivOpen {
+  transform: translateY(0);
+}
+
+#mobileFormDivOpen {
   transition-delay: 0.2s;
   transform: translateY(0);
 }
@@ -43,7 +47,7 @@
     "body"
     "submit";
   width: 50%;
-  height: 75%;
+  height: 85%;
 }
 
 .input,
@@ -55,6 +59,11 @@
   color: var(--five);
 }
 
+.input:focus,
+.textarea:focus {
+  outline: none;
+}
+
 .text .form::placeholder {
   color: var(--five);
 }
@@ -62,6 +71,7 @@
 .form input {
   grid-area: title;
   height: 30px;
+  align-self: center;
 }
 
 .form textarea {
@@ -76,7 +86,7 @@
   font-size: 3em;
   text-align: center;
   grid-area: header;
-  color: var(--one);
+  color: var(--two);
 }
 
 .button {
@@ -89,6 +99,7 @@
   border-radius: 10px;
   color: var(--two);
   justify-self: center;
+  align-self: center;
   cursor: pointer;
 }
 .button:hover {
@@ -101,6 +112,7 @@
   border-radius: 10px;
   border-style: none;
   justify-self: center;
+  align-self: center;
   pointer-events: none;
   width: 75%;
   height: 50%;

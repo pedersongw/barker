@@ -136,7 +136,9 @@ class Comment extends React.Component {
               <div
                 className={styles.ellipsis}
                 id={this.props.comment._id}
-                onClick={() => this.props.handleMenu(this.props.comment)}
+                onClick={() =>
+                  this.props.handleMenu(this.props.comment, this.props.depth)
+                }
               >
                 <FaEllipsisH />
               </div>

@@ -73,7 +73,13 @@ export default class PostModal extends React.Component {
         ></div>
         <div
           className={styles.formDiv}
-          id={this.props.isOpen ? styles.formDivOpen : null}
+          id={
+            this.props.isOpen
+              ? this.props.width < 800
+                ? styles.mobileFormDivOpen
+                : styles.formDivOpen
+              : null
+          }
           onMouseDown={() => this.props.closeModal()}
         >
           <form
@@ -94,7 +100,7 @@ export default class PostModal extends React.Component {
             <textarea
               placeholder="What's on your mind?"
               className={styles.textarea}
-              maxLength={2000}
+              maxLength={3000}
               type="text"
               name="body"
               value={this.state.body}

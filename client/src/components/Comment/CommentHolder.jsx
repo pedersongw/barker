@@ -1,6 +1,7 @@
 import React from "react";
 import Comment from "./Comment";
 import ReplyModal from "../Modals/ReplyModal";
+import TestModal from "../Modals/TestModal";
 import ReportModal from "../Modals/ReportModal";
 import MobileReplyMenu from "../Navs/MobileReplyMenu";
 import jwtDecode from "jwt-decode";
@@ -11,6 +12,7 @@ import styles from "./CommentHolder.module.css";
 class CommentHolder extends React.Component {
   state = {
     replyModalOpen: false,
+    testModalOpen: false,
     reportModalOpen: false,
     mobileReplyOpen: false,
     clickedComment: "",
@@ -30,7 +32,7 @@ class CommentHolder extends React.Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
-    window.addEventListener("keydown", () => console.log(this.state));
+
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
@@ -98,6 +100,14 @@ class CommentHolder extends React.Component {
     this.setState({ replyModalOpen: false });
   };
 
+  openTestModal = () => {
+    this.setState({ testModalOpen: true });
+  };
+
+  closeTestModal = () => {
+    this.setState({ testModalOpen: false });
+  };
+
   handleClickOutsideReplyModal = (event) => {
     const container = document.getElementById("reply-modal-content");
     if (
@@ -158,10 +168,12 @@ class CommentHolder extends React.Component {
     }
   };
 
-  openMobileReplyMenu = (comment) => {
+  openMobileReplyMenu = (comment, depth) => {
+    let obj = comment;
+    comment.depth = depth;
     if (!this.state.mobileReplyOpen) {
       this.setState({ mobileReplyOpen: true });
-      this.setState({ clickedComment: comment });
+      this.setState({ clickedComment: obj });
     }
     document.body.style.overflow = "hidden";
   };
@@ -196,7 +208,7 @@ class CommentHolder extends React.Component {
           <Comment
             depth={0}
             key={comment._id}
-            openReplyModal={this.openReplyModal}
+            openReplyModal={this.openTestModal}
             openReportModal={this.openReportModal}
             id={comment._id}
             width={this.state.width}
@@ -214,6 +226,14 @@ class CommentHolder extends React.Component {
           width={this.state.width}
           user={this.state.user}
         />
+        <TestModal
+          closeModal={this.closeTestModal}
+          isOpen={this.state.testModalOpen}
+          comment={this.state.clickedComment}
+          post={this.state.viewedEntry}
+          width={this.state.width}
+          user={this.state.user}
+        />
         <ReportModal
           closeModal={this.closeReportModal}
           isOpen={this.state.reportModalOpen}
@@ -225,7 +245,7 @@ class CommentHolder extends React.Component {
         />
         <MobileReplyMenu
           openReportModal={this.openReportModal}
-          openReplyModal={this.openReplyModal}
+          openReplyModal={this.openTestModal}
           delete={this.updateDeletedComment}
           open={this.state.mobileReplyOpen}
           close={this.closeMobileReplyMenu}

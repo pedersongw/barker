@@ -30,12 +30,13 @@
 }
 
 #formDivOpen {
+  transition-delay: 0.2s;
   transform: translateY(0);
 }
 
 .form {
   display: grid;
-  grid-template-rows: 2fr 2fr 6fr 3fr;
+  grid-template-rows: auto 4fr 6fr 3fr;
   grid-template-areas:
     "header"
     "title"
@@ -45,29 +46,81 @@
   height: 75%;
 }
 
-.input,
 .textarea {
   border-radius: 10px;
   border-style: none;
   background-color: var(--two);
   text-indent: 10px;
   color: var(--five);
-}
-
-.text .form::placeholder {
-  color: var(--five);
-}
-
-.form input {
-  grid-area: title;
-  height: 30px;
-}
-
-.form textarea {
   grid-area: body;
   height: 75%;
   resize: none;
   align-self: center;
+}
+
+.textarea .form::placeholder {
+  color: var(--five);
+}
+
+.comment {
+  grid-area: title;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "comment"
+    "by";
+  justify-self: center;
+  padding: 0 5px;
+  height: 75%;
+  min-width: 50%;
+  border: 2px solid var(--two);
+  color: var(--two);
+  border-radius: 10px;
+}
+
+.mobileComment {
+  min-width: 75%;
+}
+
+.commentBody {
+  height: 100%;
+  width: 100%;
+  grid-area: comment;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--two);
+  border-width: 0 0 1px 0;
+}
+
+.commentBy {
+  height: 100%;
+  width: 100%;
+  grid-area: by;
+  padding: 2px 0;
+}
+
+#depth-0 {
+  border-left-color: orange;
+}
+
+#depth-1 {
+  border-left-color: green;
+}
+
+#depth-2 {
+  border-left-color: blue;
+}
+
+#depth-3 {
+  border-left-color: yellow;
+}
+
+#depth-4 {
+  border-left-color: purple;
+}
+
+#depth-5 {
+  border-left-color: red;
 }
 
 .h2 {
@@ -84,12 +137,15 @@
   width: 50%;
   height: 50%;
   background-color: var(--five);
-  border-style: none;
+  border: 2px solid var(--two);
   border-radius: 10px;
   color: var(--two);
   justify-self: center;
+  align-self: center;
   cursor: pointer;
 }
 .button:hover {
-  color: var(--one);
+  background-color: var(--three);
+  border: none;
+  color: var(--five);
 }
