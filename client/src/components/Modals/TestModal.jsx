@@ -4,16 +4,20 @@ import styles from "./TestModal.module.css";
 class TestModal extends React.Component {
   render() {
     return (
-      <div
-        className={styles.blurFilter}
-        id={this.props.isOpen ? styles.blurOpen : null}
-        onClick={() => this.props.closeModal()}
-      >
+      <React.Fragment>
+        <div
+          className={styles.blurFilter}
+          id={this.props.isOpen ? styles.blurOpen : null}
+        ></div>
         <div
           className={styles.formDiv}
-          onClick={(event) => event.stopPropagation()}
+          id={this.props.isOpen ? styles.formDivOpen : null}
+          onMouseDown={() => this.props.closeModal()}
         >
-          <form className={styles.form}>
+          <form
+            className={styles.form}
+            onMouseDown={(event) => event.stopPropagation()}
+          >
             <h2 className={styles["h2"]}>Create Post</h2>
             <input
               placeholder="Title your post"
@@ -22,13 +26,14 @@ class TestModal extends React.Component {
             <textarea
               placeholder="What's on your mind?"
               className={styles.textarea}
+              maxLength={2000}
             ></textarea>
             <button type="submit" className={styles.button}>
               Submit
             </button>
           </form>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

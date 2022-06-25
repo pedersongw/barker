@@ -27,9 +27,18 @@ export default class PostModal extends React.Component {
     this.setState({ errorMessage: "" });
   };
 
-  onSubmit = () => {
-    if (this.state.title.length < 1 || this.state.body.length < 1) {
-      this.setState({ errorMessage: "Title and body cannot be empty" });
+  onSubmit = (event) => {
+    const { title, body } = this.state;
+    event.preventDefault();
+    if (title.length < 1 || body.length < 1) {
+      this.setState({ errorMessage: "Fill both fields" });
+      return;
+    } else if (title.length < 5 && title.length > 0) {
+      this.setState({ errorMessage: "Title too short" });
+      return;
+    } else if (body.length < 5 && body.length > 0) {
+      this.setState({ errorMessage: "Post too short" });
+      return;
     } else {
       this.createNewPost();
     }
@@ -47,86 +56,60 @@ export default class PostModal extends React.Component {
     try {
       const response = await axios.post(config + "/api/posts", postObj);
       console.log(response);
-      this.props.closePostModal();
-      window.location = "/forum/1/all";
+      this.props.closeModal();
+      window.location.reload();
     } catch (error) {
       console.log(error);
-      this.props.closePostModal();
+      this.props.closeModal();
     }
   };
   render() {
     return (
-      <div
-        className={
-          this.props.width < 800
-            ? `${styles.modal} ${styles.mobile}`
-            : `${styles.modal} ${styles.desktop}`
-        }
-        id={this.props.isOpen ? styles.show : null}
-      >
-        <div className={styles.content} id="post-modal-content">
-          <div className={styles.modalHeader}>
-            {!this.state.errorMessage && (
-              <h2 className={styles.modalHeaderText}>Create New Post</h2>
-            )}
-
-            {this.state.errorMessage ? (
-              <div className={styles.modalError}>{this.state.errorMessage}</div>
-            ) : null}
-            <span
-              className={styles.close}
-              onClick={() => this.props.closePostModal()}
-            >
-              &times;
-            </span>
-          </div>
-          <div
-            className={styles.modalBody}
-            id={
-              this.props.width < 800
-                ? styles.modalBodyMobile
-                : styles.modalBodyDesktop
-            }
+      <React.Fragment>
+        <div
+          className={styles.blurFilter}
+          id={this.props.isOpen ? styles.blurOpen : null}
+        ></div>
+        <div
+          className={styles.formDiv}
+          id={this.props.isOpen ? styles.formDivOpen : null}
+          onMouseDown={() => this.props.closeModal()}
+        >
+          <form
+            className={styles.form}
+            onMouseDown={(event) => event.stopPropagation()}
+            onSubmit={(event) => this.onSubmit(event)}
           >
-            <form className={styles.form}>
-              <label htmlFor="title" className="label">
-                title
-              </label>
-              <input
-                type="text"
-                className={styles.formInput}
-                id="title"
-                name="title"
-                placeholder="Title"
-                value={this.state.title}
-                maxLength="40"
-                onChange={(event) => this.onTitleChange(event)}
-              ></input>
-              <label htmlFor="body" className="label">
-                body
-              </label>
-              <textarea
-                type="text"
-                className={styles.formInput}
-                id="body"
-                name="body"
-                value={this.state.body}
-                placeholder="Body"
-                maxLength="300"
-                onChange={(event) => this.onBodyChange(event)}
-              ></textarea>
-            </form>
+            <h2 className={styles["h2"]}>Create Post</h2>
+            <input
+              placeholder="Title your post"
+              className={styles.input}
+              type="text"
+              name="title"
+              value={this.state.title}
+              maxLength="50"
+              onChange={(event) => this.onTitleChange(event)}
+            ></input>
+            <textarea
+              placeholder="What's on your mind?"
+              className={styles.textarea}
+              maxLength={2000}
+              type="text"
+              name="body"
+              value={this.state.body}
+              onChange={(event) => this.onBodyChange(event)}
+            ></textarea>
             <button
-              className={styles.submitReplyBtn}
               type="submit"
-              onClick={() => this.onSubmit()}
+              className={
+                this.state.errorMessage ? styles.errButton : styles.button
+              }
             >
-              Submit
+              {this.state.errorMessage ? this.state.errorMessage : "Submit"}
             </button>
-          </div>
-          <div className={styles.modalFooter}></div>
+          </form>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

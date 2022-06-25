@@ -1,41 +1,52 @@
 .blurFilter {
   position: fixed;
-  top: 0;
+  overflow: hidden;
+  top: 10vh;
   left: 0;
+  display: none;
   backdrop-filter: blur(10px);
-  transform: translateY(100%);
-  transition: transform 0.1s linear;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  height: 90vh;
   width: 100vw;
   z-index: 2;
 }
 
 #blurOpen {
-  transform: translateY(0);
+  display: block;
 }
 
 .formDiv {
-  width: 50%;
-  height: 75%;
+  position: fixed;
+  z-index: 3;
+  top: 10vh;
+  left: 0;
+  transform: translateY(100%);
+  transition: transform 0.1s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+  min-height: 500px;
+}
+
+#formDivOpen {
+  transform: translateY(0);
 }
 
 .form {
   display: grid;
-  grid-template-rows: 2fr 1fr 6fr 2fr;
+  grid-template-rows: 2fr 2fr 6fr 3fr;
   grid-template-areas:
     "header"
     "title"
     "body"
     "submit";
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 75%;
 }
 
-.form .input,
-.form .textarea {
+.input,
+.textarea {
   border-radius: 10px;
   border-style: none;
   background-color: var(--two);
@@ -43,12 +54,13 @@
   color: var(--five);
 }
 
-.form::placeholder {
+.text .form::placeholder {
   color: var(--five);
 }
 
 .form input {
   grid-area: title;
+  height: 30px;
 }
 
 .form textarea {

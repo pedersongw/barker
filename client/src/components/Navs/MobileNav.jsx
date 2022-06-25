@@ -52,17 +52,20 @@ class ForumMobileNav extends React.Component {
 
   onLogIn = () => {
     this.setState({ navOpen: false });
+    this.setState({ sortByClicked: false });
     this.props.logIn();
   };
 
   createNewUser = () => {
     this.setState({ navOpen: false });
+    this.setState({ sortByClicked: false });
     this.props.openUserModal();
   };
 
   openPostModal = () => {
     this.props.openPostModal();
     this.setState({ navOpen: false });
+    this.setState({ sortByClicked: false });
   };
 
   sortByArgument = (argument) => {

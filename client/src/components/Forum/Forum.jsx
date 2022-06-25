@@ -4,7 +4,6 @@ import { config } from "../../URLs.jsx";
 import jwtDecode from "jwt-decode";
 import Post from "./Post";
 import PostModal from "../Modals/PostModal";
-import TestModal from "../Modals/TestModal";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
 import ForumMobileNav from "../Navs/MobileNav";
 import Pagination from "../Utilities/Pagination";
@@ -22,7 +21,6 @@ class Forum extends React.Component {
     width: window.innerWidth,
     dbWasContacted: false,
     postModalOpen: false,
-    testModalOpen: false,
     user: null,
     createModalError: "",
     currentPage: this.props.page,
@@ -71,7 +69,6 @@ class Forum extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
-    window.removeEventListener("mousedown", this.handleClickOutsidePostModal);
   }
 
   isAdmin = () => {
@@ -155,36 +152,13 @@ class Forum extends React.Component {
     });
   };
   openPostModal = () => {
-    window.addEventListener("mousedown", this.handleClickOutsidePostModal);
     this.setState({ postModalOpen: true });
     this.resetStateFormInfoHolders();
   };
 
   closePostModal = () => {
-    window.removeEventListener("mousedown", this.handleClickOutsidePostModal);
     this.setState({ postModalOpen: false });
     this.resetStateFormInfoHolders();
-  };
-
-  handleClickOutsidePostModal = (event) => {
-    const container = document.getElementById("post-modal-content");
-    const button = document.getElementById("create-post-button");
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      button !== event.target
-    ) {
-      console.log("clicked outside post modal");
-      this.closePostModal();
-    }
-  };
-
-  openTestModal = () => {
-    this.setState({ testModalOpen: true });
-  };
-
-  closeTestModal = () => {
-    this.setState({ testModalOpen: false });
   };
 
   serverStatus = () => {
@@ -260,16 +234,10 @@ class Forum extends React.Component {
         )}
         <header></header>
         <PostModal
-          closePostModal={this.closePostModal}
+          closeModal={this.closePostModal}
           isOpen={this.state.postModalOpen}
           value={this.state.postModalOpen}
           updateView={this.updateEntriesFromDatabase}
-          width={this.state.width}
-          user={this.state.user}
-        />
-        <TestModal
-          closeModal={this.closeTestModal}
-          isOpen={this.state.testModalOpen}
           width={this.state.width}
           user={this.state.user}
         />
@@ -280,7 +248,7 @@ class Forum extends React.Component {
         >
           {this.state.width > 800 && this.userLoggedIn() && (
             <ForumDesktopNav
-              openPostModal={this.openTestModal}
+              openPostModal={this.openPostModal}
               openUserModal={this.openUserModal}
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
