@@ -15,6 +15,7 @@ class MobileReplyMenu extends React.Component {
     this.props.openReplyModal();
   };
   menuClicked = () => {
+    console.log("menu clicked");
     this.props.close();
   };
 
@@ -33,7 +34,6 @@ class MobileReplyMenu extends React.Component {
               : styles.navMobile
           }
           id="nav-mobile"
-          onClick={() => this.menuClicked()}
         >
           <div
             className={styles.mobileNavButton}

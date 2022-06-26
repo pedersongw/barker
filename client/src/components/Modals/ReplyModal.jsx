@@ -1,7 +1,6 @@
 import React from "react";
 import { config } from "../../URLs.jsx";
 import axios from "axios";
-import { FaReply } from "react-icons/fa";
 import styles from "./ReplyModal.module.css";
 
 class ReplyModal extends React.Component {
@@ -10,14 +9,14 @@ class ReplyModal extends React.Component {
     errorMessage: "",
   };
 
+  componentDidMount() {
+    window.addEventListener("keydown", () => console.log(this.props));
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.setState({ replyText: "" });
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener("keydown", () => console.log(this.props.comment));
   }
 
   saveCommentInDatabase = async () => {
@@ -39,21 +38,13 @@ class ReplyModal extends React.Component {
     }
   };
 
-  returnFooterText = () => {
-    let body = this.props.comment
-      ? this.props.comment.body
-      : this.props.post.body;
-    if (!body) {
-      return null;
-    } else return body.length < 90 ? body : body.slice(0, 90) + "...";
-  };
-
   onTextareaChange = (event) => {
     this.setState({ replyText: event.target.value });
     this.setState({ errorMessage: "" });
   };
 
-  onSubmit = () => {
+  onSubmit = (event) => {
+    event.preventDefault();
     if (this.state.replyText.length < 1) {
       this.setState({ errorMessage: "Reply cannot be empty" });
     } else {
@@ -63,70 +54,64 @@ class ReplyModal extends React.Component {
   };
 
   render() {
+    const { comment, post, width, isOpen } = this.props;
     return (
-      <div
-        className={
-          this.props.width < 800
-            ? `${styles.modal} ${styles.mobile}`
-            : `${styles.modal} ${styles.desktop}`
-        }
-        id={this.props.isOpen ? styles.show : null}
-      >
-        <div className={styles.content} id="reply-modal-content">
-          <div className={styles.modalHeader}>
-            <h2 className={styles.modalHeaderText}>Reply</h2>
-            {this.state.errorMessage ? (
-              <div className={styles.modalError}>{this.state.errorMessage}</div>
-            ) : null}
-            <span
-              className={styles.close}
-              onClick={() => this.props.closeModal()}
-            >
-              &times;
-            </span>
-          </div>
-          <div
-            className={styles.modalBody}
-            id={
-              this.props.width < 800
-                ? styles.modalBodyMobile
-                : styles.modalBodyDesktop
-            }
+      <React.Fragment>
+        <div
+          className={styles.blurFilter}
+          id={this.props.isOpen ? styles.blurOpen : null}
+        ></div>
+        <div
+          className={styles.formDiv}
+          id={this.props.isOpen ? styles.formDivOpen : null}
+          onMouseDown={() => this.props.closeModal()}
+        >
+          <form
+            className={styles.form}
+            onMouseDown={(event) => event.stopPropagation()}
+            onSubmit={(event) => this.onSubmit(event)}
           >
-            <form className={styles.form}>
-              <label htmlFor="body" className="label"></label>
-              <textarea
-                type="text"
-                className={styles.replyFormInput}
-                id="body"
-                name="body"
-                value={this.state.replyText}
-                placeholder="Write your reply here..."
-                maxLength="300"
-                onChange={(event) => this.onTextareaChange(event)}
-              ></textarea>
-            </form>
-
-            <div className="submit-reply-div">
-              <button
-                className={styles.submitReplyBtn}
-                type="submit"
-                onClick={() => this.onSubmit()}
+            {comment && (
+              <div
+                className={
+                  comment
+                    ? width < 800
+                      ? `${styles.comment} ${styles.mobileComment}`
+                      : styles.comment
+                    : null
+                }
+                id={styles[`depth-${comment.depth}`]}
               >
-                Submit
-              </button>
-            </div>
-          </div>
-          <div className={styles.modalFooter}>
-            <div className={styles.footerText}>
-              {this.props.comment ? this.returnFooterText() : null}
-            </div>
-            <div className={styles.footerIcon}>
-              <FaReply />
-            </div>
-          </div>
+                <div className={styles.commentBody}>
+                  {comment ? comment.body : null}
+                </div>
+                <div className={styles.commentBy}>
+                  <small>by {comment ? comment.username.name : null}</small>
+                </div>
+              </div>
+            )}
+            {isOpen && !comment && (
+              <div className={styles.post}>{post.body}</div>
+            )}
+
+            <textarea
+              placeholder="Reply here..."
+              className={styles.textarea}
+              onChange={(event) => this.onTextareaChange(event)}
+              value={this.state.replyText}
+              maxLength={2000}
+            ></textarea>
+            <button
+              type="submit"
+              className={
+                this.state.errorMesage ? styles.errButton : styles.button
+              }
+            >
+              Submit
+            </button>
+          </form>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

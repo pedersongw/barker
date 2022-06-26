@@ -1,7 +1,6 @@
 import React from "react";
 import Comment from "./Comment";
 import ReplyModal from "../Modals/ReplyModal";
-import TestModal from "../Modals/TestModal";
 import ReportModal from "../Modals/ReportModal";
 import MobileReplyMenu from "../Navs/MobileReplyMenu";
 import jwtDecode from "jwt-decode";
@@ -12,7 +11,6 @@ import styles from "./CommentHolder.module.css";
 class CommentHolder extends React.Component {
   state = {
     replyModalOpen: false,
-    testModalOpen: false,
     reportModalOpen: false,
     mobileReplyOpen: false,
     clickedComment: "",
@@ -88,39 +86,12 @@ class CommentHolder extends React.Component {
 
     this.setState({ mobileReplyOpen: false });
     this.setState({ replyModalOpen: true });
-    setTimeout(
-      () => window.addEventListener("click", this.handleClickOutsideReplyModal),
-      500
-    );
   };
 
   closeReplyModal = () => {
     window.removeEventListener("click", this.handleClickOutsideReplyModal);
     this.setState({ clickedComment: false });
     this.setState({ replyModalOpen: false });
-  };
-
-  openTestModal = () => {
-    this.setState({ testModalOpen: true });
-  };
-
-  closeTestModal = () => {
-    this.setState({ testModalOpen: false });
-  };
-
-  handleClickOutsideReplyModal = (event) => {
-    const container = document.getElementById("reply-modal-content");
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      event.target.className !== "post-reply-button" &&
-      event.target.className !== "comment-button"
-    ) {
-      console.log("clicked outside reply modal");
-      this.closeReplyModal();
-    } else {
-      console.log("clicked inside reply modal");
-    }
   };
 
   openReportModal = () => {
@@ -208,7 +179,7 @@ class CommentHolder extends React.Component {
           <Comment
             depth={0}
             key={comment._id}
-            openReplyModal={this.openTestModal}
+            openReplyModal={this.openReplyModal}
             openReportModal={this.openReportModal}
             id={comment._id}
             width={this.state.width}
@@ -226,14 +197,6 @@ class CommentHolder extends React.Component {
           width={this.state.width}
           user={this.state.user}
         />
-        <TestModal
-          closeModal={this.closeTestModal}
-          isOpen={this.state.testModalOpen}
-          comment={this.state.clickedComment}
-          post={this.state.viewedEntry}
-          width={this.state.width}
-          user={this.state.user}
-        />
         <ReportModal
           closeModal={this.closeReportModal}
           isOpen={this.state.reportModalOpen}
@@ -245,7 +208,7 @@ class CommentHolder extends React.Component {
         />
         <MobileReplyMenu
           openReportModal={this.openReportModal}
-          openReplyModal={this.openTestModal}
+          openReplyModal={this.openReplyModal}
           delete={this.updateDeletedComment}
           open={this.state.mobileReplyOpen}
           close={this.closeMobileReplyMenu}

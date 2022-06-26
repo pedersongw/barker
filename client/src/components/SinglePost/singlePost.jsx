@@ -74,6 +74,7 @@ class SinglePost extends React.Component {
     window.removeEventListener("resize", this.handleWindowSizeChange);
     window.removeEventListener("click", this.handleClickOutsideReplyModal);
     window.removeEventListener("click", this.handleClickOutsideReportModal);
+    document.body.style.overflow = "scroll";
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -166,32 +167,13 @@ class SinglePost extends React.Component {
   openReplyModal = () => {
     this.setState({ mobileReplyOpen: false });
     this.setState({ replyModalOpen: true });
-    setTimeout(
-      () => window.addEventListener("click", this.handleClickOutsideReplyModal),
-      500
-    );
+    document.body.style.overflow = "hidden";
   };
 
   closeReplyModal = () => {
-    window.removeEventListener("click", this.handleClickOutsideReplyModal);
     this.setState({ clickedComment: null });
     this.setState({ replyModalOpen: false });
-  };
-
-  handleClickOutsideReplyModal = (event) => {
-    const container = document.getElementById("reply-modal-content");
-    console.log(container, event.target);
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      event.target.className !== "post-reply-button" &&
-      event.target.className !== "comment-button"
-    ) {
-      console.log("clicked outside reply modal");
-      this.closeReplyModal();
-    } else {
-      console.log("clicked inside reply modal");
-    }
+    document.body.style.overflow = "scroll";
   };
 
   openReportModal = () => {
@@ -238,11 +220,12 @@ class SinglePost extends React.Component {
     }
   };
 
-  openMobileReplyMenu = (comment) => {
+  openMobileReplyMenu = (comment, depth) => {
+    let obj = comment;
+    comment.depth = depth;
     if (!this.state.mobileReplyOpen) {
       this.setState({ mobileReplyOpen: true });
-      this.setState({ clickedComment: comment });
-      setTimeout(() => console.log(this.state), 4000);
+      this.setState({ clickedComment: obj });
     }
     document.body.style.overflow = "hidden";
   };
