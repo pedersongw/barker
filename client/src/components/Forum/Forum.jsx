@@ -32,7 +32,14 @@ class Forum extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    window.addEventListener("beforeunload", () => this.beforeUnload());
+    window.onbeforeunload = function () {
+      let sort = sessionStorage.getItem("sort");
+      if (sort === "old") {
+        return;
+      } else {
+        sessionStorage.clear();
+      }
+    };
     let sessionPage = sessionStorage.getItem("page");
     if (sessionPage) {
       this.setState({ currentPage: sessionPage });
@@ -67,19 +74,7 @@ class Forum extends React.Component {
     }
   }
 
-  beforeUnload = () => {
-    let sort = sessionStorage.getItem("sort");
-    if (sort === "old") {
-      return;
-    } else {
-      sessionStorage.clear();
-    }
-  };
-
   componentWillUnmount() {
-    this.beforeUnload();
-    window.removeEventListener("beforeunload", () => this.beforeUnload());
-
     window.removeEventListener("resize", this.handleWindowSizeChange);
   }
 
@@ -112,6 +107,7 @@ class Forum extends React.Component {
 
   displayMyPosts = () => {
     sessionStorage.setItem("sort", "my");
+    sessionStorage.removeItem("page");
     this.setState({ currentPage: 1, sort: "my" });
     const unsorted = [...this.state.entries];
     const sorted = unsorted.filter(
@@ -122,6 +118,7 @@ class Forum extends React.Component {
 
   displayPostsSortedByNew = () => {
     sessionStorage.setItem("sort", "new");
+    sessionStorage.removeItem("page");
     this.setState({ currentPage: 1, sort: "new" });
     const sortedEntries = this.state.entries.sort((a, b) => {
       return new Date(b.timePosted) - new Date(a.timePosted);
@@ -131,6 +128,7 @@ class Forum extends React.Component {
 
   displayPostsSortedByOld = () => {
     sessionStorage.setItem("sort", "old");
+    sessionStorage.removeItem("page");
     this.setState({ currentPage: 1, sort: "old" });
     const sortedEntries = this.state.entries.sort((a, b) => {
       return new Date(a.timePosted) - new Date(b.timePosted);
@@ -140,6 +138,7 @@ class Forum extends React.Component {
 
   displayPostsSortedByPopular = () => {
     sessionStorage.setItem("sort", "popular");
+    sessionStorage.removeItem("page");
     this.setState({ currentPage: 1, sort: "popular" });
     const sortedEntries = this.state.entries.sort((a, b) => {
       return b.likes.length - a.likes.length;
@@ -241,11 +240,6 @@ class Forum extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.test}>
-          {"sort: " + sessionStorage.getItem("sort")}
-          <br />
-          {"page: " + sessionStorage.getItem("page")}
-        </div>
         <TopMobileNavBar page="forum" />
         {this.state.width > 800 ? (
           <div className={styles.desktopHeaderSpacer}></div>
