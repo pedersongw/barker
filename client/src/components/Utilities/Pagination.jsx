@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import { FaEllipsisH } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import styles from "./Pagination.module.css";
 
 class Pagination extends React.Component {
@@ -58,10 +57,14 @@ class Pagination extends React.Component {
     }
   };
 
+  updatePage = (event) => {
+    this.props.updateCurrentPage(Number(event.target.id));
+  };
+
   mapFromDetermineFunctionToButtons = () => {
     const { currentPage, sort } = this.props;
     let array = this.determineHowManyButtons();
-    console.log(array);
+    let updatePage = this.updatePage;
     return array.map(function (arrayIndex, i) {
       if (typeof arrayIndex === "string") {
         return (
@@ -75,25 +78,23 @@ class Pagination extends React.Component {
         );
       } else {
         return currentPage === arrayIndex ? (
-          <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
-            <button
-              className={`${styles.pageButton} ${styles.currentPageButton}`}
-              id={arrayIndex}
-              key={arrayIndex}
-            >
-              {arrayIndex}
-            </button>
-          </Link>
+          <button
+            className={`${styles.pageButton} ${styles.currentPageButton}`}
+            id={arrayIndex}
+            key={arrayIndex}
+            onClick={(event) => updatePage(event)}
+          >
+            {arrayIndex}
+          </button>
         ) : (
-          <Link key={arrayIndex} to={`/forum/${arrayIndex}/${sort}`}>
-            <button
-              className={styles.pageButton}
-              key={arrayIndex}
-              id={arrayIndex}
-            >
-              {arrayIndex}
-            </button>
-          </Link>
+          <button
+            className={styles.pageButton}
+            key={arrayIndex}
+            id={arrayIndex}
+            onClick={(event) => updatePage(event)}
+          >
+            {arrayIndex}
+          </button>
         );
       }
     });

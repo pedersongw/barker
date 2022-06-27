@@ -23,8 +23,8 @@ class Forum extends React.Component {
     postModalOpen: false,
     user: null,
     createModalError: "",
-    currentPage: this.props.page,
-    sort: this.props.sort,
+    currentPage: 1,
+    sort: "old",
     pageSize: 5,
     numberOfPages: 0,
     navOpen: false,
@@ -32,7 +32,18 @@ class Forum extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    const { sort } = this.props;
+    window.addEventListener("beforeunload", () => this.beforeUnload());
+    let sessionPage = sessionStorage.getItem("page");
+    if (sessionPage) {
+      this.setState({ currentPage: sessionPage });
+    }
+    let sort = sessionStorage.getItem("sort");
+    if (!sort) {
+      sessionStorage.setItem("sort", "old");
+    }
+    window.addEventListener("keydown", () =>
+      console.log(sessionStorage, this.state)
+    );
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
@@ -54,33 +65,27 @@ class Forum extends React.Component {
     } catch (error) {
       console.log("Couldn't reach the server", error);
     }
-    if (sort === "all") {
-      return;
-    } else if (sort === "popular") {
-      this.displayPostsSortedByPopular();
-    } else if (sort === "my") {
-      this.displayMyPosts();
-    } else if (sort === "new") {
-      this.displayPostsSortedByNew();
-    } else if (sort === "old") {
-      this.displayPostsSortedByOld();
-    }
   }
 
+  beforeUnload = () => {
+    let sort = sessionStorage.getItem("sort");
+    if (sort === "old") {
+      return;
+    } else {
+      sessionStorage.clear();
+    }
+  };
+
   componentWillUnmount() {
+    this.beforeUnload();
+    window.removeEventListener("beforeunload", () => this.beforeUnload());
+
     window.removeEventListener("resize", this.handleWindowSizeChange);
   }
 
   isAdmin = () => {
     return this.state.user.isAdmin ? true : false;
   };
-
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      window.location.reload();
-      window.scrollTo(0, 0);
-    }
-  }
 
   updateEntriesFromDatabase = async () => {
     try {
@@ -106,6 +111,8 @@ class Forum extends React.Component {
   };
 
   displayMyPosts = () => {
+    sessionStorage.setItem("sort", "my");
+    this.setState({ currentPage: 1, sort: "my" });
     const unsorted = [...this.state.entries];
     const sorted = unsorted.filter(
       (entry) => entry.username[0]["_id"] === this.state.user["_id"]
@@ -114,6 +121,8 @@ class Forum extends React.Component {
   };
 
   displayPostsSortedByNew = () => {
+    sessionStorage.setItem("sort", "new");
+    this.setState({ currentPage: 1, sort: "new" });
     const sortedEntries = this.state.entries.sort((a, b) => {
       return new Date(b.timePosted) - new Date(a.timePosted);
     });
@@ -121,6 +130,8 @@ class Forum extends React.Component {
   };
 
   displayPostsSortedByOld = () => {
+    sessionStorage.setItem("sort", "old");
+    this.setState({ currentPage: 1, sort: "old" });
     const sortedEntries = this.state.entries.sort((a, b) => {
       return new Date(a.timePosted) - new Date(b.timePosted);
     });
@@ -128,6 +139,8 @@ class Forum extends React.Component {
   };
 
   displayPostsSortedByPopular = () => {
+    sessionStorage.setItem("sort", "popular");
+    this.setState({ currentPage: 1, sort: "popular" });
     const sortedEntries = this.state.entries.sort((a, b) => {
       return b.likes.length - a.likes.length;
     });
@@ -176,13 +189,14 @@ class Forum extends React.Component {
   logOut = () => {
     localStorage.removeItem("token");
     this.setState({ user: null });
-    window.location = "/forum/1/all";
+    window.location = "/forum";
   };
 
   renderPostsInListGroup = () => {
     if (this.state.entriesDisplayed.length < 1) {
       return <h2>Nothing to display</h2>;
     }
+
     return this.state.entriesDisplayed[this.state.currentPage - 1].map(
       (entry) => {
         return (
@@ -204,8 +218,9 @@ class Forum extends React.Component {
   };
 
   updateCurrentPage = (newPage) => {
-    console.log(newPage);
     this.setState({ currentPage: newPage });
+    sessionStorage.setItem("page", newPage);
+    window.scrollTo(0, 0);
   };
 
   incrementPage = (num) => {
@@ -250,15 +265,15 @@ class Forum extends React.Component {
             <ForumDesktopNav
               openPostModal={this.openPostModal}
               openUserModal={this.openUserModal}
+              sortMyPosts={this.displayMyPosts}
+              sortPopular={this.displayPostsSortedByPopular}
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
               logOut={this.logOut}
               userLoggedIn={this.userLoggedIn}
               user={this.state.user}
-              sortMyPosts={this.displayMyPosts}
-              sortPopular={this.displayPostsSortedByPopular}
               updateView={this.updateEntriesFromDatabase}
-              sort={this.props.sort}
+              sort={this.state.sort}
               status={this.serverStatus}
             />
           )}
@@ -297,13 +312,13 @@ class Forum extends React.Component {
                 openUserModal={this.openUserModal}
                 sortByNew={this.displayPostsSortedByNew}
                 sortByOld={this.displayPostsSortedByOld}
+                sortMyPosts={this.displayMyPosts}
+                sortByPopular={this.displayPostsSortedByPopular}
+                updateView={this.updateEntriesFromDatabase}
                 logOut={this.logOut}
                 userLoggedIn={this.userLoggedIn}
-                sortMyPosts={this.displayMyPosts}
-                sortPopular={this.displayPostsSortedByPopular}
-                updateView={this.updateEntriesFromDatabase}
                 navOpen={this.navOpen}
-                sort={this.props.sort}
+                sort={this.state.sort}
               />
             </div>
           )}

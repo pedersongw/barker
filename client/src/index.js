@@ -12,15 +12,15 @@ import Contact from "./components/Contact/Contact";
 import DisplayComment from "./components/Comment/DisplayComment";
 import SinglePostHolder from "./components/SinglePost/singlePostHolder";
 import reportWebVitals from "./reportWebVitals";
-import ForumHolder from "./components/Forum/ForumHolder";
 import VerifyHolder from "./components/Verify/VerifyHolder";
+import Forum from "./components/Forum/Forum";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="forum/:page/:sort" element={<ForumHolder />} />
+        <Route path="forum" element={<Forum />} />
         <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />

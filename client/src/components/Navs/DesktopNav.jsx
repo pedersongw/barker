@@ -26,11 +26,6 @@ class ForumDesktopNav extends React.Component {
     }
   };
 
-  sortByArgument = (argument) => {
-    this.setState({ navOpen: false });
-    window.location.href = `/forum/1/${argument}`;
-  };
-
   render() {
     return (
       <nav className={styles.nav} id={this.state.navOpen ? styles.nav : null}>
@@ -86,15 +81,22 @@ class ForumDesktopNav extends React.Component {
               >
                 <li
                   className={styles.navLi}
-                  id={this.props.sort === "all" ? styles.selected : null}
-                  onClick={() => this.sortByArgument("all")}
+                  id={this.props.sort === "old" ? styles.selected : null}
+                  onClick={() => this.props.sortByOld()}
                 >
-                  All
+                  Old
+                </li>
+                <li
+                  className={styles.navLi}
+                  id={this.props.sort === "new" ? styles.selected : null}
+                  onClick={() => this.props.sortByNew()}
+                >
+                  New
                 </li>
                 <li
                   className={styles.navLi}
                   id={this.props.sort === "popular" ? styles.selected : null}
-                  onClick={() => this.sortByArgument("popular")}
+                  onClick={() => this.props.sortPopular()}
                 >
                   Popular
                 </li>
@@ -102,23 +104,9 @@ class ForumDesktopNav extends React.Component {
                 <li
                   className={styles.navLi}
                   id={this.props.sort === "my" ? styles.selected : null}
-                  onClick={() => this.sortByArgument("my")}
+                  onClick={() => this.props.sortMyPosts()}
                 >
                   My Posts
-                </li>
-                <li
-                  className={styles.navLi}
-                  id={this.props.sort === "new" ? styles.selected : null}
-                  onClick={() => this.sortByArgument("new")}
-                >
-                  New
-                </li>
-                <li
-                  className={styles.navLi}
-                  id={this.props.sort === "old" ? styles.selected : null}
-                  onClick={() => this.sortByArgument("old")}
-                >
-                  Old
                 </li>
               </ul>
             </div>

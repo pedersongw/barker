@@ -47,10 +47,10 @@
   visibility: hidden;
   display: flex;
   flex-direction: column;
-  justify-self: center;
+  justify-self: space-around;
   align-items: center;
   width: 15vw;
-  bottom: -155px;
+  bottom: -135px;
   opacity: 0;
   color: var(--five);
   transition-property: opacity;

@@ -92,7 +92,7 @@ class LogInOrCreate extends React.Component {
       const response = await axios.post(config + "/api/auth", postObj);
       console.log(response);
       localStorage.setItem("token", response.data);
-      window.location = "/forum/1/all";
+      window.location = "/forum";
     } catch (error) {
       console.log(error.response.status, error.response.data);
       this.setState({ message: error.response.data.message });

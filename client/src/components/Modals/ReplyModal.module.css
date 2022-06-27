@@ -97,6 +97,10 @@
   min-width: 40%;
 }
 
+.post::-webkit-scrollbar {
+  display: none;
+}
+
 .mobileComment {
   min-width: 75%;
 }
