@@ -15,7 +15,7 @@ class ReplyModal extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.isOpen !== prevProps.isOpen) {
-      this.setState({ replyText: "" });
+      this.setState({ replyText: "", errorMessage: "" });
     }
   }
 
@@ -68,7 +68,6 @@ class ReplyModal extends React.Component {
         >
           <form
             className={styles.form}
-            onMouseDown={(event) => event.stopPropagation()}
             onSubmit={(event) => this.onSubmit(event)}
           >
             {comment && (
@@ -80,6 +79,7 @@ class ReplyModal extends React.Component {
                       : styles.comment
                     : null
                 }
+                onMouseDown={(event) => event.stopPropagation()}
                 id={styles[`depth-${comment.depth}`]}
               >
                 <div className={styles.commentBody}>
@@ -98,16 +98,18 @@ class ReplyModal extends React.Component {
               placeholder="Reply here..."
               className={styles.textarea}
               onChange={(event) => this.onTextareaChange(event)}
+              onMouseDown={(event) => event.stopPropagation()}
               value={this.state.replyText}
-              maxLength={2000}
+              maxLength={250}
             ></textarea>
             <button
               type="submit"
+              onMouseDown={(event) => event.stopPropagation()}
               className={
-                this.state.errorMesage ? styles.errButton : styles.button
+                this.state.errorMessage ? styles.errButton : styles.button
               }
             >
-              Submit
+              {this.state.errorMessage ? this.state.errorMessage : "Submit"}
             </button>
           </form>
         </div>

@@ -177,7 +177,9 @@ class SinglePost extends React.Component {
   };
 
   openReportModal = () => {
+    console.log("report modal open called");
     this.setState({ mobileReplyOpen: false });
+
     let obj = this.state.clickedComment;
     if (!obj) {
       obj = this.state.post;
@@ -193,31 +195,15 @@ class SinglePost extends React.Component {
     } else {
       console.log("not yet reported");
     }
-
-    window.addEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: true });
+    document.body.style.overflow = "hidden";
   };
 
   closeReportModal = () => {
-    window.removeEventListener("click", this.handleClickOutsideReportModal);
     this.setState({ reportModalOpen: false });
     this.setState({ clickedComment: null });
     setTimeout(() => this.setState({ alreadyReported: false }), 250);
-  };
-
-  handleClickOutsideReportModal = (event) => {
-    const container = document.getElementById("report-modal-content");
-    if (
-      container !== event.target &&
-      !container.contains(event.target) &&
-      event.target.id !== "comment-report-button" &&
-      event.target.id !== "post-report"
-    ) {
-      console.log("clicked outside report modal");
-      this.closeReportModal();
-    } else {
-      console.log("clicked inside report modal");
-    }
+    document.body.style.overflow = "scroll";
   };
 
   openMobileReplyMenu = (comment, depth) => {
