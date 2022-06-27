@@ -69,14 +69,6 @@ class ForumMobileNav extends React.Component {
     this.setState({ sortByClicked: false });
   };
 
-  navigate = (url) => {
-    this.setState({ navOpen: false });
-    if (url === "logout") {
-      this.props.logOut();
-    }
-    window.location.href = `${url}`;
-  };
-
   sortBy = () => {
     console.log("sort by button clicked");
     this.setState({ sortByClicked: !this.state.sortByClicked });
@@ -169,25 +161,9 @@ class ForumMobileNav extends React.Component {
           {this.props.userLoggedIn() && (
             <div
               className={styles.mobileNavButton}
-              onClick={() => this.navigate("logout")}
+              onClick={() => this.props.logOut()}
             >
               Logout
-            </div>
-          )}
-          {!this.props.userLoggedIn() && (
-            <div
-              className={styles.mobileNavButton}
-              onClick={() => this.navigate("/login/login")}
-            >
-              Login
-            </div>
-          )}
-          {!this.props.userLoggedIn() && (
-            <div
-              className={styles.mobileNavButton}
-              onClick={() => this.navigate("/login/create")}
-            >
-              Create New User
             </div>
           )}
         </div>

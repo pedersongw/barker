@@ -40,7 +40,7 @@ class TopMobileNavBar extends React.Component {
           )}
         </div>
         <div className={styles.link} id={styles.nav4}>
-          <Link to="/forum>Forum</Link>
+          <Link to="/forum">Forum</Link>
         </div>
       </div>
     );
