@@ -15,6 +15,7 @@ import MobileReplyMenu from "../Navs/MobileReplyMenu";
 
 class SinglePost extends React.Component {
   state = {
+    postId: null,
     reply: "",
     post: null,
     comments: null,
@@ -32,13 +33,16 @@ class SinglePost extends React.Component {
     window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
 
+    const postId = sessionStorage.getItem("postId");
+    this.setState({ postId: postId });
+
     const jwt = localStorage.getItem("token");
     const user = jwtDecode(jwt);
     this.setState({ user: user });
     try {
       const { data } = await axios.get(config + "/api/posts/single", {
         params: {
-          _id: this.props.id,
+          _id: postId,
         },
       });
       console.log(data);
@@ -47,7 +51,7 @@ class SinglePost extends React.Component {
       console.log("Couldn't reach the server", error);
     }
     try {
-      let searchParam = { parentPost: `${this.props.id}` };
+      let searchParam = { parentPost: `${this.state.postId}` };
       const { data: comments } = await axios.post(
         config + "/api/comments/get",
         searchParam
@@ -72,15 +76,8 @@ class SinglePost extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
-    window.removeEventListener("click", this.handleClickOutsideReplyModal);
-    window.removeEventListener("click", this.handleClickOutsideReportModal);
-    document.body.style.overflow = "scroll";
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.post !== this.state.post) {
-      console.log("state has changed.");
-    }
+    document.body.style.overflow = "scroll";
   }
 
   handleWindowSizeChange = () => {
@@ -108,7 +105,7 @@ class SinglePost extends React.Component {
   updatePost = async () => {
     const { data } = await axios.get(config + "/api/posts/single", {
       params: {
-        _id: this.props.id,
+        _id: this.state.postId,
       },
     });
     console.log(data);
@@ -128,7 +125,7 @@ class SinglePost extends React.Component {
   };
 
   onLike = async () => {
-    let id = this.props.id;
+    let id = this.state.postId;
     const userID = this.state.user._id;
     const data = {
       _id: id,

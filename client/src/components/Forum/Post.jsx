@@ -4,7 +4,8 @@ import styles from "./Post.module.css";
 
 class Post extends React.Component {
   onClick = () => {
-    window.location.href = `/post/${this.props.id}`;
+    window.location.href = "/post";
+    sessionStorage.setItem("postId", this.props.id);
   };
 
   render() {

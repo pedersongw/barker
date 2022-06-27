@@ -10,7 +10,7 @@ import Donate from "./components/Donate/Donate";
 import Admin from "./components/Admin/admin.jsx";
 import Contact from "./components/Contact/Contact";
 import DisplayComment from "./components/Comment/DisplayComment";
-import SinglePostHolder from "./components/SinglePost/singlePostHolder";
+import SinglePost from "./components/SinglePost/singlePost";
 import reportWebVitals from "./reportWebVitals";
 import VerifyHolder from "./components/Verify/VerifyHolder";
 import Forum from "./components/Forum/Forum";
@@ -24,7 +24,7 @@ ReactDOM.render(
         <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
         <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
-        <Route path="post/:id" element={<SinglePostHolder />} />
+        <Route path="post" element={<SinglePost />} />
         <Route path="admin" element={<Admin />} />
         <Route path="verify/:confirmationCode" element={<VerifyHolder />} />
         <Route path="verify/" element={<VerifyHolder />} />
