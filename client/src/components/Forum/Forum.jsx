@@ -241,6 +241,11 @@ class Forum extends React.Component {
 
     return (
       <div className={styles.wrapper}>
+        <div className={styles.test}>
+          {"sort: " + sessionStorage.getItem("sort")}
+          <br />
+          {"page: " + sessionStorage.getItem("page")}
+        </div>
         <TopMobileNavBar page="forum" />
         {this.state.width > 800 ? (
           <div className={styles.desktopHeaderSpacer}></div>
