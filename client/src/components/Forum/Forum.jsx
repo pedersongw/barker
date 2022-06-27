@@ -35,7 +35,8 @@ class Forum extends React.Component {
     if (sort === "old") {
       return;
     } else {
-      sessionStorage.clear();
+      sessionStorage.removeItem("page");
+      sessionStorage.removeItem("sort");
     }
   };
 
