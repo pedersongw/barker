@@ -29,13 +29,23 @@ class SinglePost extends React.Component {
     width: window.innerWidth,
   };
 
+  constructor(props) {
+    super(props);
+    const postId = sessionStorage.getItem("postId");
+    if (!postId) {
+      window.location = "/forum";
+      return;
+    }
+    this.setState({ postId: postId });
+  }
+
   async componentDidMount() {
     window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
-
     const postId = sessionStorage.getItem("postId");
-    this.setState({ postId: postId });
-
+    if (!postId) {
+      return;
+    }
     const jwt = localStorage.getItem("token");
     const user = jwtDecode(jwt);
     this.setState({ user: user });
