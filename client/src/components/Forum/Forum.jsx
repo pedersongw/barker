@@ -30,16 +30,19 @@ class Forum extends React.Component {
     navOpen: false,
   };
 
+  beforeUnload = () => {
+    let sort = sessionStorage.getItem("sort");
+    if (sort === "old") {
+      return;
+    } else {
+      sessionStorage.clear();
+    }
+  };
+
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
-    window.onbeforeunload = function () {
-      let sort = sessionStorage.getItem("sort");
-      if (sort === "old") {
-        return;
-      } else {
-        sessionStorage.clear();
-      }
-    };
+    window.onbeforeunload = this.beforeUnload;
+    window.onpagehide = this.beforeUnload;
     let sessionPage = sessionStorage.getItem("page");
     if (sessionPage) {
       this.setState({ currentPage: sessionPage });
