@@ -23,7 +23,7 @@ ReactDOM.render(
         <Route path="forum" element={<Forum />} />
         <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
-        <Route path="comment/:id/:parentPost" element={<DisplayComment />} />
+        <Route path="comment/:id/" element={<DisplayComment />} />
         <Route path="post" element={<SinglePost />} />
         <Route path="admin" element={<Admin />} />
         <Route path="verify/:confirmationCode" element={<VerifyHolder />} />

@@ -50,16 +50,20 @@ class Comment extends React.Component {
     }
   };
 
+  clickedCommentLink = () => {
+    window.location = `/comment/${this.props.comment._id}`;
+  };
+
   displayBody = () => {
     if (this.isDeep()) {
       return (
         <React.Fragment>
-          <Link
-            to={`/comment/${this.props.comment.parentComment}/${this.props.comment.parentPost}`}
-            state={{ comment: this.props.comment }}
+          <div
+            className={styles.deletedDiv}
+            onClick={() => this.clickedCommentLink()}
           >
-            <div className={styles.deletedDiv}>Click to continue thread</div>
-          </Link>
+            Click to continue thread
+          </div>
         </React.Fragment>
       );
     } else if (this.props.comment.deleted) {
@@ -113,13 +117,7 @@ class Comment extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div
-          className={styles.comment}
-          id={styles[this.determineCommentId()]}
-          onClick={() =>
-            console.log(this.props, this.isAlmostDeep(), this.isDeep())
-          }
-        >
+        <div className={styles.comment} id={styles[this.determineCommentId()]}>
           <div className={styles.body}>
             {this.isDeep() && (
               <div className={styles.deepText}>{this.displayBody()}</div>

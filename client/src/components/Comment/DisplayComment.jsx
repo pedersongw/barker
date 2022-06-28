@@ -5,14 +5,13 @@ import CommentHolder from "./CommentHolder";
 
 const DisplayComment = () => {
   const { id } = useParams();
-  const { parentPost } = useParams();
 
   return (
     <div>
       <TopMobileNavBar />
 
       <div>
-        <CommentHolder id={id} parentPost={parentPost} />
+        <CommentHolder id={id} />
       </div>
     </div>
   );

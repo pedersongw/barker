@@ -9,6 +9,7 @@ import TopMobileNavBar from "../Navs/TopMobileNavBar";
 class Contact extends React.Component {
   state = {
     width: window.innerWidth,
+    counter: 0,
     email: "",
     firstName: "",
     lastName: "",
@@ -20,12 +21,53 @@ class Contact extends React.Component {
   };
 
   componentDidMount() {
-    window.addEventListener("resize", this.handleWindowSizeChange);
+    sessionStorage.removeItem("obj");
+    window.addEventListener("resize", () => this.handleWindowSizeChange);
+    window.addEventListener("keydown", () => this.keydown());
+    window.addEventListener("click", () => this.click());
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener("resize", () => this.handleWindowSizeChange);
+    window.removeEventListener("keydown", () => this.keydown());
+    window.removeEventListener("click", () => this.click());
   }
+
+  keydown = () => {
+    const { counter } = this.state;
+    const sessionStorageArray = sessionStorage.getItem("obj");
+    const myObj = JSON.parse(sessionStorageArray);
+    if (!sessionStorageArray) {
+      console.log("array does not exist");
+      let obj = { 0: counter };
+      sessionStorage.setItem("obj", JSON.stringify(obj));
+      this.setState({ counter: this.state.counter + 1 });
+    } else {
+      myObj[counter] = counter;
+      sessionStorage.setItem("obj", JSON.stringify(myObj));
+      console.log(myObj);
+      this.setState({ counter: this.state.counter + 1 });
+    }
+  };
+
+  click = () => {
+    const sessionStorageArray = sessionStorage.getItem("obj");
+    const myObj = JSON.parse(sessionStorageArray);
+    if (!sessionStorageArray) {
+      console.log("array does not exist");
+    } else if (Object.keys(myObj).length === 0) {
+      console.log("array does not exist");
+      sessionStorage.removeItem("obj");
+    } else {
+      let keys = Object.keys(myObj);
+      console.log(myObj[keys.length - 1]);
+      delete myObj[keys.length - 1];
+      console.log(myObj);
+      this.setState({ counter: this.state.counter - 1 });
+
+      sessionStorage.setItem("obj", JSON.stringify(myObj));
+    }
+  };
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });

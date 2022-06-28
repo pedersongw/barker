@@ -7,6 +7,8 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { config } from "../../URLs.jsx";
 import styles from "./CommentHolder.module.css";
+import TopMobileNavBar from "../Navs/TopMobileNavBar";
+import TestModal from "../Modals/ReportModal";
 
 class CommentHolder extends React.Component {
   state = {
@@ -30,7 +32,7 @@ class CommentHolder extends React.Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
-
+    const sessionStorageId = sessionStorage.getItem("postId");
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
@@ -39,7 +41,7 @@ class CommentHolder extends React.Component {
       this.setState({ user: null });
     }
     try {
-      let searchParam = { parentPost: `${this.props.parentPost}` };
+      let searchParam = { parentPost: `${sessionStorageId}` };
       const { data: comments } = await axios.post(
         config + "/api/comments/get",
         searchParam
@@ -160,46 +162,49 @@ class CommentHolder extends React.Component {
   render() {
     const { result: comment } = this.state;
     return (
-      <div className={styles.wrapper}>
-        {this.state.result && (
-          <Comment
-            depth={0}
-            key={comment._id}
-            openReplyModal={this.openReplyModal}
-            openReportModal={this.openReportModal}
-            id={comment._id}
-            width={this.state.width}
-            comment={comment}
-            parentPost={comment.parentPost}
-            handleMenu={this.openMobileReplyMenu}
-          />
-        )}
+      <React.Fragment>
+        <TopMobileNavBar />
+        <div className={styles.wrapper}>
+          {this.state.result && (
+            <Comment
+              depth={0}
+              key={comment._id}
+              openReplyModal={this.openReplyModal}
+              openReportModal={this.openReportModal}
+              id={comment._id}
+              width={this.state.width}
+              comment={comment}
+              parentPost={comment.parentPost}
+              handleMenu={this.openMobileReplyMenu}
+            />
+          )}
 
-        <ReplyModal
-          closeModal={this.closeReplyModal}
-          isOpen={this.state.replyModalOpen}
-          comment={this.state.clickedComment}
-          post={this.state.viewedEntry}
-          width={this.state.width}
-          user={this.state.user}
-        />
-        <ReportModal
-          closeModal={this.closeReportModal}
-          isOpen={this.state.reportModalOpen}
-          comment={this.state.clickedComment}
-          post={this.state.viewedEntry}
-          width={this.state.width}
-          reported={this.state.alreadyReported}
-          user={this.state.user}
-        />
-        <MobileReplyMenu
-          openReportModal={this.openReportModal}
-          openReplyModal={this.openReplyModal}
-          delete={this.updateDeletedComment}
-          open={this.state.mobileReplyOpen}
-          close={this.closeMobileReplyMenu}
-        />
-      </div>
+          <ReplyModal
+            closeModal={this.closeReplyModal}
+            isOpen={this.state.replyModalOpen}
+            comment={this.state.clickedComment}
+            post={this.state.viewedEntry}
+            width={this.state.width}
+            user={this.state.user}
+          />
+          <ReportModal
+            closeModal={this.closeReportModal}
+            isOpen={this.state.reportModalOpen}
+            comment={this.state.clickedComment}
+            post={this.state.viewedEntry}
+            width={this.state.width}
+            reported={this.state.alreadyReported}
+            user={this.state.user}
+          />
+          <MobileReplyMenu
+            openReportModal={this.openReportModal}
+            openReplyModal={this.openReplyModal}
+            delete={this.updateDeletedComment}
+            open={this.state.mobileReplyOpen}
+            close={this.closeMobileReplyMenu}
+          />
+        </div>
+      </React.Fragment>
     );
   }
 }
