@@ -42,7 +42,7 @@
     "title"
     "body"
     "submit";
-  width: 50%;
+  width: 75%;
   height: 75%;
 }
 
@@ -54,7 +54,9 @@
   color: var(--five);
   grid-area: body;
   height: 75%;
+  width: 50%;
   resize: none;
+  justify-self: center;
   align-self: center;
 }
 
@@ -73,7 +75,7 @@
   justify-self: center;
   padding: 0 5px;
   margin: auto;
-  min-width: 50%;
+  min-width: 35%;
   border-style: solid;
   border-color: var(--two);
   border-width: 1px 1px 1px 3px;

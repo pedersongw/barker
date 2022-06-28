@@ -8,6 +8,20 @@ class Post extends React.Component {
     window.location.href = "/post";
   };
 
+  displayLimitedBody = () => {
+    let { body } = this.props;
+    if (body.length > 400) {
+      return (
+        <p className={styles.body}>
+          {body.slice(0, 400)}
+          <span className={styles.seeMore}>...see more</span>
+        </p>
+      );
+    } else {
+      return <p className={styles.body}>{body}</p>;
+    }
+  };
+
   render() {
     const { body, likes, timePosted, username, title } = this.props;
     return (
@@ -17,7 +31,7 @@ class Post extends React.Component {
             <b>{username[1]}</b>
           </h4>
           <h3 className={styles.title}>{title}</h3>
-          <p className={styles.body}>{body}</p>
+          {this.displayLimitedBody()}
           <div className={styles.time}>
             <DateComponent time={timePosted} />
           </div>

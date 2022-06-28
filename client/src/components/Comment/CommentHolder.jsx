@@ -8,7 +8,6 @@ import axios from "axios";
 import { config } from "../../URLs.jsx";
 import styles from "./CommentHolder.module.css";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
-import TestModal from "../Modals/ReportModal";
 
 class CommentHolder extends React.Component {
   state = {

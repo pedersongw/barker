@@ -61,7 +61,7 @@
   justify-self: center;
   padding: 0 5px;
   margin: auto;
-  min-width: 50%;
+  min-width: 35%;
   border-style: solid;
   border-color: var(--two);
   border-width: 1px 1px 1px 3px;
@@ -141,7 +141,7 @@
 .button {
   grid-area: submit;
   font-size: 1em;
-  width: 50%;
+  width: 35%;
   height: 50%;
   background-color: var(--five);
   border: 2px solid var(--two);
@@ -172,8 +172,9 @@
 .formGridWrapper {
   grid-area: body;
   height: 100%;
-  width: 100%;
+  width: 80%;
   display: flex;
+  justify-self: center;
 }
 .radioWrapper {
   width: 50%;
@@ -214,11 +215,11 @@
 }
 
 .radioDiv {
-  width: 75%;
+  width: 85%;
 }
 
 #radioDivUnchecked {
-  width: 35%;
+  width: 45%;
 }
 
 .radio {

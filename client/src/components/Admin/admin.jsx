@@ -165,6 +165,7 @@ class Admin extends React.Component {
                 Remove Selected Report
               </button>
             )}
+            <button onClick={() => (window.location = "/forum")}>Forum</button>
           </div>
         </div>
       </React.Fragment>

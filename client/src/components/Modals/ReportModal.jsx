@@ -1,9 +1,9 @@
 import React from "react";
 import { config } from "../../URLs.jsx";
 import axios from "axios";
-import styles from "./TestModal.module.css";
+import styles from "./ReportModal.module.css";
 
-class TestModal extends React.Component {
+class ReportModal extends React.Component {
   state = {
     selectedOption: null,
     otherText: "",
@@ -244,4 +244,4 @@ class TestModal extends React.Component {
   }
 }
 
-export default TestModal;
+export default ReportModal;
