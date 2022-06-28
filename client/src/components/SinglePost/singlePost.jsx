@@ -61,7 +61,7 @@ class SinglePost extends React.Component {
       console.log("Couldn't reach the server", error);
     }
     try {
-      let searchParam = { parentPost: `${this.state.postId}` };
+      let searchParam = { parentPost: `${postId}` };
       const { data: comments } = await axios.post(
         config + "/api/comments/get",
         searchParam
