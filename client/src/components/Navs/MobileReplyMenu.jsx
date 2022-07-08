@@ -2,21 +2,36 @@ import React from "react";
 import styles from "./MobileReplyMenu.module.css";
 
 class MobileReplyMenu extends React.Component {
-  reportClicked = () => {
+  reportClicked = (event) => {
+    event.stopPropagation();
     console.log("report clicked");
     this.props.openReportModal();
   };
-  deleteClicked = () => {
+  deleteClicked = (event) => {
+    event.stopPropagation();
+    if (!this.props.user) {
+      this.props.handlePleaseLogin();
+      return;
+    }
     console.log("delete clicked");
     this.props.delete();
   };
-  replyClicked = () => {
+  replyClicked = (event) => {
+    event.stopPropagation();
     console.log("reply clicked");
     this.props.openReplyModal();
   };
   menuClicked = () => {
     console.log("menu clicked");
     this.props.close();
+  };
+  isAdminOrOwner = () => {
+    let { comment, user } = this.props;
+    if (!comment || !user) {
+      return null;
+    } else {
+      return comment.username._id === user._id || user.isAdmin ? true : false;
+    }
   };
 
   render() {
@@ -34,23 +49,27 @@ class MobileReplyMenu extends React.Component {
               : styles.navMobile
           }
           id="nav-mobile"
+          onClick={() => this.menuClicked()}
         >
-          <div
-            className={styles.mobileNavButton}
-            onClick={() => this.deleteClicked()}
-          >
-            Delete
-          </div>
+          {this.isAdminOrOwner() && (
+            <div
+              className={styles.mobileNavButton}
+              onClick={(event) => this.deleteClicked(event)}
+            >
+              Delete
+            </div>
+          )}
+
           <div
             className={styles.mobileNavButton}
             id="comment-report-button"
-            onClick={(event) => this.reportClicked()}
+            onClick={(event) => this.reportClicked(event)}
           >
             Report
           </div>
           <div
             className={styles.mobileNavButton}
-            onClick={() => this.replyClicked()}
+            onClick={(event) => this.replyClicked(event)}
           >
             Reply
           </div>

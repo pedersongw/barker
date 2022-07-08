@@ -23,6 +23,7 @@
 }
 
 .mainLarge {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 4fr 20px;
   grid-template-areas: "nav post space";
@@ -55,6 +56,15 @@
   margin: 0px 10px 35px;
   background-color: var(--five);
   border-radius: 10px;
+}
+
+.nothing {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--two);
 }
 
 .spinnerDiv {

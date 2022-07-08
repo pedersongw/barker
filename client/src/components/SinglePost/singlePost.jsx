@@ -1,17 +1,20 @@
 import React from "react";
 import styles from "./singlePost.module.css";
+import { isExpired, decodeToken } from "react-jwt";
+import { config } from "../../URLs.jsx";
+import axios from "axios";
+
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+
 import Comment from "../Comment/Comment";
 import DateComponent from "../Utilities/date";
 import ReportModal from "../Modals/ReportModal";
 import ReplyModal from "../Modals/ReplyModal";
-import { FaHeart } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
-import { FaEllipsisH } from "react-icons/fa";
-import jwtDecode from "jwt-decode";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
-import { config } from "../../URLs.jsx";
-import axios from "axios";
 import MobileReplyMenu from "../Navs/MobileReplyMenu";
+import PleaseLogin from "../Modals/PleaseLogin";
+import MobileLogin from "../Modals/MobileLogin";
 
 class SinglePost extends React.Component {
   state = {
@@ -22,6 +25,8 @@ class SinglePost extends React.Component {
     replyModalOpen: false,
     reportModalOpen: false,
     mobileReplyOpen: false,
+    mobileLoginOpen: false,
+    pleaseLoginOpen: false,
     alreadyReported: false,
     clickedComment: null,
     isLiked: false,
@@ -36,56 +41,74 @@ class SinglePost extends React.Component {
       window.location = "/forum";
       return;
     }
-    this.setState({ postId: postId });
   }
 
   async componentDidMount() {
     window.scrollTo(0, 0);
+
     window.addEventListener("resize", this.handleWindowSizeChange);
+
     const postId = sessionStorage.getItem("postId");
+    console.log(postId);
+    this.setState({ postId: postId });
     if (!postId) {
       return;
-    }
-    const jwt = localStorage.getItem("token");
-    const user = jwtDecode(jwt);
-    this.setState({ user: user });
-    try {
-      const { data } = await axios.get(config + "/api/posts/single", {
-        params: {
-          _id: postId,
-        },
-      });
-      console.log(data);
-      this.setState({ post: data });
-    } catch (error) {
-      console.log("Couldn't reach the server", error);
-    }
-    try {
-      let searchParam = { parentPost: `${postId}` };
-      const { data: comments } = await axios.post(
-        config + "/api/comments/get",
-        searchParam
-      );
-      console.log(comments);
-      const hashTable = Object.create(null);
-      comments.forEach((comment) => (hashTable[comment._id] = { ...comment }));
-      const dataTree = [];
-      comments.forEach((comment) => {
-        if (comment.parentComment)
-          hashTable[comment.parentComment].children.push(
-            hashTable[comment._id]
-          );
-        else dataTree.push(hashTable[comment._id]);
-      });
-      console.log(dataTree);
-      this.setState({ comments: dataTree });
-    } catch (error) {
-      console.log("catch block called", error);
+    } else {
+      try {
+        const jwt = localStorage.getItem("token");
+        const user = decodeToken(jwt);
+        this.setState({ user: user });
+      } catch (ex) {
+        this.setState({ user: null });
+        const jwt = localStorage.getItem("token");
+
+        console.log("no user", jwt);
+      }
+      try {
+        const { data } = await axios.get(config + "/api/posts/single", {
+          params: {
+            _id: postId,
+          },
+        });
+        this.setState({ post: data });
+      } catch (error) {
+        console.log("Couldn't reach the server", error);
+      }
+      try {
+        console.log(postId);
+        let searchParam = { parentPost: `${postId}` };
+        const { data: comments } = await axios.post(
+          config + "/api/comments/get",
+          searchParam
+        );
+
+        const hashTable = Object.create(null);
+        comments.forEach(
+          (comment) => (hashTable[comment._id] = { ...comment })
+        );
+        const dataTree = [];
+        comments.forEach((comment) => {
+          if (comment.parentComment)
+            hashTable[comment.parentComment].children.push(
+              hashTable[comment._id]
+            );
+          else dataTree.push(hashTable[comment._id]);
+        });
+
+        this.setState({ comments: dataTree });
+      } catch (error) {
+        console.log("catch block called", error);
+      }
     }
   }
 
+  logToken = () => {
+    console.log(this.state);
+  };
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener("keypress", () => this.logToken());
 
     document.body.style.overflow = "scroll";
   }
@@ -124,6 +147,9 @@ class SinglePost extends React.Component {
 
   isLiked = () => {
     const { post } = this.state;
+    if (!this.state.user) {
+      return false;
+    }
     const userID = this.state.user._id;
     let isAlreadyLiked = false;
     for (let i = 0; i < post.likes.length; i++) {
@@ -135,6 +161,10 @@ class SinglePost extends React.Component {
   };
 
   onLike = async () => {
+    if (!this.state.user) {
+      this.handlePleaseLogin();
+      return;
+    }
     let id = this.state.postId;
     const userID = this.state.user._id;
     const data = {
@@ -172,6 +202,11 @@ class SinglePost extends React.Component {
   };
 
   openReplyModal = () => {
+    if (!this.state.user) {
+      this.handlePleaseLogin();
+      document.body.style.overflow = "scroll";
+      return;
+    }
     this.setState({ mobileReplyOpen: false });
     this.setState({ replyModalOpen: true });
     document.body.style.overflow = "hidden";
@@ -184,6 +219,11 @@ class SinglePost extends React.Component {
   };
 
   openReportModal = () => {
+    if (!this.state.user) {
+      this.handlePleaseLogin();
+      document.body.style.overflow = "scroll";
+      return;
+    }
     console.log("report modal open called");
     this.setState({ mobileReplyOpen: false });
 
@@ -245,10 +285,35 @@ class SinglePost extends React.Component {
     window.location.reload();
   };
 
+  handlePleaseLogin = (event) => {
+    console.log("handle please login called");
+    this.setState({
+      pleaseLoginOpen: !this.state.pleaseLoginOpen,
+      mobileReplyOpen: false,
+    });
+  };
+
+  handleMobileLogin = () => {
+    this.setState({
+      pleaseLoginOpen: false,
+      mobileLoginOpen: !this.state.mobileLoginOpen,
+    });
+  };
+
   render() {
     const { post } = this.state;
     return (
       <React.Fragment>
+        <PleaseLogin
+          isOpen={this.state.pleaseLoginOpen}
+          handleMobile={this.handleMobileLogin}
+          close={this.handlePleaseLogin}
+          width={this.state.width}
+        />
+        <MobileLogin
+          isOpen={this.state.mobileLoginOpen}
+          handle={this.handleMobileLogin}
+        />
         <ReplyModal
           closeModal={this.closeReplyModal}
           isOpen={this.state.replyModalOpen}
@@ -266,10 +331,23 @@ class SinglePost extends React.Component {
           width={this.state.width}
           user={this.state.user}
         />
+        <MobileReplyMenu
+          openReportModal={this.openReportModal}
+          openReplyModal={this.openReplyModal}
+          delete={this.updateDeletedComment}
+          handlePleaseLogin={this.handlePleaseLogin}
+          comment={this.state.clickedComment}
+          open={this.state.mobileReplyOpen}
+          close={this.closeMobileReplyMenu}
+          user={this.state.user}
+        />
         <TopMobileNavBar />
         <div className={styles.postsSpacer}>
           <div className="posts-div">
-            <div className={styles.viewedPostWrapper}>
+            <div
+              className={styles.viewedPostWrapper}
+              onClick={() => this.setState({ pleaseLoginOpen: false })}
+            >
               {this.state.comments && this.state.post && (
                 <React.Fragment>
                   <div className={styles.viewedPost}>
@@ -289,7 +367,10 @@ class SinglePost extends React.Component {
                       <DateComponent time={post.timePosted} />
                     </div>
                     <div className={styles.viewedPostReplyDiv}>
-                      <div className={styles.likesHeart}>
+                      <div
+                        className={styles.likesHeart}
+                        onClick={(event) => event.stopPropagation()}
+                      >
                         {this.isLiked() ? (
                           <FaHeart
                             className={styles.heartIcon}
@@ -302,7 +383,10 @@ class SinglePost extends React.Component {
                           />
                         )}
                       </div>
-                      <div className={styles.postReplyHolder}>
+                      <div
+                        className={styles.postReplyHolder}
+                        onClick={(event) => event.stopPropagation()}
+                      >
                         <button
                           type="submit"
                           className={styles.postReplyButton}
@@ -311,7 +395,10 @@ class SinglePost extends React.Component {
                           Reply
                         </button>
                       </div>
-                      <div className={styles.postReportHolder}>
+                      <div
+                        className={styles.postReportHolder}
+                        onClick={(event) => event.stopPropagation()}
+                      >
                         <small
                           className={styles.report}
                           id="post-report"
@@ -331,13 +418,6 @@ class SinglePost extends React.Component {
             </div>
           </div>
         </div>
-        <MobileReplyMenu
-          openReportModal={this.openReportModal}
-          openReplyModal={this.openReplyModal}
-          delete={this.updateDeletedComment}
-          open={this.state.mobileReplyOpen}
-          close={this.closeMobileReplyMenu}
-        />
       </React.Fragment>
     );
   }

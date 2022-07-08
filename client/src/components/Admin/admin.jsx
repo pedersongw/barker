@@ -1,6 +1,6 @@
 import React from "react";
-import jwtDecode from "jwt-decode";
 import { config } from "../../URLs.jsx";
+import { isExpired, decodeToken } from "react-jwt";
 import axios from "axios";
 import ReportedComment from "./ReportedComment";
 import ReportDetails from "./ReportDetails";
@@ -17,11 +17,15 @@ class Admin extends React.Component {
   };
 
   async componentDidMount() {
-    const jwt = localStorage.getItem("token");
-    const user = jwtDecode(jwt);
-    this.setState({ user: user });
-    if (user.isAdmin) {
-      this.setState({ isAdmin: true });
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = decodeToken(jwt);
+      this.setState({ user: user });
+    } catch (ex) {
+      this.setState({ user: null });
+      const jwt = localStorage.getItem("token");
+
+      console.log("no user", jwt);
     }
     try {
       const { data } = await axios.get(config + "/api/comments/all");

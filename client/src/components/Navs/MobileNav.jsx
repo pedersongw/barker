@@ -22,33 +22,20 @@ class ForumMobileNav extends React.Component {
   }
 
   handleMenuOpen = () => {
-    window.addEventListener("mousedown", this.handleClickOutsideMenu);
-    this.props.navOpen();
     this.setState({ navOpen: true });
     document.body.style.overflow = "hidden";
   };
 
   handleMenuClose = () => {
     console.log("menu closed");
-    window.removeEventListener("mousedown", this.handleClickOutsideMenu);
-    this.props.navOpen();
     this.setState({ navOpen: false });
     this.setState({ sortByClicked: false });
     document.body.style.overflow = "scroll";
   };
 
-  handleClickOutsideMenu = (event) => {
-    const container = document.getElementsByClassName("entire-menu")[0];
-    console.log(event.target);
-    if (container === undefined) {
-      window.removeEventListener("mousedown", this.handleClickOutsideMenu);
-    } else if (
-      event.target === this.blurFilter.current ||
-      event.target.id === "nav-mobile"
-    ) {
-      console.log("clicked outside mobile nav menu", event.target);
-      this.handleMenuClose();
-    }
+  logIn = () => {
+    this.handleMenuClose();
+    this.props.logIn();
   };
 
   onLogIn = () => {
@@ -69,9 +56,23 @@ class ForumMobileNav extends React.Component {
     this.setState({ sortByClicked: false });
   };
 
-  sortBy = () => {
+  sortBy = (event) => {
+    event.stopPropagation();
     console.log("sort by button clicked");
     this.setState({ sortByClicked: !this.state.sortByClicked });
+  };
+
+  sortByArg = (arg) => {
+    this.handleMenuClose();
+    if (arg === "popular") {
+      this.props.sortByPopular();
+    } else if (arg === "my") {
+      this.props.sortMyPosts();
+    } else if (arg === "new") {
+      this.props.sortByNew();
+    } else if (arg === "old") {
+      this.props.sortByOld();
+    }
   };
 
   render() {
@@ -81,6 +82,7 @@ class ForumMobileNav extends React.Component {
           ref={this.blurFilter}
           className={styles.blurFilter}
           id={this.state.navOpen ? styles.blurFilter : null}
+          onClick={() => this.handleMenuClose()}
         ></div>
         <div
           className={styles.forumNavIcon}
@@ -96,15 +98,15 @@ class ForumMobileNav extends React.Component {
               : styles.navMobile
           }
           id="nav-mobile"
+          onClick={() => this.handleMenuClose()}
         >
-          {this.props.userLoggedIn() && (
+          {this.props.userLoggedIn && (
             <div
               className={`${styles.sortBy} ${styles.mobileNavButton}`}
-              onClick={() => this.sortBy()}
+              onClick={(event) => this.sortBy(event)}
             >
               Sort By
               <nav
-                onClick={(e) => e.stopPropagation()}
                 className={styles.sortByNav}
                 id={
                   this.state.sortByClicked && this.state.navOpen
@@ -112,19 +114,16 @@ class ForumMobileNav extends React.Component {
                     : "sort-by-closed"
                 }
               >
-                <ul
-                  className={styles.sortByUl}
-                  onClick={() => this.handleMenuClose()}
-                >
+                <ul className={styles.sortByUl}>
                   <li
                     id={this.props.sort === "old" ? styles.liSelected : null}
-                    onClick={() => this.props.sortByOld()}
+                    onClick={() => this.sortByArg("old")}
                   >
                     Old
                   </li>
                   <li
                     id={this.props.sort === "new" ? styles.liSelected : null}
-                    onClick={() => this.props.sortByNew()}
+                    onClick={() => this.sortByArg("new")}
                   >
                     New
                   </li>
@@ -133,14 +132,14 @@ class ForumMobileNav extends React.Component {
                     id={
                       this.props.sort === "popular" ? styles.liSelected : null
                     }
-                    onClick={() => this.props.sortByPopular()}
+                    onClick={() => this.sortByArg("popular")}
                   >
                     Popular
                   </li>
 
                   <li
                     id={this.props.sort === "my" ? styles.liSelected : null}
-                    onClick={() => this.props.sortMyPosts()}
+                    onClick={() => this.sortByArg("my")}
                   >
                     My Posts
                   </li>
@@ -149,7 +148,7 @@ class ForumMobileNav extends React.Component {
             </div>
           )}
 
-          {this.props.userLoggedIn() && (
+          {this.props.userLoggedIn && (
             <div
               className={styles.mobileNavButton}
               onClick={() => this.openPostModal()}
@@ -158,12 +157,20 @@ class ForumMobileNav extends React.Component {
             </div>
           )}
 
-          {this.props.userLoggedIn() && (
+          {this.props.userLoggedIn && (
             <div
               className={styles.mobileNavButton}
               onClick={() => this.props.logOut()}
             >
               Logout
+            </div>
+          )}
+          {!this.props.userLoggedIn && (
+            <div
+              className={styles.mobileNavButton}
+              onClick={() => this.logIn()}
+            >
+              Login
             </div>
           )}
         </div>

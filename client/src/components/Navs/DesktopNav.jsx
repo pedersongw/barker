@@ -38,7 +38,7 @@ class ForumDesktopNav extends React.Component {
               Admin
             </div>
           )}
-          {!this.props.userLoggedIn() && (
+          {!this.props.userLoggedIn && (
             <div
               className={styles.navDiv}
               onClick={() => (window.location.href = "/login/create")}
@@ -46,7 +46,7 @@ class ForumDesktopNav extends React.Component {
               Create New User
             </div>
           )}
-          {!this.props.userLoggedIn() && (
+          {!this.props.userLoggedIn && (
             <div
               className={styles.navDiv}
               onClick={() => (window.location.href = "/login/login")}
@@ -54,7 +54,7 @@ class ForumDesktopNav extends React.Component {
               Login
             </div>
           )}
-          {this.props.userLoggedIn() && (
+          {this.props.userLoggedIn && (
             <div
               className={styles.navDiv}
               onClick={() => this.props.openPostModal()}
@@ -62,13 +62,13 @@ class ForumDesktopNav extends React.Component {
               Create Post
             </div>
           )}
-          {this.props.userLoggedIn() && (
+          {this.props.userLoggedIn && (
             <div className={styles.navDiv} onClick={() => this.props.logOut()}>
               Logout
             </div>
           )}
 
-          {this.props.userLoggedIn() && (
+          {this.props.userLoggedIn && (
             <div
               className={styles.navDiv}
               id={styles.sortBy}
@@ -112,7 +112,7 @@ class ForumDesktopNav extends React.Component {
             </div>
           )}
         </div>
-        {!this.props.userLoggedIn() && (
+        {!this.props.userLoggedIn && (
           <h2 className={styles.serverStatus}>
             {!this.state.user && this.props.status()}
           </h2>

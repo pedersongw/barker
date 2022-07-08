@@ -10,10 +10,6 @@ class ReportModal extends React.Component {
     errorMessage: "",
   };
 
-  componentDidMount() {
-    window.addEventListener("keydown", () => console.log(this.props));
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({ otherText: "" });

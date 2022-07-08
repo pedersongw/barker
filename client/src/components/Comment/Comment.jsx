@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../../URLs.jsx";
+import { isExpired, decodeToken } from "react-jwt";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { FaEllipsisH } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styles from "./Comment.module.css";
@@ -13,9 +13,16 @@ class Comment extends React.Component {
   };
 
   componentDidMount() {
-    const jwt = localStorage.getItem("token");
-    const user = jwtDecode(jwt);
-    this.setState({ user: user });
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = decodeToken(jwt);
+      this.setState({ user: user });
+    } catch (ex) {
+      this.setState({ user: null });
+      const jwt = localStorage.getItem("token");
+
+      console.log("no user", jwt);
+    }
   }
 
   saveCommentInDatabase = async () => {
@@ -59,7 +66,7 @@ class Comment extends React.Component {
       return (
         <React.Fragment>
           <div
-            className={styles.deletedDiv}
+            className={styles.linkToMoreDiv}
             onClick={() => this.clickedCommentLink()}
           >
             Click to continue thread
@@ -90,10 +97,6 @@ class Comment extends React.Component {
       return "comment-depth-" + this.props.depth.toString();
     }
   };
-
-  componentWillUnmount() {
-    window.removeEventListener("click", this.handleClickOutsideCommentMenu);
-  }
 
   render() {
     const nestedComments = (this.props.comment.children || []).map(

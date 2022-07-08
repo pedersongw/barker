@@ -20,8 +20,9 @@
   opacity: 0.6;
 }
 
-.deletedDiv {
+.linkToMoreDiv {
   color: var(--one);
+  cursor: pointer;
 }
 
 #comment-depth-0 {

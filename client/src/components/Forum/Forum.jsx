@@ -1,15 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { config } from "../../URLs.jsx";
-import jwtDecode from "jwt-decode";
+import { isExpired, decodeToken } from "react-jwt";
 import Post from "./Post";
 import PostModal from "../Modals/PostModal";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
 import ForumMobileNav from "../Navs/MobileNav";
 import Pagination from "../Utilities/Pagination";
 import ForumDesktopNav from "../Navs/DesktopNav";
-import LogInOrCreate from "../Login/LoginOrCreate";
-import logo from "../../images/logo.png";
+import MobileLogin from "../Modals/MobileLogin";
+import DesktopLogin from "./DesktopLogin";
 import { FaSpinner } from "react-icons/fa";
 import styles from "./Forum.module.css";
 
@@ -21,13 +21,13 @@ class Forum extends React.Component {
     width: window.innerWidth,
     dbWasContacted: false,
     postModalOpen: false,
+    mobileLoginOpen: false,
     user: null,
     createModalError: "",
     currentPage: 1,
     sort: "old",
     pageSize: 5,
     numberOfPages: 0,
-    navOpen: false,
   };
 
   beforeUnload = () => {
@@ -42,6 +42,7 @@ class Forum extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
+    window.addEventListener("keypress", () => console.log(this.state));
     window.onbeforeunload = this.beforeUnload;
     window.onpagehide = this.beforeUnload;
     let sessionPage = sessionStorage.getItem("page");
@@ -57,11 +58,13 @@ class Forum extends React.Component {
     );
     try {
       const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
+      const user = decodeToken(jwt);
       this.setState({ user: user });
     } catch (ex) {
       this.setState({ user: null });
-      document.body.style.overflow = "hidden";
+      const jwt = localStorage.getItem("token");
+
+      console.log("no user", jwt);
     }
     try {
       const { data: entries } = await axios.get(config + "/api/posts");
@@ -154,10 +157,6 @@ class Forum extends React.Component {
     this.setState({ width: window.innerWidth });
   };
 
-  userLoggedIn = () => {
-    return this.state.user === null ? false : true;
-  };
-
   resetStateFormInfoHolders = () => {
     this.setState({
       createModalError: "",
@@ -190,14 +189,14 @@ class Forum extends React.Component {
   };
 
   logOut = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     this.setState({ user: null });
     window.location = "/forum";
   };
 
   renderPostsInListGroup = () => {
     if (this.state.entriesDisplayed.length < 1) {
-      return <h2>Nothing to display</h2>;
+      return <h2 className={styles.nothing}>No posts found</h2>;
     }
 
     return this.state.entriesDisplayed[this.state.currentPage - 1].map(
@@ -213,7 +212,7 @@ class Forum extends React.Component {
             username={entry.username}
             onDelete={this.onDelete}
             onLike={this.onLike}
-            userLoggedIn={Boolean(this.state.user)}
+            userLoggedIn={this.state.user}
           />
         );
       }
@@ -230,13 +229,15 @@ class Forum extends React.Component {
     this.setState({ currentPage: num });
   };
 
-  navOpen = () => {
-    this.setState({ navOpen: !this.state.navOpen });
-  };
-
   year = () => {
     let date = new Date();
     return date.getFullYear().toString();
+  };
+
+  handleMobileLogin = () => {
+    this.setState({
+      mobileLoginOpen: !this.state.mobileLoginOpen,
+    });
   };
 
   render() {
@@ -262,9 +263,8 @@ class Forum extends React.Component {
 
         <div
           className={this.state.width < 800 ? styles.main : styles.mainLarge}
-          id={this.userLoggedIn() ? null : styles.loginLanding}
         >
-          {this.state.width > 800 && this.userLoggedIn() && (
+          {this.state.width > 800 && this.state.user && (
             <ForumDesktopNav
               openPostModal={this.openPostModal}
               openUserModal={this.openUserModal}
@@ -273,27 +273,21 @@ class Forum extends React.Component {
               sortByNew={this.displayPostsSortedByNew}
               sortByOld={this.displayPostsSortedByOld}
               logOut={this.logOut}
-              userLoggedIn={this.userLoggedIn}
+              userLoggedIn={this.state.user}
               user={this.state.user}
               updateView={this.updateEntriesFromDatabase}
               sort={this.state.sort}
               status={this.serverStatus}
             />
           )}
-          {!this.userLoggedIn() && <LogInOrCreate />}
-          {!this.userLoggedIn() && this.state.width > 800 && (
-            <React.Fragment>
-              <div className={styles.pleaseLogin}>
-                <img alt="Barker-Field Logo" src={logo}></img>
-              </div>
-            </React.Fragment>
-          )}
-          {!this.state.entriesDisplayed && this.state.user && (
+          {this.state.width > 800 && !this.state.user && <DesktopLogin />}
+
+          {!this.state.entriesDisplayed && (
             <div className={styles.spinnerDiv}>
               <FaSpinner className={styles.spinner} />
             </div>
           )}
-          {this.state.entriesDisplayed && this.state.user && (
+          {this.state.entriesDisplayed && (
             <div className={styles.postsDiv}>
               {this.renderPostsInListGroup()}
               <Pagination
@@ -305,10 +299,9 @@ class Forum extends React.Component {
                 incrementPage={this.incrementPage}
                 sort={this.state.sort}
               />
-              )
             </div>
           )}
-          {this.userLoggedIn() && this.state.width < 800 && (
+          {this.state.width < 800 && (
             <div className={styles.mobileNav}>
               <ForumMobileNav
                 openPostModal={this.openPostModal}
@@ -319,9 +312,14 @@ class Forum extends React.Component {
                 sortByPopular={this.displayPostsSortedByPopular}
                 updateView={this.updateEntriesFromDatabase}
                 logOut={this.logOut}
-                userLoggedIn={this.userLoggedIn}
-                navOpen={this.navOpen}
+                logIn={this.handleMobileLogin}
+                userLoggedIn={this.state.user}
                 sort={this.state.sort}
+              />
+              <MobileLogin
+                isOpen={this.state.mobileLoginOpen}
+                handle={this.handleMobileLogin}
+                width={this.state.width}
               />
             </div>
           )}

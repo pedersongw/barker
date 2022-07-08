@@ -9,10 +9,6 @@ class ReplyModal extends React.Component {
     errorMessage: "",
   };
 
-  componentDidMount() {
-    window.addEventListener("keydown", () => console.log(this.props));
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.setState({ replyText: "", errorMessage: "" });

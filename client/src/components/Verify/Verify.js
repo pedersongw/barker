@@ -19,7 +19,7 @@ class Verify extends React.Component {
         confirmationCode
       );
       this.setState({ message: response.data, status: response.status });
-      setTimeout(() => (window.location = "/forum/1/all"), 3000);
+      setTimeout(() => (window.location = "/forum"), 3000);
     } catch (error) {
       this.setState({ message: error.response.data.message });
     }

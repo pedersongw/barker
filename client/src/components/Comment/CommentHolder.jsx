@@ -3,17 +3,21 @@ import Comment from "./Comment";
 import ReplyModal from "../Modals/ReplyModal";
 import ReportModal from "../Modals/ReportModal";
 import MobileReplyMenu from "../Navs/MobileReplyMenu";
-import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { config } from "../../URLs.jsx";
+import { isExpired, decodeToken } from "react-jwt";
 import styles from "./CommentHolder.module.css";
 import TopMobileNavBar from "../Navs/TopMobileNavBar";
+import PleaseLogin from "../Modals/PleaseLogin";
+import MobileLogin from "../Modals/MobileLogin";
 
 class CommentHolder extends React.Component {
   state = {
     replyModalOpen: false,
     reportModalOpen: false,
     mobileReplyOpen: false,
+    pleaseLoginOpen: false,
+    mobileLoginOpen: false,
     clickedComment: "",
     alreadyReported: false,
     width: window.innerWidth,
@@ -31,14 +35,21 @@ class CommentHolder extends React.Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
     window.addEventListener("resize", this.handleWindowSizeChange);
-    const sessionStorageId = sessionStorage.getItem("postId");
+    window.addEventListener("keypress", () => this.logToken());
+
     try {
       const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
+      const user = decodeToken(jwt);
       this.setState({ user: user });
     } catch (ex) {
       this.setState({ user: null });
+      const jwt = localStorage.getItem("token");
+
+      console.log("no user", jwt);
     }
+
+    const sessionStorageId = sessionStorage.getItem("postId");
+
     try {
       let searchParam = { parentPost: `${sessionStorageId}` };
       const { data: comments } = await axios.post(
@@ -55,13 +66,16 @@ class CommentHolder extends React.Component {
           );
         else dataTree.push(hashTable[comment._id]);
       });
-      console.log(dataTree);
       this.setState({ comments: dataTree });
       this.searchTree(dataTree, this.props.id);
     } catch (error) {
       console.log("catch block called", error);
     }
   }
+
+  logToken = () => {
+    console.log(this.state);
+  };
 
   searchTree = (element, matchingTitle) => {
     for (var k in element) {
@@ -76,6 +90,7 @@ class CommentHolder extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener("keypress", () => this.logToken());
   }
 
   handleWindowSizeChange = () => {
@@ -83,6 +98,11 @@ class CommentHolder extends React.Component {
   };
 
   openReplyModal = () => {
+    if (!this.state.user) {
+      this.handlePleaseLogin();
+      document.body.style.overflow = "scroll";
+      return;
+    }
     console.log("reply modal open called");
     this.setState({ mobileReplyOpen: false });
     this.setState({ replyModalOpen: true });
@@ -97,6 +117,11 @@ class CommentHolder extends React.Component {
   };
 
   openReportModal = () => {
+    if (!this.state.user) {
+      this.handlePleaseLogin();
+      document.body.style.overflow = "scroll";
+      return;
+    }
     console.log("report modal open called");
     this.setState({ mobileReplyOpen: false });
 
@@ -158,12 +183,41 @@ class CommentHolder extends React.Component {
     window.location.reload();
   };
 
+  handlePleaseLogin = (event) => {
+    console.log("handle please login called");
+    this.setState({
+      pleaseLoginOpen: !this.state.pleaseLoginOpen,
+      mobileReplyOpen: false,
+    });
+  };
+
+  handleMobileLogin = () => {
+    this.setState({
+      pleaseLoginOpen: false,
+      mobileLoginOpen: !this.state.mobileLoginOpen,
+    });
+  };
+
   render() {
     const { result: comment } = this.state;
     return (
       <React.Fragment>
         <TopMobileNavBar />
-        <div className={styles.wrapper}>
+        <PleaseLogin
+          isOpen={this.state.pleaseLoginOpen}
+          handleMobile={this.handleMobileLogin}
+          close={this.handlePleaseLogin}
+          width={this.state.width}
+        />
+        <MobileLogin
+          isOpen={this.state.mobileLoginOpen}
+          handle={this.handleMobileLogin}
+        />
+
+        <div
+          className={styles.wrapper}
+          onClick={() => this.setState({ pleaseLoginOpen: false })}
+        >
           {this.state.result && (
             <Comment
               depth={0}
