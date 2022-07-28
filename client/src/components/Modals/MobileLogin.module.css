@@ -97,6 +97,7 @@ input:focus {
 
 .button {
   font-size: 1.5em;
+  text-align: center;
   width: 50%;
   height: 50px;
   background-color: var(--five);
